@@ -25,6 +25,7 @@ X1 = rmvnorm(n1, mean=c(0.5, 0.5))
 data = rbind(X0, X1)
 group_labels = c(rep(0,n0), rep(1,n1))
 
+###############################################################################################
 # (1) estimate the density ratio with the gradient boosting
 result_boosting = estimate_balancing_weight_boosting(data = data,
                                                      group_labels = group_labels,
@@ -40,6 +41,7 @@ result_boosting = estimate_balancing_weight_boosting(data = data,
 
 log_ratio_boosting = balance_to_log_ratio(result_boosting$balance_weight_boosting_data)
 
+###############################################################################################
 # (2) estimate the density ratio with the Bayesian additive trees
 result_BAT = estimate_balancing_weight_Bayes(data = data,
                                                     group_labels = group_labels,
@@ -116,3 +118,4 @@ ggplot(ratio_eval_df, aes(x = x, y = y, color = log_ratio)) +
   ) +
   facet_wrap(~method, nrow = 2) +
   labs(color = "log(density ratio)")
+
