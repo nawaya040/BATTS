@@ -255,11 +255,11 @@ estimate_balancing_weight_Bayes = function(data,
 }
 
 #' @export
-eval_balance_weight = function(list_boosting, eval_points, BART_result = FALSE){
+eval_balance_weight = function(list_result, eval_points, BART_result = FALSE){
 
-  data_info = list_boosting$data_info
+  data_info = list_result$data_info
 
-  if(length(list_boosting$tree_list) == 0){
+  if(length(list_result$tree_list) == 0){
 
     stop("The tree list is empty")
 
@@ -281,11 +281,11 @@ eval_balance_weight = function(list_boosting, eval_points, BART_result = FALSE){
 
     out = list()
 
-    out_temp = evaluate_balance_weight_boosting(list_boosting$tree_list, eval_points)
+    out_temp = evaluate_balance_weight_boosting(list_result$tree_list, eval_points)
     out$balancing_weight_boosting = out_temp$balance_current
 
     if(BART_result){
-      out_temp = evaluate_balance_weight_BART(list_boosting$forest_list, eval_points)
+      out_temp = evaluate_balance_weight_BART(list_result$forest_list, eval_points)
       out$balancing_weight_BART = out_temp$balance_store
     }
   }
