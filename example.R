@@ -45,7 +45,7 @@ group_labels = c(rep(0,n0), rep(1,n1))
 #               in each dimension
 # use_gradient: TRUE = gradient boosting
 #               FALSE = Hellinger-based optimization
-# quiet       : TRUE = print the progress
+# quiet       : FALSE = print the progress
 
 result_boosting = estimate_balancing_weight_boosting(data = data,
                                                      group_labels = group_labels,
@@ -76,7 +76,7 @@ log_ratio_boosting = balance_to_log_ratio(result_boosting$balance_weight_boostin
 # size_backfitting: size of the backfitting MCMC
 # output_BART_ensembles: TRUE = output the generated ensembles
 #                        used to evaluate ratios for test sets
-# quiet       : TRUE = print the progress
+# quiet       : FALSE = print the progress
 
 result_BAT = estimate_balancing_weight_Bayes(data = data,
                                               group_labels = group_labels,
