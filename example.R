@@ -2,13 +2,15 @@
 # packages
 library(mvtnorm)
 library(ggplot2)
+library(balancePM)
 
-# the functions output the square root of density ratios by default
-# make a function to transform them to the log-density ratios
+# the functions output the square root of density ratios
+# function to transform them to log-density ratios
 balance_to_log_ratio = function(x){
   return(log(x)*2)
 }
 
+# function to obtain 95% credible intervals
 calc_quantiles = function(X){
   return(quantile(X, probs = c(0.025,0.975)))
 }
@@ -22,15 +24,33 @@ n1 = 1000
 X0 = rmvnorm(n0, mean=c(-0.5, -0.5))
 X1 = rmvnorm(n1, mean=c(0.5, 0.5))
 
+# need to combine the two samples and input the class labels
 data = rbind(X0, X1)
 group_labels = c(rep(0,n0), rep(1,n1))
 
 ###############################################################################################
 # (1) estimate the density ratio with the gradient boosting
+
+# estimate_balancing_weight_boosting() performs the boosting method
+# num_trees: maximum # of trees used in the boosting
+# K_CV: size of CV for selecting the optimal number of trees
+#       skip CV when = 0
+# max_resol: maximum resolution (# layers) of each tree
+# learn_rate: learning rate in the boosting
+# n_bins: evaluate n_bins-1 cutpoints in each dimension
+#         when creating a new node
+# margin_scale: define the sample space by creating margins
+#               around the observations
+#               margin size = margin_scale * (max-min)
+#               in each dimension
+# use_gradient: TRUE = gradient boosting
+#               FALSE = Hellinger-based optimization
+# quiet       : TRUE = print the progress
+
 result_boosting = estimate_balancing_weight_boosting(data = data,
                                                      group_labels = group_labels,
                                                      num_trees = 500,
-                                                     K_CV = 2,
+                                                     K_CV = 5,
                                                      max_resol = 4,
                                                      learn_rate = 0.01,
                                                      n_bins = 32,
@@ -43,18 +63,35 @@ log_ratio_boosting = balance_to_log_ratio(result_boosting$balance_weight_boostin
 
 ###############################################################################################
 # (2) estimate the density ratio with the Bayesian additive trees
+
+# estimate_balancing_weight_Bayes() performs the BAT method
+# num_trees: # trees in the additive model
+# n_bins: evaluate n_bins-1 cutpoints in each dimension
+#         when creating a new node
+# margin_scale: define the sample space by creating margins
+#               around the observations
+#               margin size = margin_scale * (max-min)
+#               in each dimension
+# size_burnin: size of the burnin period
+# size_backfitting: size of the backfitting MCMC
+# output_BART_ensembles: TRUE = output the generated ensembles
+#                        used to evaluate ratios for test sets
+# quiet       : TRUE = print the progress
+
 result_BAT = estimate_balancing_weight_Bayes(data = data,
-                                                    group_labels = group_labels,
-                                                    num_trees = 200,
-                                                    n_bins = 32,
-                                                    margin_scale = 0.1,
-                                                    size_burnin = 500,
-                                                    size_backfitting = 500,
-                                                    output_BART_ensembles = T,
-                                                    quiet = F
+                                              group_labels = group_labels,
+                                              num_trees = 200,
+                                              n_bins = 32,
+                                              margin_scale = 0.1,
+                                              size_burnin = 500,
+                                              size_backfitting = 500,
+                                              output_BART_ensembles = T,
+                                              quiet = F
 )
 
 log_ratio_BAT = balance_to_log_ratio(result_BAT$balance_weight_BART_data)
+
+# calculate the posterior means and quantiles
 log_ratio_BAT_mean = rowMeans(log_ratio_BAT)
 log_ratio_BAT_quantiles = apply(log_ratio_BAT,1,calc_quantiles)
 
@@ -62,12 +99,12 @@ log_ratio_BAT_quantiles = apply(log_ratio_BAT,1,calc_quantiles)
 methods = c("GB", "BAT","lower","upper")
 
 ratio_df = data.frame(x = rep(data[,1],4),
-                     y = rep(data[,2],4),
-                     log_ratio = c(log_ratio_boosting,
-                                   log_ratio_BAT_mean,
-                                   log_ratio_BAT_quantiles[1,],
-                                   log_ratio_BAT_quantiles[2,]),
-                     method = factor(rep(methods, each = n0+n1), levels = methods)
+                      y = rep(data[,2],4),
+                      log_ratio = c(log_ratio_boosting,
+                                    log_ratio_BAT_mean,
+                                    log_ratio_BAT_quantiles[1,],
+                                    log_ratio_BAT_quantiles[2,]),
+                      method = factor(rep(methods, each = n0+n1), levels = methods)
                      )
 
 max_abs = max(abs(ratio_df$log_ratio))
@@ -81,15 +118,30 @@ ggplot(ratio_df, aes(x = x, y = y, color = log_ratio)) +
              oob = scales::squish
              ) +
   facet_wrap(~method, nrow = 2) +
-  labs(color = "log(density ratio)")
+  labs(color = "log(density ratio)") +
+  ggtitle("Log-density ratios evaluated on observations")
 
-# we can also evaluate the density ratios for test data
+###############################################################################################
+# (3) evaluate density ratios for test data
 eval_points = rmvnorm(1000, mean=c(0,0), sigma = diag(c(1,1)))
 
-eval_boosting = eval_balance_weight(result_boosting, eval_points, BART_result = F)
+# eval_balance_weight() outputs the estimated density ratios for test data
+# list_result: list generated by the estimation functions
+# eval_points: matrix of test data
+# is_Bayes: TRUE if this is a result of the Bayesian additive trees
+
+# evaluation for the boosting
+eval_boosting = eval_balance_weight(list_result = result_boosting,
+                                    eval_points = eval_points,
+                                    is_Bayes = F)
+
 log_ratio_eval_boosting = balance_to_log_ratio(eval_boosting$balancing_weight_boosting)
 
-eval_BAT = eval_balance_weight(result_BAT, eval_points, BART_result = T)
+# evaluation for the Bayesian additive trees
+eval_BAT = eval_balance_weight(list_result = result_BAT,
+                               eval_points = eval_points,
+                               is_Bayes = T)
+
 log_ratio_eval_BAT = balance_to_log_ratio(eval_BAT$balancing_weight_BART)
 log_ratio_eval_BAT_mean = rowMeans(log_ratio_eval_BAT)
 log_ratio_eval_BAT_quantiles = apply(log_ratio_eval_BAT,1,calc_quantiles)
@@ -117,5 +169,6 @@ ggplot(ratio_eval_df, aes(x = x, y = y, color = log_ratio)) +
     oob = scales::squish
   ) +
   facet_wrap(~method, nrow = 2) +
-  labs(color = "log(density ratio)")
+  labs(color = "log(density ratio)") +
+  ggtitle("Log-density ratios evaluated on test data")
 
