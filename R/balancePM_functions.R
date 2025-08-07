@@ -255,7 +255,7 @@ estimate_balancing_weight_Bayes = function(data,
 }
 
 #' @export
-eval_balance_weight = function(list_result, eval_points, BART_result = FALSE){
+eval_balance_weight = function(list_result, eval_points, is_Bayes = FALSE){
 
   data_info = list_result$data_info
 
@@ -284,7 +284,7 @@ eval_balance_weight = function(list_result, eval_points, BART_result = FALSE){
     out_temp = evaluate_balance_weight_boosting(list_result$tree_list, eval_points)
     out$balancing_weight_boosting = out_temp$balance_current
 
-    if(BART_result){
+    if(is_Bayes){
       out_temp = evaluate_balance_weight_BART(list_result$forest_list, eval_points)
       out$balancing_weight_BART = out_temp$balance_store
     }
