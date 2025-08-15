@@ -2,7 +2,7 @@
 # packages
 library(mvtnorm)
 library(ggplot2)
-library(balancePM)
+library(BATTS)
 
 # the functions output the square root of density ratios
 # function to transform them to log-density ratios
