@@ -1,5 +1,5 @@
 #' @export
-estimate_balancing_weight_boosting = function(data,
+boots = function(data,
                      group_labels,
                      num_trees_max = 100,
                      K_CV = 0 ,
@@ -155,7 +155,7 @@ estimate_balancing_weight_boosting = function(data,
 }
 
 #' @export
-estimate_balancing_weight_Bayes = function(data,
+batts = function(data,
                                      group_labels,
                                      num_trees = 100,
                                      max_resol = 0,

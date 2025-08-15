@@ -31,7 +31,7 @@ group_labels = c(rep(0,n0), rep(1,n1))
 ###############################################################################################
 # (1) estimate the density ratio with the gradient boosting
 
-# estimate_balancing_weight_boosting() performs the boosting method
+# boots() performs the boosting method
 # num_trees: maximum # of trees used in the boosting
 # K_CV: size of CV for selecting the optimal number of trees
 #       skip CV when = 0
@@ -47,16 +47,16 @@ group_labels = c(rep(0,n0), rep(1,n1))
 #               FALSE = Hellinger-based optimization
 # quiet       : FALSE = print the progress
 
-result_boosting = estimate_balancing_weight_boosting(data = data,
-                                                     group_labels = group_labels,
-                                                     num_trees = 500,
-                                                     K_CV = 5,
-                                                     max_resol = 4,
-                                                     learn_rate = 0.01,
-                                                     n_bins = 32,
-                                                     margin_scale = 0.1,
-                                                     use_gradient = T,
-                                                     quiet = F
+result_boosting = boots(data = data,
+                         group_labels = group_labels,
+                         num_trees = 500,
+                         K_CV = 5,
+                         max_resol = 4,
+                         learn_rate = 0.01,
+                         n_bins = 32,
+                         margin_scale = 0.1,
+                         use_gradient = T,
+                         quiet = F
 )
 
 log_ratio_boosting = balance_to_log_ratio(result_boosting$balance_weight_boosting_data)
@@ -64,7 +64,7 @@ log_ratio_boosting = balance_to_log_ratio(result_boosting$balance_weight_boostin
 ###############################################################################################
 # (2) estimate the density ratio with the Bayesian additive trees
 
-# estimate_balancing_weight_Bayes() performs the BAT method
+# batts() performs the BAT method
 # num_trees: # trees in the additive model
 # n_bins: evaluate n_bins-1 cutpoints in each dimension
 #         when creating a new node
@@ -78,15 +78,15 @@ log_ratio_boosting = balance_to_log_ratio(result_boosting$balance_weight_boostin
 #                        used to evaluate ratios for test sets
 # quiet       : FALSE = print the progress
 
-result_BAT = estimate_balancing_weight_Bayes(data = data,
-                                              group_labels = group_labels,
-                                              num_trees = 200,
-                                              n_bins = 32,
-                                              margin_scale = 0.1,
-                                              size_burnin = 500,
-                                              size_backfitting = 500,
-                                              output_BART_ensembles = T,
-                                              quiet = F
+result_BAT = batts(data = data,
+            group_labels = group_labels,
+            num_trees = 200,
+            n_bins = 32,
+            margin_scale = 0.1,
+            size_burnin = 500,
+            size_backfitting = 500,
+            output_BART_ensembles = T,
+            quiet = F
 )
 
 log_ratio_BAT = balance_to_log_ratio(result_BAT$balance_weight_BART_data)
