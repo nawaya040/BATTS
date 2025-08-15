@@ -1,4 +1,4 @@
-# balancePM
+# BATTS (Bayesian Additive Trees and Two-Sample comparison)
 
 This package implements the algorithms for the boosting and the Bayesian additive trees of Awaya, Xu, and Ma (2025).
 
@@ -8,7 +8,7 @@ The package may be easily installed using `devtools` as follows:
 
 ```
 library(devtools)
-install_github("nawaya040/balancePM")
+install_github("nawaya040/BATTS")
 ```
 
 You can see how to use the functions in the example.
