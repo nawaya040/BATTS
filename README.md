@@ -1,4 +1,4 @@
-# BATTS (Bayesian Additive Trees and Two-Sample comparison)
+# BATTS (Bayesian Additive Trees for Two-Sample comparison)
 
 This package implements the algorithms for the boosting and the Bayesian additive trees of Awaya, Xu, and Ma (2025).
 
