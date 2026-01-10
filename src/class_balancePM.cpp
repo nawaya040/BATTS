@@ -1158,8 +1158,9 @@ void class_balancePM::GROW(Node* node){
 
     // randomly select dimension and cutpoint
     int dim_chosen = random_number(d);
-    int index_location_chosen = random_number(n_cut_points);
-    double location_chosen = L_candidates(index_location_chosen);
+    // int index_location_chosen = random_number(n_cut_points);
+    // double location_chosen = L_candidates(index_location_chosen);
+    double location_chosen = R::runif(SMALL_NUMBER, 1.0 - SMALL_NUMBER);
 
     // temporally cut the node
     double left_point = node->left_points(dim_chosen);
@@ -1310,8 +1311,9 @@ void class_balancePM::CHANGE(Node* node){
     // create the candidates
     // randomly select dimension and cutpoint
     int dim_chosen = random_number(d);
-    int index_location_chosen = random_number(n_cut_points);
-    double location_chosen = L_candidates(index_location_chosen);
+    // int index_location_chosen = random_number(n_cut_points);
+    // double location_chosen = L_candidates(index_location_chosen);
+    double location_chosen = R::runif(SMALL_NUMBER, 1.0 - SMALL_NUMBER);
 
     double left_point = node->left_points(dim_chosen);
     double right_point = node->right_points(dim_chosen);
