@@ -888,7 +888,9 @@ void class_balancePM::backfitting(){
   }
 
   // need to consider the ratio of the sample size
-  zeta = (double) n_vec(0) / (double) n;
+  // zeta = (double) n_vec(0) / (double) n;
+  zeta0 = 0.5 * (double) n / (double) n_vec(0);
+  zeta1 = 0.5 * (double) n / (double) n_vec(1);
 
   // prior for tree updating moves
   prob_GROW = prob_moves(0);
@@ -1106,21 +1108,27 @@ void class_balancePM::update_beta(Node* node){
       double beta_sq_new;
 
       if(even_or_odd == 0){
-        double sqrt_n = lambda_prior + 2.0 / zeta * omega * balance_inv_0_sum_A;
-        double sqrt_d = lambda_prior/pow(mu_prior,2.0) + 2.0 / (1.0 - zeta) * omega * balance_1_sum_A;
+        // double sqrt_n = lambda_prior + 2.0 / zeta * omega * balance_inv_0_sum_A;
+        // double sqrt_d = lambda_prior/pow(mu_prior,2.0) + 2.0 / (1.0 - zeta) * omega * balance_1_sum_A;
+        double sqrt_n = lambda_prior + 2.0 * zeta0 * omega * balance_inv_0_sum_A;
+        double sqrt_d = lambda_prior/pow(mu_prior,2.0) + 2.0 * zeta1* omega * balance_1_sum_A;
 
         mu_post = pow(sqrt_n / sqrt_d, 0.5);
 
-        lambda_post = lambda_prior + 2.0 / zeta * omega * balance_inv_0_sum_A;
+        // lambda_post = lambda_prior + 2.0 / zeta * omega * balance_inv_0_sum_A;
+        lambda_post = lambda_prior + 2.0 * zeta0 * omega * balance_inv_0_sum_A;
 
         beta_sq_new = rinversegauss_single(mu_post, lambda_post);
       }else{
-        double sqrt_n = lambda_prior + 2.0 / (1.0 - zeta) * omega * balance_1_sum_A;
-        double sqrt_d = lambda_prior/pow(mu_prior,2.0) + 2.0 / zeta * omega * balance_inv_0_sum_A;
+        // double sqrt_n = lambda_prior + 2.0 / (1.0 - zeta) * omega * balance_1_sum_A;
+        // double sqrt_d = lambda_prior/pow(mu_prior,2.0) + 2.0 / zeta * omega * balance_inv_0_sum_A;
+        double sqrt_n = lambda_prior + 2.0 * zeta1* omega * balance_1_sum_A;
+        double sqrt_d = lambda_prior/pow(mu_prior,2.0) + 2.0 * zeta0 * omega * balance_inv_0_sum_A;
 
         mu_post = pow(sqrt_n / sqrt_d, 0.5);
 
-        lambda_post = lambda_prior +  2.0 / (1.0 - zeta) * omega * balance_1_sum_A;
+        // lambda_post = lambda_prior +  2.0 / (1.0 - zeta) * omega * balance_1_sum_A;
+        lambda_post = lambda_prior +  2.0 * zeta1* omega * balance_1_sum_A;
 
         beta_sq_new = 1.0 / rinversegauss_single(mu_post, lambda_post);
       }
@@ -1418,19 +1426,25 @@ double class_balancePM::compute_log_ML(Node* node){
     double mu_post;
 
     if(even_or_odd == 0){
-      double sqrt_n = lambda_prior + 2.0 / zeta * omega * balance_inv_0_sum_A;
-      double sqrt_d = lambda_prior/pow(mu_prior,2.0) + 2.0 / (1.0 - zeta) * omega * balance_1_sum_A;
+      // double sqrt_n = lambda_prior + 2.0 / zeta * omega * balance_inv_0_sum_A;
+      // double sqrt_d = lambda_prior/pow(mu_prior,2.0) + 2.0 / (1.0 - zeta) * omega * balance_1_sum_A;
+      double sqrt_n = lambda_prior + 2.0 * zeta0 * omega * balance_inv_0_sum_A;
+      double sqrt_d = lambda_prior/pow(mu_prior,2.0) + 2.0 * zeta1* omega * balance_1_sum_A;
 
       mu_post = pow(sqrt_n / sqrt_d, 0.5);
 
-      lambda_post = lambda_prior + 2.0 / zeta * omega * balance_inv_0_sum_A;
+      // lambda_post = lambda_prior + 2.0 / zeta * omega * balance_inv_0_sum_A;
+      lambda_post = lambda_prior + 2.0 * zeta0 * omega * balance_inv_0_sum_A;
     }else{
-      double sqrt_n = lambda_prior + 2.0 / (1.0 - zeta) * omega * balance_1_sum_A;
-      double sqrt_d = lambda_prior/pow(mu_prior,2.0) + 2.0 / zeta * omega * balance_inv_0_sum_A;
+      // double sqrt_n = lambda_prior + 2.0 / (1.0 - zeta) * omega * balance_1_sum_A;
+      // double sqrt_d = lambda_prior/pow(mu_prior,2.0) + 2.0 / zeta * omega * balance_inv_0_sum_A;
+      double sqrt_n = lambda_prior + 2.0 * zeta1* omega * balance_1_sum_A;
+      double sqrt_d = lambda_prior/pow(mu_prior,2.0) + 2.0 * zeta0 * omega * balance_inv_0_sum_A;
 
       mu_post = pow(sqrt_n / sqrt_d, 0.5);
 
-      lambda_post = lambda_prior +  2.0 / (1.0 - zeta) * omega * balance_1_sum_A;
+      // lambda_post = lambda_prior +  2.0 / (1.0 - zeta) * omega * balance_1_sum_A;
+      lambda_post = lambda_prior +  2.0 * zeta1* omega * balance_1_sum_A;
     }
 
     out = 0.5 * (log(lambda_prior) - log(lambda_post)) +  lambda_prior / mu_prior - lambda_post / mu_post;
@@ -1479,9 +1493,11 @@ void class_balancePM::update_omega(){
 
   for(int i=0; i<n;i++){
     if(group_labels(i) == 0){
-      b_post += balance_inv_current(i) / zeta;
+      // b_post += balance_inv_current(i) / zeta;
+      b_post += balance_inv_current(i) * zeta0;
     }else{
-      b_post += balance_current(i) / (1.0 - zeta);
+      // b_post += balance_current(i) / (1.0 - zeta);
+      b_post += balance_current(i) * zeta1;
     }
   }
 

@@ -204,7 +204,9 @@ public:
   vec omega_store;
   vec lambda_store;
 
-  double zeta;
+  // double zeta;
+  double zeta0;
+  double zeta1;
 
   double omega;
   int n_cut_points;
