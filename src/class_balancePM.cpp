@@ -889,8 +889,12 @@ void class_balancePM::backfitting(){
 
   // need to consider the ratio of the sample size
   // zeta = (double) n_vec(0) / (double) n;
-  zeta0 = 0.5 * (double) n / (double) n_vec(0);
-  zeta1 = 0.5 * (double) n / (double) n_vec(1);
+  int n_min = std::min(n_vec(0), n_vec(1));
+
+  // zeta0 = 0.5 * (double) n / (double) n_vec(0);
+  // zeta1 = 0.5 * (double) n / (double) n_vec(1);
+  zeta0 = (double) n_min / (double) n_vec(0);
+  zeta1 = (double) n_min / (double) n_vec(1);
 
   // prior for tree updating moves
   prob_GROW = prob_moves(0);

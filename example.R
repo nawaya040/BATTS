@@ -81,7 +81,7 @@ log_ratio_boosting = balance_to_log_ratio(result_boosting$balance_weight_boostin
 result_BAT = batts(data = data,
             group_labels = group_labels,
             num_trees = 200,
-            lambda_0 = 2,
+            lambda_0 = 5,
             margin_scale = 0.25,
             size_burnin = 500,
             size_backfitting = 500,
