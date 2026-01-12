@@ -1492,7 +1492,7 @@ bool class_balancePM::root_or_has_nieces(Node* node){
 void class_balancePM::update_omega(){
 
   // obtain the posterior
-  double a_post = a_prior_omega + (double) n_min;
+  double a_post = a_prior_omega + 2.0 * ((double) n_min);
   double b_post = b_prior_omega;
 
   for(int i=0; i<n;i++){
