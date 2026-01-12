@@ -889,7 +889,7 @@ void class_balancePM::backfitting(){
 
   // need to consider the ratio of the sample size
   // zeta = (double) n_vec(0) / (double) n;
-  int n_min = std::min(n_vec(0), n_vec(1));
+  n_min = std::min(n_vec(0), n_vec(1));
 
   // zeta0 = 0.5 * (double) n / (double) n_vec(0);
   // zeta1 = 0.5 * (double) n / (double) n_vec(1);
@@ -1492,7 +1492,7 @@ bool class_balancePM::root_or_has_nieces(Node* node){
 void class_balancePM::update_omega(){
 
   // obtain the posterior
-  double a_post = a_prior_omega + (double) n;
+  double a_post = a_prior_omega + (double) n_min;
   double b_post = b_prior_omega;
 
   for(int i=0; i<n;i++){

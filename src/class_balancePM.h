@@ -139,6 +139,7 @@ public:
   int num_grid_points_L;
 
   ivec n_vec;
+  int n_min;
 
   ivec indices_group_0;
   ivec indices_group_1;
