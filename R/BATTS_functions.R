@@ -75,7 +75,9 @@ boots = function(data,
 
     for(k in 1:K_CV){
 
-      print(paste("CV :", k, "/", K_CV), sep = "")
+      if(!quiet){
+        print(paste("CV :", k, "/", K_CV), sep = "")
+      }
 
       labels_train = numeric(length(group_labels))
       labels_train[which(labels_CV != k)] = 1
