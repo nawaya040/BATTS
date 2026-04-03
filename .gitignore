@@ -8,6 +8,7 @@
 .quarto
 .Rproj
 BATTS.Rproj
+README.html
 *.Rcheck/
 *.tar.gz
 src/*.obj

@@ -49,14 +49,14 @@ group_labels = c(rep(0,n0), rep(1,n1))
 
 result_boosting = boots(data = data,
                          group_labels = group_labels,
-                         num_trees = 500,
+                         num_trees_max = 500,
                          K_CV = 5,
                          max_resol = 4,
                          learn_rate = 0.01,
                          n_bins = 32,
                          margin_scale = 0.1,
-                         use_gradient = T,
-                         quiet = F
+                         use_gradient = TRUE,
+                         quiet = FALSE
 )
 
 log_ratio_boosting = balance_to_log_ratio(result_boosting$balance_weight_boosting_data)
@@ -85,8 +85,8 @@ result_BAT = batts(data = data,
             margin_scale = 0.25,
             size_burnin = 500,
             size_backfitting = 500,
-            output_BART_ensembles = T,
-            quiet = F,
+            output_BART_ensembles = TRUE,
+            quiet = FALSE
 )
 
 log_ratio_BAT = balance_to_log_ratio(result_BAT$balance_weight_BART_data)
@@ -133,14 +133,14 @@ eval_points = rmvnorm(1000, mean=c(0,0), sigma = diag(c(1,1)))
 # evaluation for the boosting
 eval_boosting = eval_balance_weight(list_result = result_boosting,
                                     eval_points = eval_points,
-                                    is_Bayes = F)
+                                    is_Bayes = FALSE)
 
 log_ratio_eval_boosting = balance_to_log_ratio(eval_boosting$balancing_weight_boosting)
 
 # evaluation for the Bayesian additive trees
 eval_BAT = eval_balance_weight(list_result = result_BAT,
                                eval_points = eval_points,
-                               is_Bayes = T)
+                               is_Bayes = TRUE)
 
 log_ratio_eval_BAT = balance_to_log_ratio(eval_BAT$balancing_weight_BART)
 log_ratio_eval_BAT_mean = rowMeans(log_ratio_eval_BAT)
@@ -155,8 +155,9 @@ ratio_eval_df = data.frame(x = rep(eval_points[,1],4),
                                         log_ratio_eval_BAT_mean,
                                         log_ratio_eval_BAT_quantiles[1,],
                                         log_ratio_eval_BAT_quantiles[2,]),
-                           method = factor(rep(methods, each = n0+n1), levels = methods)
+                           method = factor(rep(methods, each = nrow(eval_points)), levels = methods)
 )
+
 
 max_abs = max(abs(ratio_eval_df$log_ratio))
 
@@ -171,4 +172,3 @@ ggplot(ratio_eval_df, aes(x = x, y = y, color = log_ratio)) +
   facet_wrap(~method, nrow = 2) +
   labs(color = "log(density ratio)") +
   ggtitle("Log-density ratios evaluated on test data")
-
