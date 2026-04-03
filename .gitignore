@@ -1,6 +1,15 @@
 .Rproj.user
 .Rhistory
 .Rdata
+.RData
+.Ruserdata
 .httr-oauth
 .DS_Store
 .quarto
+.Rproj
+BATTS.Rproj
+*.Rcheck/
+*.tar.gz
+src/*.obj
+src/*.lib
+src/*.exp
