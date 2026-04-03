@@ -25,10 +25,6 @@ estimation.
 Paper:
 [Two-sample comparison through additive tree models for density ratios](https://arxiv.org/abs/2508.03059)
 
-This README is organized as a short usage guide, following the same
-README-as-vignette style used in the
-[BIMA project](https://github.com/yuliangxu/BIMA).
-
 ## Install BATTS
 
 ```{r install, eval=FALSE}
