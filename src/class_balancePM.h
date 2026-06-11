@@ -3,6 +3,7 @@
 
 // [[Rcpp::depends(RcppArmadillo)]]
 #include <RcppArmadillo.h>
+#include <vector>
 #include "helpers.h"
 
 using namespace Rcpp;

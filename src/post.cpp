@@ -1,6 +1,7 @@
 // [[Rcpp::depends(RcppArmadillo)]]
 #include <RcppArmadillo.h>
-#include<bits/stdc++.h>
+#include <cmath>
+#include <stack>
 #include "post.h"
 
 using namespace Rcpp;

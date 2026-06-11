@@ -1,7 +1,9 @@
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
 
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <cmath>
+#include <stack>
 #include "class_balancePM.h"
 #include "helpers.h"
 
