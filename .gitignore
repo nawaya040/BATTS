@@ -1,0 +1,29 @@
+# R and RStudio local state
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.Renviron
+
+# Package build products
+src/*.o
+src/*.dll
+src/*.so
+*.Rcheck/
+*.tar.gz
+
+# Dependency caches
+renv/library/
+renv/staging/
+
+# Generated experiment outputs
+results/generated/
+/errors.csv
+/errors.rds
+/out_lines.txt
+/plot1.png
+/result_*.rds
+/result_*.txt
+/sample_boostPM.csv
+/test*.csv
+/test*.txt
