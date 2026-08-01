@@ -364,8 +364,10 @@ void class_balancePM::do_boosting(){
     }
 
     if(!use_gradient){
-      double c_normalize = (sum_balance_inv_0 / (double) n0_learn) /
-        (sum_balance_1 / (double) n1_learn);
+      double c_normalize = std::sqrt(
+        (sum_balance_inv_0 / (double) n0_learn) /
+        (sum_balance_1 / (double) n1_learn)
+      );
 
       prod_c = prod_c * c_normalize;
 

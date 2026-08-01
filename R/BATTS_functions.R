@@ -284,7 +284,7 @@ eval_balance_weight = function(list_result, eval_points, is_Bayes = FALSE){
     out = list()
 
     out_temp = evaluate_balance_weight_boosting(list_result$tree_list, eval_points)
-    out$balancing_weight_boosting = out_temp$balance_current
+    out$balancing_weight_boosting = list_result$c * out_temp$balance_current
 
     if(is_Bayes){
       out_temp = evaluate_balance_weight_BART(list_result$forest_list, eval_points)
