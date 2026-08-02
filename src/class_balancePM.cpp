@@ -788,9 +788,7 @@ void class_balancePM::compute_beta(Node* node){
 void class_balancePM::update_balancing_weights(Node* root){
 
   for(int i=0; i<n;i++){
-    vec temp_i = residuals_current.col(i);
-
-    double beta_i = evaluate_density(root, temp_i);
+    double beta_i = evaluate_density(root, i);
     //NOTICE: don't forget to take the squared root
     //since we are dealing with squared root of weight
     double beta_sqrt = pow(beta_i, 0.5);
@@ -800,12 +798,12 @@ void class_balancePM::update_balancing_weights(Node* root){
   }
 }
 
-double class_balancePM::evaluate_density(Node* root, vec& x){
+double class_balancePM::evaluate_density(Node* root, int observation_index){
 
   // note that in the current code "density" means a balancing weight
 
   //find a terminal node that x belongs to
-  Node* curr = find_terminal_node(root, x);
+  Node* curr = find_terminal_node(root, observation_index);
 
   double dens_curr = curr->beta;
 
@@ -815,23 +813,21 @@ double class_balancePM::evaluate_density(Node* root, vec& x){
 
 void class_balancePM::input_indices_for_leaves(Node* root){
   for(int i=0; i<n;i++){
-    vec temp_i = residuals_current.col(i);
-
     //find a terminal node that x belongs to
-    Node* curr = find_terminal_node(root, temp_i);
+    Node* curr = find_terminal_node(root, i);
 
     curr->indices.push_back(i);
   }
 }
 
-Node* class_balancePM::find_terminal_node(Node* root, vec& x){
+Node* class_balancePM::find_terminal_node(Node* root, int observation_index){
 
   Node* curr = root;
 
   while(curr->left != nullptr){
     int dim_selected = curr->dim_selected;
 
-    if(x(dim_selected) <= curr->partition_point){
+    if(residuals_current(dim_selected, observation_index) <= curr->partition_point){
       curr = curr->left;
     }else{
       curr = curr->right;
@@ -944,9 +940,7 @@ void class_balancePM::backfitting(){
         // step 0: adjust the current estimate of the balancing weights
         //         by subtracting the beta values stored in the current tree
         for(int i=0; i<n; i++){
-          vec temp_i = residuals_current.col(i);
-
-          double beta_i = evaluate_density(root, temp_i);
+          double beta_i = evaluate_density(root, i);
           double beta_sqrt = pow(beta_i, 0.5);
 
           balance_current(i) = balance_current(i) / beta_sqrt;

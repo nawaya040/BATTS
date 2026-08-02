@@ -249,10 +249,10 @@ public:
   bool split_node(Node* node);
   void compute_beta(Node* node);
 
-  Node* find_terminal_node(Node* root, vec& x);
+  Node* find_terminal_node(Node* root, int observation_index);
 
   void update_balancing_weights(Node* root);
-  double evaluate_density(Node* root, vec& x);
+  double evaluate_density(Node* root, int observation_index);
 
   void input_indices_for_leaves(Node* root);
 
