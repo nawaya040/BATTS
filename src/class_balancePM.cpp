@@ -109,10 +109,6 @@ void class_balancePM::init(){ //Initialization
   balance_current = zeros(n);
   balance_inv_current = zeros(n);
 
-  // matrix to store the estimated balancing weights
-  // (requires a lot of memory, should be optimized later)
-  balance_store_boosting = zeros(n, num_trees);
-
   // vector to store the current gradients (necessary if we use the gradient boosting)
   gradient_current = zeros(n);
 
@@ -375,9 +371,6 @@ void class_balancePM::do_boosting(){
       balance_inv_current = 1.0 / c_normalize * balance_inv_current;
     }
 
-    // store the current weight
-    balance_store_boosting.col(index_tree) = balance_current;
-
     // loss given by the validation set (after constructing the tree)
     double loss_temp0 = 0.0;
     double loss_temp1 = 0.0;
@@ -496,7 +489,7 @@ bool class_balancePM::split_node(Node* node){
   bool is_split = false;
 
   //input the information of the indices
-  vector<int> indices_current = node->indices;
+  const vector<int>& indices_current = node->indices;
   int n_total_A = indices_current.size();
 
   //if the node is too deep, stop splitting
@@ -506,11 +499,8 @@ bool class_balancePM::split_node(Node* node){
   if(node->depth < max_resol && n_total_A > n_min_obs_per_node){
 
     //get more information
-    mat residuals_A = get_submat_double(residuals_current, indices_current, n_total_A);
-    ivec group_labels_A = get_subvector_int(group_labels, indices_current, n_total_A);
-
-    vec left_points_A = node->left_points;
-    vec right_points_A = node->right_points;
+    const vec& left_points_A = node->left_points;
+    const vec& right_points_A = node->right_points;
 
     // calculate the loss given for the possible splitting rules
     mat loss_left_matrix(d, n_cut_points);
@@ -523,9 +513,6 @@ bool class_balancePM::split_node(Node* node){
 
     if(!use_gradient){
 
-      vec balance_A = get_subvector_double(balance_current, indices_current, n_total_A);
-      vec balance_inv_A = get_subvector_double(balance_inv_current, indices_current, n_total_A);
-
       // compute the effective size given by the weighted measures for the two groups
       mat sum_inv_0_mat = zeros(d, n_cells);
       mat sum_1_mat = zeros(d, n_cells);
@@ -536,14 +523,15 @@ bool class_balancePM::split_node(Node* node){
         double right = right_points_A(j);
 
         for(int i=0;i<n_total_A;i++){
+          int index_i = indices_current[i];
 
-          int index_cell = find_cell_x_is_in(residuals_A(j, i), left, right);
+          int index_cell = find_cell_x_is_in(residuals_current(j, index_i), left, right);
 
-          if(group_labels_A(i) == 0){
-            sum_inv_0_mat(j,index_cell) = sum_inv_0_mat(j,index_cell) + balance_inv_A(i);
+          if(group_labels(index_i) == 0){
+            sum_inv_0_mat(j,index_cell) = sum_inv_0_mat(j,index_cell) + balance_inv_current(index_i);
             count_0_mat(j,index_cell) = count_0_mat(j,index_cell) + 1.0;
           }else{
-            sum_1_mat(j,index_cell) = sum_1_mat(j,index_cell) + balance_A(i);
+            sum_1_mat(j,index_cell) = sum_1_mat(j,index_cell) + balance_current(index_i);
             count_1_mat(j,index_cell) = count_1_mat(j,index_cell) + 1.0;
           }
 
@@ -603,8 +591,6 @@ bool class_balancePM::split_node(Node* node){
 
     }else{
 
-      vec gradient_A = get_subvector_double(gradient_current, indices_current, n_total_A);
-
       // compute the effective size given by the weighted measures for the two groups
       mat sum_mat = zeros(d, n_cells);
       mat square_mat = zeros(d, n_cells);
@@ -615,13 +601,15 @@ bool class_balancePM::split_node(Node* node){
         double right = right_points_A(j);
 
         for(int i=0;i<n_total_A;i++){
+          int index_i = indices_current[i];
+          double gradient_i = gradient_current(index_i);
 
-          int index_cell = find_cell_x_is_in(residuals_A(j, i), left, right);
+          int index_cell = find_cell_x_is_in(residuals_current(j, index_i), left, right);
 
-          sum_mat(j, index_cell) = sum_mat(j, index_cell) + gradient_A(i);
-          square_mat(j, index_cell) = square_mat(j, index_cell) + pow(gradient_A(i), 2.0);
+          sum_mat(j, index_cell) = sum_mat(j, index_cell) + gradient_i;
+          square_mat(j, index_cell) = square_mat(j, index_cell) + pow(gradient_i, 2.0);
 
-          if(group_labels_A(i) == 0){
+          if(group_labels(index_i) == 0){
             count_0_mat(j,index_cell) = count_0_mat(j,index_cell) + 1.0;
           }else{
             count_1_mat(j,index_cell) = count_1_mat(j,index_cell) + 1.0;
@@ -727,7 +715,7 @@ bool class_balancePM::split_node(Node* node){
       for(int i=0; i<n_total_A; i++){
         int index_i = indices_current[i];
 
-        if(residuals_A(dim_chosen, i) < partition_point){
+        if(residuals_current(dim_chosen, index_i) < partition_point){
           node->left->indices.push_back(index_i);
 
         }else{
@@ -749,23 +737,19 @@ bool class_balancePM::split_node(Node* node){
 
 void class_balancePM::compute_beta(Node* node){
   //input the information of the indices
-  vector<int> indices_current = node->indices;
+  const vector<int>& indices_current = node->indices;
   int n_total_A = indices_current.size();
-
-  //get more information
-  ivec group_labels_A = get_subvector_int(group_labels, indices_current, n_total_A);
-  vec balance_A = get_subvector_double(balance_current, indices_current, n_total_A);
-  vec balance_inv_A = get_subvector_double(balance_inv_current, indices_current, n_total_A);
 
   //compute the effective size (sum of weights) for the current leaf node
   double sum_inv_A_0 = 0.0;
   double sum_A_1 = 0.0;
 
   for(int i=0; i<n_total_A; i++){
-    if(group_labels_A(i) == 0){
-      sum_inv_A_0 += balance_inv_A(i);
+    int index_i = indices_current[i];
+    if(group_labels(index_i) == 0){
+      sum_inv_A_0 += balance_inv_current(index_i);
     }else{
-      sum_A_1 += balance_A(i);
+      sum_A_1 += balance_current(index_i);
     }
   }
 

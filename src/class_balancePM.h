@@ -153,8 +153,6 @@ public:
   vec balance_current;
   vec balance_inv_current;
 
-  mat balance_store_boosting;
-
   vec balance_boosting;
 
   vec gradient_current;
