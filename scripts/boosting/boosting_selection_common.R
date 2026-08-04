@@ -245,7 +245,6 @@ boosting_seed_map <- function(seed) {
     folds = 100000L + seed,
     ada_cv_base = 200000L + seed * 100L,
     ada_final = 300000L + seed,
-    test_data = 400000L + seed,
     gb = 500000L + seed,
     fs = 600000L + seed
   )
@@ -500,9 +499,8 @@ boosting_ada_node_summary <- function(model, selections) {
   )
 }
 
-boosting_run_proposed <- function(data, labels, eval_data, truth_train, truth_test,
-                                  labels_test, settings, use_gradient, seed,
-                                  method_name) {
+boosting_run_proposed <- function(data, labels, truth_train, settings,
+                                  use_gradient, seed, method_name) {
   expected_fold_id <- boosting_make_stratified_folds(labels, settings$folds, seed)
   set.seed(seed)
   fit <- BATTS::boots(
@@ -522,10 +520,6 @@ boosting_run_proposed <- function(data, labels, eval_data, truth_train, truth_te
     stop(method_name, " selected tree count does not match its CV argmin")
   }
   train_estimate <- 2 * log(as.numeric(fit$balance_weight_boosting_data))
-  test_weights <- BATTS::eval_balance_weight(
-    fit, eval_data, is_Bayes = FALSE
-  )$balancing_weight_boosting
-  test_estimate <- 2 * log(as.numeric(test_weights))
   list(
     diagnostics = list(
       method = method_name,
@@ -539,16 +533,10 @@ boosting_run_proposed <- function(data, labels, eval_data, truth_train, truth_te
       total_nodes = sum(fit$n_nodes),
       mean_nodes_per_tree = mean(fit$n_nodes)
     ),
-    estimates = list(train = train_estimate, test = test_estimate),
-    metrics = rbind(
-      boosting_metric_row(
-        method_name, "native_balancing_loss", "train",
-        train_estimate, truth_train, labels
-      ),
-      boosting_metric_row(
-        method_name, "native_balancing_loss", "test",
-        test_estimate, truth_test, labels_test
-      )
+    estimates = list(train = train_estimate),
+    metrics = boosting_metric_row(
+      method_name, "native_balancing_loss", "train",
+      train_estimate, truth_train, labels
     )
   )
 }

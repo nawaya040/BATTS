@@ -50,9 +50,7 @@ if (identical(mode, "canonical")) {
     learn_rate = 0.01,
     ada_depth = 4L,
     ada_bag_fraction = 0.5,
-    proposed_depth = 4L,
-    test_n0 = 5000L,
-    test_n1 = 5000L
+    proposed_depth = 4L
   )
 } else {
   n0 <- boosting_int(boosting_arg(args, "n0", "80"), "n0")
@@ -64,9 +62,7 @@ if (identical(mode, "canonical")) {
     learn_rate = 0.01,
     ada_depth = 4L,
     ada_bag_fraction = 0.5,
-    proposed_depth = 4L,
-    test_n0 = 80L,
-    test_n1 = 80L
+    proposed_depth = 4L
   )
 }
 
@@ -174,16 +170,7 @@ ada_model <- boosting_fit_ada_final(
   data, labels_train, max_selected_ada, settings, seed_map$ada_final
 )
 
-set.seed(seed_map$test_data)
-testing <- generate_data(settings$test_n0, settings$test_n1)
-test_data <- as.matrix(testing$data)
-labels_test <- as.integer(testing$group_labels)
-truth_test <- as.numeric(testing$true_log_w_obs)
-if (nrow(test_data) != length(labels_test) || length(labels_test) != length(truth_test)) {
-  stop("Test data, labels, and truth have incompatible dimensions")
-}
-
-ada_estimates <- list(train = list(), test = list())
+ada_estimates <- list(train = list())
 ada_metric_rows <- list()
 metric_index <- 1L
 for (index in seq_len(nrow(ada_selections))) {
@@ -192,19 +179,10 @@ for (index in seq_len(nrow(ada_selections))) {
   train_estimate <- boosting_ada_log_ratio(
     ada_model, data, selected_trees, n0, n1
   )
-  test_estimate <- boosting_ada_log_ratio(
-    ada_model, test_data, selected_trees, n0, n1
-  )
   ada_estimates$train[[criterion]] <- train_estimate
-  ada_estimates$test[[criterion]] <- test_estimate
   ada_metric_rows[[metric_index]] <- boosting_metric_row(
     "adaboost", criterion, "train",
     train_estimate, truth_train, labels_train
-  )
-  metric_index <- metric_index + 1L
-  ada_metric_rows[[metric_index]] <- boosting_metric_row(
-    "adaboost", criterion, "test",
-    test_estimate, truth_test, labels_test
   )
   metric_index <- metric_index + 1L
 }
@@ -217,10 +195,7 @@ ada_nodes <- boosting_ada_node_summary(ada_model, ada_selections)
 gb <- boosting_run_proposed(
   data = data,
   labels = labels_train,
-  eval_data = test_data,
   truth_train = truth_train,
-  truth_test = truth_test,
-  labels_test = labels_test,
   settings = settings,
   use_gradient = TRUE,
   seed = seed_map$folds,
@@ -229,10 +204,7 @@ gb <- boosting_run_proposed(
 fs <- boosting_run_proposed(
   data = data,
   labels = labels_train,
-  eval_data = test_data,
   truth_train = truth_train,
-  truth_test = truth_test,
-  labels_test = labels_test,
   settings = settings,
   use_gradient = FALSE,
   seed = seed_map$folds,
@@ -251,7 +223,6 @@ metadata$timing <- c(
 )
 metadata$output_dimensions <- list(
   training_observations = nrow(data),
-  test_observations = nrow(test_data),
   predictors = ncol(data),
   folds = settings$folds,
   maximum_trees = settings$max_trees
@@ -261,9 +232,7 @@ result <- list(
   design = list(
     fold_id = fold_id,
     labels_train = labels_train,
-    truth_train = truth_train,
-    labels_test = labels_test,
-    truth_test = truth_test
+    truth_train = truth_train
   ),
   adaboost = list(
     selections = ada_selections,

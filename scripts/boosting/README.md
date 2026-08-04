@@ -29,6 +29,11 @@ For the proposed GB and FS methods, the workflow records the selected number
 of trees, fold-level and aggregate CV curves, fold-level argmins, upper-bound
 hits, and node counts without changing `BATTS::boots()`.
 
+Performance metrics for AdaBoost, GB, and FS are evaluated on the training
+observations, matching the submitted simulation design. Independent test
+evaluation is intentionally excluded because `BATTS::eval_balance_weight()`
+does not extrapolate beyond the fitted sample space.
+
 ## Safety modes
 
 The default mode is `smoke`. Smoke runs use two folds, at most 60 trees, small
