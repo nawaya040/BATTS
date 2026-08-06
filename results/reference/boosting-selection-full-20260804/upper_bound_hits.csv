@@ -1,0 +1,8 @@
+"job_id","family","scenario","n0","n1","transformed","seed","method","criterion","selected_trees"
+"boosting_selection_20d_latent_dispersion_n0-5000_n1-5000_transformed-true_seed-030","20d","latent_dispersion",5000,5000,TRUE,30,"adaboost","exponential_loss",1000
+"boosting_selection_20d_latent_dispersion_n0-5000_n1-5000_transformed-true_seed-030","20d","latent_dispersion",5000,5000,TRUE,30,"adaboost","balancing_loss",1000
+"boosting_selection_20d_latent_dispersion_n0-5000_n1-5000_transformed-true_seed-040","20d","latent_dispersion",5000,5000,TRUE,40,"adaboost","exponential_loss",1000
+"boosting_selection_20d_latent_dispersion_n0-5000_n1-5000_transformed-true_seed-040","20d","latent_dispersion",5000,5000,TRUE,40,"adaboost","balancing_loss",1000
+"boosting_selection_20d_latent_dispersion_n0-5000_n1-5000_transformed-true_seed-043","20d","latent_dispersion",5000,5000,TRUE,43,"adaboost","exponential_loss",1000
+"boosting_selection_20d_latent_dispersion_n0-5000_n1-5000_transformed-true_seed-043","20d","latent_dispersion",5000,5000,TRUE,43,"adaboost","balancing_loss",1000
+"boosting_selection_20d_latent_location_shift_n0-5000_n1-5000_transformed-false_seed-047","20d","latent_location_shift",5000,5000,FALSE,47,"adaboost","classification_error",1000
