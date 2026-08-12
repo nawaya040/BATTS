@@ -45,7 +45,7 @@ generate_global_shift_20d <- function(
     n1 > 0L,
     d >= latent_dim,
     latent_dim >= 1L,
-    shift > 0,
+    shift >= 0,
     noise_sd > 0
   )
 
