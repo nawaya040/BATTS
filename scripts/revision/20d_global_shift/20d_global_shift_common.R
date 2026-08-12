@@ -221,6 +221,49 @@ compute_binned_metrics <- function(
   }))
 }
 
+compute_calibration_curve <- function(
+    log_ratio_draws,
+    truth,
+    group_labels,
+    nominal_levels) {
+  nominal_levels <- sort(unique(as.numeric(nominal_levels)))
+  if (length(nominal_levels) == 0L ||
+      any(!is.finite(nominal_levels)) ||
+      any(nominal_levels <= 0 | nominal_levels >= 1)) {
+    stop("Calibration levels must be finite and strictly between 0 and 1")
+  }
+
+  lower_probs <- (1 - nominal_levels) / 2
+  upper_probs <- 1 - lower_probs
+  requested_probs <- c(lower_probs, upper_probs)
+  quantiles <- matrixStats::rowQuantiles(
+    log_ratio_draws,
+    probs = requested_probs,
+    na.rm = FALSE,
+    drop = FALSE
+  )
+  n_levels <- length(nominal_levels)
+  lower <- quantiles[, seq_len(n_levels), drop = FALSE]
+  upper <- quantiles[, n_levels + seq_len(n_levels), drop = FALSE]
+  covered <- lower <= truth & truth <= upper
+
+  group_indices <- list(
+    all = seq_along(truth),
+    group0 = which(group_labels == 0L),
+    group1 = which(group_labels == 1L)
+  )
+  do.call(rbind, lapply(names(group_indices), function(group_name) {
+    indices <- group_indices[[group_name]]
+    data.frame(
+      group = group_name,
+      nominal_level = nominal_levels,
+      empirical_coverage = colMeans(covered[indices, , drop = FALSE]),
+      n = length(indices),
+      stringsAsFactors = FALSE
+    )
+  }))
+}
+
 result_filename <- function(n0, n1, seed) {
   sprintf("global_shift_n0_%05d_n1_%05d_seed_%02d.rds", n0, n1, seed)
 }
@@ -300,11 +343,23 @@ run_global_shift_fit <- function(task, output_dir, source_paths) {
     na.rm = FALSE,
     drop = FALSE
   )
-  rm(log_ratio_draws)
   lower <- intervals[, 1L]
   upper <- intervals[, 2L]
 
-  if (any(!is.finite(c(posterior_mean, lower, upper)))) {
+  calibration_curve <- NULL
+  if (!is.null(task$calibration_levels)) {
+    calibration_curve <- compute_calibration_curve(
+      log_ratio_draws,
+      simulation$true_log_ratio,
+      simulation$group_labels,
+      task$calibration_levels
+    )
+  }
+  rm(log_ratio_draws)
+
+  if (any(!is.finite(c(posterior_mean, lower, upper))) ||
+      (!is.null(calibration_curve) &&
+       any(!is.finite(calibration_curve$empirical_coverage)))) {
     stop("Non-finite posterior summaries")
   }
   if (any(lower > upper)) {
@@ -337,6 +392,7 @@ run_global_shift_fit <- function(task, output_dir, source_paths) {
     task = task,
     metrics = metrics,
     binned_metrics = binned_metrics,
+    calibration_curve = calibration_curve,
     pointwise = list(
       group_labels = simulation$group_labels,
       true_log_ratio = simulation$true_log_ratio,

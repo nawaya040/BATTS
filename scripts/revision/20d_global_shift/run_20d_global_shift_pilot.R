@@ -26,8 +26,12 @@ script_path <- function() {
 
 args <- parse_cli(commandArgs(TRUE))
 mode <- if (is.null(args$mode)) "pilot" else args$mode
-if (!mode %in% c("smoke", "preflight", "pilot")) {
-  stop("--mode must be smoke, preflight, or pilot")
+if (!mode %in% c("smoke", "calibration-smoke", "preflight", "pilot",
+                 "calibration-unbalanced")) {
+  stop(paste(
+    "--mode must be smoke, calibration-smoke, preflight, pilot,",
+    "or calibration-unbalanced"
+  ))
 }
 if (is.null(args[["output-dir"]])) {
   stop("Missing required argument --output-dir=PATH")
@@ -45,7 +49,7 @@ workers <- if (is.null(args$workers)) {
 if (!is.finite(workers) || workers < 1L) {
   stop("--workers must be a positive integer")
 }
-if (mode == "pilot" && workers != 2L) {
+if (mode %in% c("pilot", "calibration-unbalanced") && workers != 2L) {
   stop("The approved pilot design requires exactly 2 workers")
 }
 if (mode == "preflight" && workers != 2L) {
@@ -83,6 +87,14 @@ smoke_parameters <- modifyList(
     size_backfitting = 20L
   )
 )
+calibration_parameters <- modifyList(
+  full_parameters,
+  list(calibration_levels = seq(0.01, 0.99, by = 0.01))
+)
+calibration_smoke_parameters <- modifyList(
+  smoke_parameters,
+  list(calibration_levels = seq(0.01, 0.99, by = 0.01))
+)
 
 make_task <- function(n0, n1, seed, parameters) {
   c(list(n0 = as.integer(n0), n1 = as.integer(n1), seed = as.integer(seed)), parameters)
@@ -90,15 +102,22 @@ make_task <- function(n0, n1, seed, parameters) {
 
 if (mode == "smoke") {
   tasks <- list(make_task(60L, 60L, 1L, smoke_parameters))
+} else if (mode == "calibration-smoke") {
+  tasks <- list(make_task(60L, 60L, 1L, calibration_smoke_parameters))
 } else if (mode == "preflight") {
   tasks <- list(
     make_task(5000L, 5000L, 1L, full_parameters),
     make_task(9000L, 1000L, 1L, full_parameters)
   )
-} else {
+} else if (mode == "pilot") {
   tasks <- c(
     lapply(1:10, function(seed) make_task(5000L, 5000L, seed, full_parameters)),
     lapply(1:10, function(seed) make_task(9000L, 1000L, seed, full_parameters))
+  )
+} else {
+  tasks <- lapply(
+    1:10,
+    function(seed) make_task(9000L, 1000L, seed, calibration_parameters)
   )
 }
 
@@ -115,6 +134,11 @@ design <- do.call(rbind, lapply(tasks, function(task) {
     num_trees = task$num_trees,
     size_burnin = task$size_burnin,
     size_backfitting = task$size_backfitting,
+    calibration_levels = if (is.null(task$calibration_levels)) {
+      NA_character_
+    } else {
+      paste(task$calibration_levels, collapse = ";")
+    },
     workers = workers,
     stringsAsFactors = FALSE
   )

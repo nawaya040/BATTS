@@ -76,3 +76,20 @@ Rscript --vanilla summarize_20d_global_shift_pilot.R `
   --output-dir=<new-summary-directory> `
   --expected=20
 ```
+
+Run the approved unbalanced calibration rerun:
+
+```powershell
+Rscript --vanilla run_20d_global_shift_pilot.R `
+  --mode=calibration-unbalanced `
+  --workers=2 `
+  --output-dir=<isolated-calibration-run-directory>
+```
+
+Create the provisional calibration plot and tables:
+
+```powershell
+Rscript --vanilla plot_unbalanced_calibration_curve.R `
+  --input-dir=<isolated-calibration-run-directory> `
+  --output-dir=<new-calibration-summary-directory>
+```
