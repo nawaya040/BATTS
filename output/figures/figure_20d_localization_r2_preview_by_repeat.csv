@@ -1,0 +1,661 @@
+"setting_id","scenario","balance","n0","n1","simulation_repeat","bin_id","bin_label","plot_value","n_points","coverage_rate","correct_detection_rate","wrong_direction_rate"
+"global_balanced","Global Shift","balanced",5000,5000,1,1,"[0.000,0.125)",0,828,0.990338164251208,0.0253623188405797,0.00241545893719807
+"global_balanced","Global Shift","balanced",5000,5000,1,2,"[0.125,0.375)",0.25,1670,0.989221556886228,0.238323353293413,0
+"global_balanced","Global Shift","balanced",5000,5000,1,3,"[0.375,0.625)",0.5,1621,0.992597162245528,0.754472547809994,0
+"global_balanced","Global Shift","balanced",5000,5000,1,4,"[0.625,0.875)",0.75,1392,0.982758620689655,0.970545977011494,0
+"global_balanced","Global Shift","balanced",5000,5000,1,5,"[0.875,1.125)",1,1277,0.981989036805012,0.996084573218481,0
+"global_balanced","Global Shift","balanced",5000,5000,1,6,"[1.125,1.375)",1.25,949,0.983140147523709,1,0
+"global_balanced","Global Shift","balanced",5000,5000,1,7,"[1.375,1.625)",1.5,804,0.975124378109453,1,0
+"global_balanced","Global Shift","balanced",5000,5000,1,8,"[1.625,1.875)",1.75,518,0.967181467181467,1,0
+"global_balanced","Global Shift","balanced",5000,5000,1,9,"[1.875,2.125)",2,361,0.961218836565097,1,0
+"global_balanced","Global Shift","balanced",5000,5000,1,10,"[2.125,2.375)",2.25,251,0.928286852589641,1,0
+"global_balanced","Global Shift","balanced",5000,5000,1,11,"[2.375,Inf)",2.5,329,0.857142857142857,1,0
+"global_balanced","Global Shift","balanced",5000,5000,6,1,"[0.000,0.125)",0,878,0.995444191343964,0.020501138952164,0
+"global_balanced","Global Shift","balanced",5000,5000,6,2,"[0.125,0.375)",0.25,1712,0.994158878504673,0.245911214953271,0
+"global_balanced","Global Shift","balanced",5000,5000,6,3,"[0.375,0.625)",0.5,1613,0.991320520768754,0.773713577185369,0
+"global_balanced","Global Shift","balanced",5000,5000,6,4,"[0.625,0.875)",0.75,1421,0.989444053483462,0.972554539057002,0
+"global_balanced","Global Shift","balanced",5000,5000,6,5,"[0.875,1.125)",1,1202,0.991680532445923,0.996672212978369,0
+"global_balanced","Global Shift","balanced",5000,5000,6,6,"[1.125,1.375)",1.25,979,0.996935648621042,1,0
+"global_balanced","Global Shift","balanced",5000,5000,6,7,"[1.375,1.625)",1.5,711,0.994374120956399,1,0
+"global_balanced","Global Shift","balanced",5000,5000,6,8,"[1.625,1.875)",1.75,535,0.990654205607477,1,0
+"global_balanced","Global Shift","balanced",5000,5000,6,9,"[1.875,2.125)",2,388,0.984536082474227,1,0
+"global_balanced","Global Shift","balanced",5000,5000,6,10,"[2.125,2.375)",2.25,239,0.945606694560669,1,0
+"global_balanced","Global Shift","balanced",5000,5000,6,11,"[2.375,Inf)",2.5,322,0.692546583850932,1,0
+"global_balanced","Global Shift","balanced",5000,5000,11,1,"[0.000,0.125)",0,882,1,0.00226757369614512,0
+"global_balanced","Global Shift","balanced",5000,5000,11,2,"[0.125,0.375)",0.25,1730,0.998265895953757,0.173988439306358,0
+"global_balanced","Global Shift","balanced",5000,5000,11,3,"[0.375,0.625)",0.5,1674,0.994623655913978,0.765232974910394,0
+"global_balanced","Global Shift","balanced",5000,5000,11,4,"[0.625,0.875)",0.75,1421,0.997888810696693,0.976776917663617,0
+"global_balanced","Global Shift","balanced",5000,5000,11,5,"[0.875,1.125)",1,1153,0.996530789245447,0.996530789245447,0
+"global_balanced","Global Shift","balanced",5000,5000,11,6,"[1.125,1.375)",1.25,981,0.99184505606524,1,0
+"global_balanced","Global Shift","balanced",5000,5000,11,7,"[1.375,1.625)",1.5,749,0.993324432576769,1,0
+"global_balanced","Global Shift","balanced",5000,5000,11,8,"[1.625,1.875)",1.75,558,0.987455197132617,1,0
+"global_balanced","Global Shift","balanced",5000,5000,11,9,"[1.875,2.125)",2,334,0.973053892215569,1,0
+"global_balanced","Global Shift","balanced",5000,5000,11,10,"[2.125,2.375)",2.25,225,0.942222222222222,1,0
+"global_balanced","Global Shift","balanced",5000,5000,11,11,"[2.375,Inf)",2.5,293,0.839590443686007,1,0
+"global_balanced","Global Shift","balanced",5000,5000,16,1,"[0.000,0.125)",0,925,0.987027027027027,0.0324324324324324,0.00324324324324324
+"global_balanced","Global Shift","balanced",5000,5000,16,2,"[0.125,0.375)",0.25,1720,0.981395348837209,0.26453488372093,0
+"global_balanced","Global Shift","balanced",5000,5000,16,3,"[0.375,0.625)",0.5,1604,0.982543640897756,0.78927680798005,0
+"global_balanced","Global Shift","balanced",5000,5000,16,4,"[0.625,0.875)",0.75,1413,0.983014861995754,0.981599433828733,0
+"global_balanced","Global Shift","balanced",5000,5000,16,5,"[0.875,1.125)",1,1236,0.980582524271845,0.996763754045307,0
+"global_balanced","Global Shift","balanced",5000,5000,16,6,"[1.125,1.375)",1.25,942,0.977707006369427,0.998938428874735,0
+"global_balanced","Global Shift","balanced",5000,5000,16,7,"[1.375,1.625)",1.5,711,0.960618846694796,1,0
+"global_balanced","Global Shift","balanced",5000,5000,16,8,"[1.625,1.875)",1.75,541,0.972273567467652,1,0
+"global_balanced","Global Shift","balanced",5000,5000,16,9,"[1.875,2.125)",2,365,0.975342465753425,1,0
+"global_balanced","Global Shift","balanced",5000,5000,16,10,"[2.125,2.375)",2.25,231,0.922077922077922,1,0
+"global_balanced","Global Shift","balanced",5000,5000,16,11,"[2.375,Inf)",2.5,312,0.82051282051282,1,0
+"global_balanced","Global Shift","balanced",5000,5000,21,1,"[0.000,0.125)",0,857,0.996499416569428,0.0128354725787631,0.00116686114352392
+"global_balanced","Global Shift","balanced",5000,5000,21,2,"[0.125,0.375)",0.25,1736,0.996543778801843,0.181451612903226,0
+"global_balanced","Global Shift","balanced",5000,5000,21,3,"[0.375,0.625)",0.5,1621,0.994447871684146,0.745835903763109,0
+"global_balanced","Global Shift","balanced",5000,5000,21,4,"[0.625,0.875)",0.75,1455,0.993127147766323,0.96426116838488,0
+"global_balanced","Global Shift","balanced",5000,5000,21,5,"[0.875,1.125)",1,1140,0.995614035087719,0.995614035087719,0
+"global_balanced","Global Shift","balanced",5000,5000,21,6,"[1.125,1.375)",1.25,940,0.995744680851064,1,0
+"global_balanced","Global Shift","balanced",5000,5000,21,7,"[1.375,1.625)",1.5,785,0.985987261146497,0.998726114649682,0
+"global_balanced","Global Shift","balanced",5000,5000,21,8,"[1.625,1.875)",1.75,523,0.978967495219885,1,0
+"global_balanced","Global Shift","balanced",5000,5000,21,9,"[1.875,2.125)",2,379,0.976253298153034,1,0
+"global_balanced","Global Shift","balanced",5000,5000,21,10,"[2.125,2.375)",2.25,245,0.959183673469388,1,0
+"global_balanced","Global Shift","balanced",5000,5000,21,11,"[2.375,Inf)",2.5,319,0.862068965517241,1,0
+"global_balanced","Global Shift","balanced",5000,5000,26,1,"[0.000,0.125)",0,881,0.978433598183882,0.0283768444948922,0.00340522133938706
+"global_balanced","Global Shift","balanced",5000,5000,26,2,"[0.125,0.375)",0.25,1752,0.976598173515982,0.278538812785388,0
+"global_balanced","Global Shift","balanced",5000,5000,26,3,"[0.375,0.625)",0.5,1600,0.981875,0.774375,0
+"global_balanced","Global Shift","balanced",5000,5000,26,4,"[0.625,0.875)",0.75,1353,0.985218033998522,0.973392461197339,0
+"global_balanced","Global Shift","balanced",5000,5000,26,5,"[0.875,1.125)",1,1259,0.988880063542494,0.998411437648928,0
+"global_balanced","Global Shift","balanced",5000,5000,26,6,"[1.125,1.375)",1.25,933,0.989281886387996,1,0
+"global_balanced","Global Shift","balanced",5000,5000,26,7,"[1.375,1.625)",1.5,748,0.982620320855615,1,0
+"global_balanced","Global Shift","balanced",5000,5000,26,8,"[1.625,1.875)",1.75,533,0.984990619136961,1,0
+"global_balanced","Global Shift","balanced",5000,5000,26,9,"[1.875,2.125)",2,403,0.987593052109181,1,0
+"global_balanced","Global Shift","balanced",5000,5000,26,10,"[2.125,2.375)",2.25,230,0.969565217391304,1,0
+"global_balanced","Global Shift","balanced",5000,5000,26,11,"[2.375,Inf)",2.5,308,0.915584415584416,1,0
+"global_balanced","Global Shift","balanced",5000,5000,31,1,"[0.000,0.125)",0,861,0.986062717770035,0.0301974448315912,0.00116144018583043
+"global_balanced","Global Shift","balanced",5000,5000,31,2,"[0.125,0.375)",0.25,1770,0.989265536723164,0.252542372881356,0
+"global_balanced","Global Shift","balanced",5000,5000,31,3,"[0.375,0.625)",0.5,1550,0.989677419354839,0.772903225806452,0
+"global_balanced","Global Shift","balanced",5000,5000,31,4,"[0.625,0.875)",0.75,1325,0.990188679245283,0.980377358490566,0
+"global_balanced","Global Shift","balanced",5000,5000,31,5,"[0.875,1.125)",1,1264,0.993670886075949,0.997626582278481,0
+"global_balanced","Global Shift","balanced",5000,5000,31,6,"[1.125,1.375)",1.25,1001,0.986013986013986,1,0
+"global_balanced","Global Shift","balanced",5000,5000,31,7,"[1.375,1.625)",1.5,759,0.993412384716733,0.998682476943346,0
+"global_balanced","Global Shift","balanced",5000,5000,31,8,"[1.625,1.875)",1.75,515,0.990291262135922,1,0
+"global_balanced","Global Shift","balanced",5000,5000,31,9,"[1.875,2.125)",2,410,0.982926829268293,1,0
+"global_balanced","Global Shift","balanced",5000,5000,31,10,"[2.125,2.375)",2.25,245,0.979591836734694,1,0
+"global_balanced","Global Shift","balanced",5000,5000,31,11,"[2.375,Inf)",2.5,300,0.913333333333333,1,0
+"global_balanced","Global Shift","balanced",5000,5000,36,1,"[0.000,0.125)",0,909,0.997799779977998,0.0033003300330033,0
+"global_balanced","Global Shift","balanced",5000,5000,36,2,"[0.125,0.375)",0.25,1744,0.998853211009174,0.235665137614679,0
+"global_balanced","Global Shift","balanced",5000,5000,36,3,"[0.375,0.625)",0.5,1602,0.997503121098627,0.814606741573034,0
+"global_balanced","Global Shift","balanced",5000,5000,36,4,"[0.625,0.875)",0.75,1397,0.995705082319255,0.982104509663565,0
+"global_balanced","Global Shift","balanced",5000,5000,36,5,"[0.875,1.125)",1,1203,0.992518703241895,0.997506234413965,0
+"global_balanced","Global Shift","balanced",5000,5000,36,6,"[1.125,1.375)",1.25,988,0.992914979757085,1,0
+"global_balanced","Global Shift","balanced",5000,5000,36,7,"[1.375,1.625)",1.5,739,0.9851150202977,1,0
+"global_balanced","Global Shift","balanced",5000,5000,36,8,"[1.625,1.875)",1.75,523,0.97131931166348,1,0
+"global_balanced","Global Shift","balanced",5000,5000,36,9,"[1.875,2.125)",2,346,0.973988439306358,1,0
+"global_balanced","Global Shift","balanced",5000,5000,36,10,"[2.125,2.375)",2.25,235,0.94468085106383,1,0
+"global_balanced","Global Shift","balanced",5000,5000,36,11,"[2.375,Inf)",2.5,314,0.745222929936306,1,0
+"global_balanced","Global Shift","balanced",5000,5000,41,1,"[0.000,0.125)",0,919,0.995647442872688,0.0119695321001088,0
+"global_balanced","Global Shift","balanced",5000,5000,41,2,"[0.125,0.375)",0.25,1703,0.998238402818555,0.18379330593071,0
+"global_balanced","Global Shift","balanced",5000,5000,41,3,"[0.375,0.625)",0.5,1632,0.993872549019608,0.723651960784314,0
+"global_balanced","Global Shift","balanced",5000,5000,41,4,"[0.625,0.875)",0.75,1415,0.9886925795053,0.975265017667844,0
+"global_balanced","Global Shift","balanced",5000,5000,41,5,"[0.875,1.125)",1,1210,0.972727272727273,0.995867768595041,0
+"global_balanced","Global Shift","balanced",5000,5000,41,6,"[1.125,1.375)",1.25,948,0.982067510548523,1,0
+"global_balanced","Global Shift","balanced",5000,5000,41,7,"[1.375,1.625)",1.5,748,0.987967914438503,1,0
+"global_balanced","Global Shift","balanced",5000,5000,41,8,"[1.625,1.875)",1.75,520,0.980769230769231,1,0
+"global_balanced","Global Shift","balanced",5000,5000,41,9,"[1.875,2.125)",2,356,0.974719101123596,1,0
+"global_balanced","Global Shift","balanced",5000,5000,41,10,"[2.125,2.375)",2.25,251,0.960159362549801,1,0
+"global_balanced","Global Shift","balanced",5000,5000,41,11,"[2.375,Inf)",2.5,298,0.788590604026846,1,0
+"global_balanced","Global Shift","balanced",5000,5000,46,1,"[0.000,0.125)",0,922,0.998915401301518,0.00542299349240781,0
+"global_balanced","Global Shift","balanced",5000,5000,46,2,"[0.125,0.375)",0.25,1756,0.997722095671982,0.214692482915718,0
+"global_balanced","Global Shift","balanced",5000,5000,46,3,"[0.375,0.625)",0.5,1599,0.998749218261413,0.774859287054409,0
+"global_balanced","Global Shift","balanced",5000,5000,46,4,"[0.625,0.875)",0.75,1447,0.996544574982723,0.978576364892882,0
+"global_balanced","Global Shift","balanced",5000,5000,46,5,"[0.875,1.125)",1,1165,0.99656652360515,0.997424892703863,0
+"global_balanced","Global Shift","balanced",5000,5000,46,6,"[1.125,1.375)",1.25,968,0.990702479338843,1,0
+"global_balanced","Global Shift","balanced",5000,5000,46,7,"[1.375,1.625)",1.5,695,0.98705035971223,1,0
+"global_balanced","Global Shift","balanced",5000,5000,46,8,"[1.625,1.875)",1.75,533,0.966228893058161,1,0
+"global_balanced","Global Shift","balanced",5000,5000,46,9,"[1.875,2.125)",2,381,0.963254593175853,1,0
+"global_balanced","Global Shift","balanced",5000,5000,46,10,"[2.125,2.375)",2.25,255,0.886274509803922,1,0
+"global_balanced","Global Shift","balanced",5000,5000,46,11,"[2.375,Inf)",2.5,279,0.587813620071685,1,0
+"location_balanced","Location Shift","balanced",5000,5000,1,1,"[0.000,0.125)",0,1626,0.882533825338254,0.129766297662977,0.00676506765067651
+"location_balanced","Location Shift","balanced",5000,5000,1,2,"[0.125,0.375)",0.25,1936,0.952479338842975,0.264979338842975,0
+"location_balanced","Location Shift","balanced",5000,5000,1,3,"[0.375,0.625)",0.5,1684,0.967933491686461,0.766627078384798,0
+"location_balanced","Location Shift","balanced",5000,5000,1,4,"[0.625,0.875)",0.75,1397,0.954187544738726,0.964924838940587,0
+"location_balanced","Location Shift","balanced",5000,5000,1,5,"[0.875,1.125)",1,1233,0.935117599351176,0.997566909975669,0
+"location_balanced","Location Shift","balanced",5000,5000,1,6,"[1.125,1.375)",1.25,945,0.894179894179894,1,0
+"location_balanced","Location Shift","balanced",5000,5000,1,7,"[1.375,1.625)",1.5,672,0.857142857142857,1,0
+"location_balanced","Location Shift","balanced",5000,5000,1,8,"[1.625,1.875)",1.75,430,0.783720930232558,1,0
+"location_balanced","Location Shift","balanced",5000,5000,1,9,"[1.875,2.125)",2,77,0.701298701298701,1,0
+"location_balanced","Location Shift","balanced",5000,5000,1,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,1,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,6,1,"[0.000,0.125)",0,1543,0.894361633182113,0.117952041477641,0.00388852883992223
+"location_balanced","Location Shift","balanced",5000,5000,6,2,"[0.125,0.375)",0.25,1910,0.944502617801047,0.326701570680628,0
+"location_balanced","Location Shift","balanced",5000,5000,6,3,"[0.375,0.625)",0.5,1633,0.971218616044091,0.79485609308022,0
+"location_balanced","Location Shift","balanced",5000,5000,6,4,"[0.625,0.875)",0.75,1525,0.971803278688525,0.96327868852459,0
+"location_balanced","Location Shift","balanced",5000,5000,6,5,"[0.875,1.125)",1,1289,0.962761830876648,0.995345228859581,0
+"location_balanced","Location Shift","balanced",5000,5000,6,6,"[1.125,1.375)",1.25,957,0.927899686520376,1,0
+"location_balanced","Location Shift","balanced",5000,5000,6,7,"[1.375,1.625)",1.5,683,0.806734992679356,1,0
+"location_balanced","Location Shift","balanced",5000,5000,6,8,"[1.625,1.875)",1.75,375,0.546666666666667,1,0
+"location_balanced","Location Shift","balanced",5000,5000,6,9,"[1.875,2.125)",2,85,0.329411764705882,1,0
+"location_balanced","Location Shift","balanced",5000,5000,6,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,6,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,11,1,"[0.000,0.125)",0,1662,0.888688327316486,0.123947051744886,0.00661853188929001
+"location_balanced","Location Shift","balanced",5000,5000,11,2,"[0.125,0.375)",0.25,1939,0.943269726663228,0.255286230015472,0
+"location_balanced","Location Shift","balanced",5000,5000,11,3,"[0.375,0.625)",0.5,1655,0.956495468277946,0.729909365558912,0
+"location_balanced","Location Shift","balanced",5000,5000,11,4,"[0.625,0.875)",0.75,1437,0.966597077244259,0.961725817675713,0
+"location_balanced","Location Shift","balanced",5000,5000,11,5,"[0.875,1.125)",1,1234,0.936790923824959,0.99837925445705,0
+"location_balanced","Location Shift","balanced",5000,5000,11,6,"[1.125,1.375)",1.25,979,0.930541368743616,1,0
+"location_balanced","Location Shift","balanced",5000,5000,11,7,"[1.375,1.625)",1.5,655,0.894656488549618,1,0
+"location_balanced","Location Shift","balanced",5000,5000,11,8,"[1.625,1.875)",1.75,356,0.839887640449438,1,0
+"location_balanced","Location Shift","balanced",5000,5000,11,9,"[1.875,2.125)",2,83,0.855421686746988,1,0
+"location_balanced","Location Shift","balanced",5000,5000,11,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,11,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,16,1,"[0.000,0.125)",0,1642,0.874543239951279,0.133373934226553,0.00913520097442144
+"location_balanced","Location Shift","balanced",5000,5000,16,2,"[0.125,0.375)",0.25,1848,0.950757575757576,0.302489177489177,0.000541125541125541
+"location_balanced","Location Shift","balanced",5000,5000,16,3,"[0.375,0.625)",0.5,1712,0.962616822429906,0.754088785046729,0
+"location_balanced","Location Shift","balanced",5000,5000,16,4,"[0.625,0.875)",0.75,1476,0.971544715447154,0.967479674796748,0
+"location_balanced","Location Shift","balanced",5000,5000,16,5,"[0.875,1.125)",1,1216,0.938322368421053,0.997532894736842,0
+"location_balanced","Location Shift","balanced",5000,5000,16,6,"[1.125,1.375)",1.25,966,0.916149068322981,1,0
+"location_balanced","Location Shift","balanced",5000,5000,16,7,"[1.375,1.625)",1.5,681,0.794419970631424,1,0
+"location_balanced","Location Shift","balanced",5000,5000,16,8,"[1.625,1.875)",1.75,382,0.62303664921466,1,0
+"location_balanced","Location Shift","balanced",5000,5000,16,9,"[1.875,2.125)",2,77,0.467532467532468,1,0
+"location_balanced","Location Shift","balanced",5000,5000,16,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,16,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,21,1,"[0.000,0.125)",0,1639,0.899328859060403,0.11287370347773,0.0109823062843197
+"location_balanced","Location Shift","balanced",5000,5000,21,2,"[0.125,0.375)",0.25,1870,0.946524064171123,0.30427807486631,0.00320855614973262
+"location_balanced","Location Shift","balanced",5000,5000,21,3,"[0.375,0.625)",0.5,1711,0.940385739333723,0.751607247223846,0
+"location_balanced","Location Shift","balanced",5000,5000,21,4,"[0.625,0.875)",0.75,1520,0.936184210526316,0.950657894736842,0
+"location_balanced","Location Shift","balanced",5000,5000,21,5,"[0.875,1.125)",1,1246,0.919743178170145,0.995987158908507,0
+"location_balanced","Location Shift","balanced",5000,5000,21,6,"[1.125,1.375)",1.25,927,0.882416396979504,1,0
+"location_balanced","Location Shift","balanced",5000,5000,21,7,"[1.375,1.625)",1.5,659,0.77845220030349,1,0
+"location_balanced","Location Shift","balanced",5000,5000,21,8,"[1.625,1.875)",1.75,331,0.56797583081571,1,0
+"location_balanced","Location Shift","balanced",5000,5000,21,9,"[1.875,2.125)",2,97,0.329896907216495,1,0
+"location_balanced","Location Shift","balanced",5000,5000,21,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,21,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,26,1,"[0.000,0.125)",0,1616,0.871905940594059,0.143564356435644,0.00185643564356436
+"location_balanced","Location Shift","balanced",5000,5000,26,2,"[0.125,0.375)",0.25,1912,0.940376569037657,0.295502092050209,0
+"location_balanced","Location Shift","balanced",5000,5000,26,3,"[0.375,0.625)",0.5,1634,0.971848225214198,0.82374541003672,0
+"location_balanced","Location Shift","balanced",5000,5000,26,4,"[0.625,0.875)",0.75,1473,0.969450101832994,0.973523421588595,0
+"location_balanced","Location Shift","balanced",5000,5000,26,5,"[0.875,1.125)",1,1217,0.947411668036155,0.99835661462613,0
+"location_balanced","Location Shift","balanced",5000,5000,26,6,"[1.125,1.375)",1.25,1002,0.889221556886227,1,0
+"location_balanced","Location Shift","balanced",5000,5000,26,7,"[1.375,1.625)",1.5,699,0.752503576537911,1,0
+"location_balanced","Location Shift","balanced",5000,5000,26,8,"[1.625,1.875)",1.75,360,0.519444444444444,1,0
+"location_balanced","Location Shift","balanced",5000,5000,26,9,"[1.875,2.125)",2,87,0.264367816091954,1,0
+"location_balanced","Location Shift","balanced",5000,5000,26,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,26,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,31,1,"[0.000,0.125)",0,1612,0.89454094292804,0.121588089330025,0
+"location_balanced","Location Shift","balanced",5000,5000,31,2,"[0.125,0.375)",0.25,1908,0.955450733752621,0.272536687631027,0
+"location_balanced","Location Shift","balanced",5000,5000,31,3,"[0.375,0.625)",0.5,1701,0.968253968253968,0.782480893592005,0
+"location_balanced","Location Shift","balanced",5000,5000,31,4,"[0.625,0.875)",0.75,1422,0.958509142053446,0.966244725738397,0
+"location_balanced","Location Shift","balanced",5000,5000,31,5,"[0.875,1.125)",1,1226,0.942903752039152,0.99673735725938,0
+"location_balanced","Location Shift","balanced",5000,5000,31,6,"[1.125,1.375)",1.25,1040,0.909615384615385,1,0
+"location_balanced","Location Shift","balanced",5000,5000,31,7,"[1.375,1.625)",1.5,643,0.835147744945568,1,0
+"location_balanced","Location Shift","balanced",5000,5000,31,8,"[1.625,1.875)",1.75,363,0.683195592286502,1,0
+"location_balanced","Location Shift","balanced",5000,5000,31,9,"[1.875,2.125)",2,85,0.364705882352941,1,0
+"location_balanced","Location Shift","balanced",5000,5000,31,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,31,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,36,1,"[0.000,0.125)",0,1584,0.881313131313131,0.129419191919192,0.00757575757575758
+"location_balanced","Location Shift","balanced",5000,5000,36,2,"[0.125,0.375)",0.25,1957,0.933571793561574,0.294839039345938,0
+"location_balanced","Location Shift","balanced",5000,5000,36,3,"[0.375,0.625)",0.5,1650,0.936363636363636,0.735757575757576,0
+"location_balanced","Location Shift","balanced",5000,5000,36,4,"[0.625,0.875)",0.75,1426,0.944600280504909,0.951612903225806,0
+"location_balanced","Location Shift","balanced",5000,5000,36,5,"[0.875,1.125)",1,1246,0.914927768860353,0.991171749598716,0
+"location_balanced","Location Shift","balanced",5000,5000,36,6,"[1.125,1.375)",1.25,974,0.874743326488706,0.998973305954826,0
+"location_balanced","Location Shift","balanced",5000,5000,36,7,"[1.375,1.625)",1.5,693,0.836940836940837,1,0
+"location_balanced","Location Shift","balanced",5000,5000,36,8,"[1.625,1.875)",1.75,392,0.762755102040816,1,0
+"location_balanced","Location Shift","balanced",5000,5000,36,9,"[1.875,2.125)",2,78,0.423076923076923,1,0
+"location_balanced","Location Shift","balanced",5000,5000,36,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,36,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,41,1,"[0.000,0.125)",0,1598,0.891739674593242,0.124530663329161,0.000625782227784731
+"location_balanced","Location Shift","balanced",5000,5000,41,2,"[0.125,0.375)",0.25,1906,0.943336831059811,0.326862539349423,0
+"location_balanced","Location Shift","balanced",5000,5000,41,3,"[0.375,0.625)",0.5,1677,0.968992248062015,0.756708407871199,0
+"location_balanced","Location Shift","balanced",5000,5000,41,4,"[0.625,0.875)",0.75,1457,0.969114619080302,0.971173644474949,0
+"location_balanced","Location Shift","balanced",5000,5000,41,5,"[0.875,1.125)",1,1267,0.943172849250197,0.998421468034728,0
+"location_balanced","Location Shift","balanced",5000,5000,41,6,"[1.125,1.375)",1.25,974,0.885010266940452,1,0
+"location_balanced","Location Shift","balanced",5000,5000,41,7,"[1.375,1.625)",1.5,668,0.823353293413174,1,0
+"location_balanced","Location Shift","balanced",5000,5000,41,8,"[1.625,1.875)",1.75,361,0.598337950138504,1,0
+"location_balanced","Location Shift","balanced",5000,5000,41,9,"[1.875,2.125)",2,92,0.391304347826087,1,0
+"location_balanced","Location Shift","balanced",5000,5000,41,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,41,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,46,1,"[0.000,0.125)",0,1528,0.863874345549738,0.157068062827225,0
+"location_balanced","Location Shift","balanced",5000,5000,46,2,"[0.125,0.375)",0.25,1981,0.937910146390712,0.346794548207976,0
+"location_balanced","Location Shift","balanced",5000,5000,46,3,"[0.375,0.625)",0.5,1683,0.970291146761735,0.879382055852644,0
+"location_balanced","Location Shift","balanced",5000,5000,46,4,"[0.625,0.875)",0.75,1496,0.981283422459893,0.99331550802139,0
+"location_balanced","Location Shift","balanced",5000,5000,46,5,"[0.875,1.125)",1,1229,0.986167615947925,0.999186330349878,0
+"location_balanced","Location Shift","balanced",5000,5000,46,6,"[1.125,1.375)",1.25,957,0.979101358411703,1,0
+"location_balanced","Location Shift","balanced",5000,5000,46,7,"[1.375,1.625)",1.5,666,0.89039039039039,1,0
+"location_balanced","Location Shift","balanced",5000,5000,46,8,"[1.625,1.875)",1.75,377,0.710875331564987,1,0
+"location_balanced","Location Shift","balanced",5000,5000,46,9,"[1.875,2.125)",2,83,0.457831325301205,1,0
+"location_balanced","Location Shift","balanced",5000,5000,46,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_balanced","Location Shift","balanced",5000,5000,46,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"dispersion_balanced","Dispersion","balanced",5000,5000,1,1,"[0.000,0.125)",0,1695,0.830678466076696,0.146312684365782,0.0283185840707965
+"dispersion_balanced","Dispersion","balanced",5000,5000,1,2,"[0.125,0.375)",0.25,2082,0.857348703170029,0.156099903938521,0.0110470701248799
+"dispersion_balanced","Dispersion","balanced",5000,5000,1,3,"[0.375,0.625)",0.5,3191,0.742400501410216,0.36853650893137,0.00219366969602006
+"dispersion_balanced","Dispersion","balanced",5000,5000,1,4,"[0.625,0.875)",0.75,1633,0.655848132271892,0.593386405388855,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,1,5,"[0.875,1.125)",1,344,0.284883720930233,0.581395348837209,0.00290697674418605
+"dispersion_balanced","Dispersion","balanced",5000,5000,1,6,"[1.125,1.375)",1.25,263,0.178707224334601,0.714828897338403,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,1,7,"[1.375,1.625)",1.5,245,0.0816326530612245,0.881632653061225,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,1,8,"[1.625,1.875)",1.75,212,0.0330188679245283,0.990566037735849,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,1,9,"[1.875,2.125)",2,169,0,0.994082840236686,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,1,10,"[2.125,2.375)",2.25,118,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,1,11,"[2.375,Inf)",2.5,48,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,6,1,"[0.000,0.125)",0,1552,0.764819587628866,0.204252577319588,0.0457474226804124
+"dispersion_balanced","Dispersion","balanced",5000,5000,6,2,"[0.125,0.375)",0.25,1977,0.79261507334345,0.273141122913505,0.0278199291856348
+"dispersion_balanced","Dispersion","balanced",5000,5000,6,3,"[0.375,0.625)",0.5,3362,0.824806662700773,0.532421177870315,0.00208209399167162
+"dispersion_balanced","Dispersion","balanced",5000,5000,6,4,"[0.625,0.875)",0.75,1678,0.835518474374255,0.769964243146603,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,6,5,"[0.875,1.125)",1,364,0.585164835164835,0.802197802197802,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,6,6,"[1.125,1.375)",1.25,283,0.455830388692579,0.911660777385159,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,6,7,"[1.375,1.625)",1.5,238,0.277310924369748,0.96218487394958,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,6,8,"[1.625,1.875)",1.75,205,0.15609756097561,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,6,9,"[1.875,2.125)",2,170,0.0470588235294118,0.994117647058824,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,6,10,"[2.125,2.375)",2.25,112,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,6,11,"[2.375,Inf)",2.5,59,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,11,1,"[0.000,0.125)",0,1667,0.830833833233353,0.142171565686863,0.0353929214157169
+"dispersion_balanced","Dispersion","balanced",5000,5000,11,2,"[0.125,0.375)",0.25,2045,0.836674816625917,0.207823960880196,0.0146699266503667
+"dispersion_balanced","Dispersion","balanced",5000,5000,11,3,"[0.375,0.625)",0.5,3276,0.765873015873016,0.459401709401709,0.00152625152625153
+"dispersion_balanced","Dispersion","balanced",5000,5000,11,4,"[0.625,0.875)",0.75,1636,0.73960880195599,0.689486552567237,0.000611246943765281
+"dispersion_balanced","Dispersion","balanced",5000,5000,11,5,"[0.875,1.125)",1,338,0.437869822485207,0.704142011834319,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,11,6,"[1.125,1.375)",1.25,238,0.336134453781513,0.840336134453782,0.00420168067226891
+"dispersion_balanced","Dispersion","balanced",5000,5000,11,7,"[1.375,1.625)",1.5,237,0.227848101265823,0.911392405063291,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,11,8,"[1.625,1.875)",1.75,199,0.14070351758794,0.974874371859296,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,11,9,"[1.875,2.125)",2,163,0.0613496932515337,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,11,10,"[2.125,2.375)",2.25,137,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,11,11,"[2.375,Inf)",2.5,64,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,16,1,"[0.000,0.125)",0,1721,0.809413131900058,0.161533991865195,0.0406740267286461
+"dispersion_balanced","Dispersion","balanced",5000,5000,16,2,"[0.125,0.375)",0.25,1994,0.825977933801404,0.223671013039117,0.0140421263791374
+"dispersion_balanced","Dispersion","balanced",5000,5000,16,3,"[0.375,0.625)",0.5,3166,0.803537586860392,0.539481996209728,0.00126342387871131
+"dispersion_balanced","Dispersion","balanced",5000,5000,16,4,"[0.625,0.875)",0.75,1701,0.79482657260435,0.775426219870664,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,16,5,"[0.875,1.125)",1,372,0.451612903225806,0.776881720430108,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,16,6,"[1.125,1.375)",1.25,264,0.337121212121212,0.901515151515152,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,16,7,"[1.375,1.625)",1.5,258,0.151162790697674,0.968992248062016,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,16,8,"[1.625,1.875)",1.75,202,0.158415841584158,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,16,9,"[1.875,2.125)",2,156,0.0256410256410256,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,16,10,"[2.125,2.375)",2.25,102,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,16,11,"[2.375,Inf)",2.5,64,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,21,1,"[0.000,0.125)",0,1658,0.811821471652593,0.162846803377563,0.0313630880579011
+"dispersion_balanced","Dispersion","balanced",5000,5000,21,2,"[0.125,0.375)",0.25,2000,0.816,0.2155,0.02
+"dispersion_balanced","Dispersion","balanced",5000,5000,21,3,"[0.375,0.625)",0.5,3269,0.735393086570817,0.438054450902417,0.00336494340776996
+"dispersion_balanced","Dispersion","balanced",5000,5000,21,4,"[0.625,0.875)",0.75,1626,0.755842558425584,0.690651906519065,0.0018450184501845
+"dispersion_balanced","Dispersion","balanced",5000,5000,21,5,"[0.875,1.125)",1,350,0.408571428571429,0.671428571428571,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,21,6,"[1.125,1.375)",1.25,280,0.275,0.817857142857143,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,21,7,"[1.375,1.625)",1.5,261,0.168582375478927,0.904214559386973,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,21,8,"[1.625,1.875)",1.75,202,0.0792079207920792,0.98019801980198,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,21,9,"[1.875,2.125)",2,157,0,0.993630573248408,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,21,10,"[2.125,2.375)",2.25,116,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,21,11,"[2.375,Inf)",2.5,81,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,26,1,"[0.000,0.125)",0,1680,0.833333333333333,0.147619047619048,0.0375
+"dispersion_balanced","Dispersion","balanced",5000,5000,26,2,"[0.125,0.375)",0.25,2075,0.838072289156626,0.263614457831325,0.00963855421686747
+"dispersion_balanced","Dispersion","balanced",5000,5000,26,3,"[0.375,0.625)",0.5,3158,0.774540848638379,0.560481317289424,0.00189993666877771
+"dispersion_balanced","Dispersion","balanced",5000,5000,26,4,"[0.625,0.875)",0.75,1685,0.790504451038576,0.806528189910979,0.000593471810089021
+"dispersion_balanced","Dispersion","balanced",5000,5000,26,5,"[0.875,1.125)",1,338,0.470414201183432,0.78698224852071,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,26,6,"[1.125,1.375)",1.25,273,0.307692307692308,0.901098901098901,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,26,7,"[1.375,1.625)",1.5,243,0.168724279835391,0.967078189300411,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,26,8,"[1.625,1.875)",1.75,209,0.0334928229665072,0.990430622009569,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,26,9,"[1.875,2.125)",2,151,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,26,10,"[2.125,2.375)",2.25,125,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,26,11,"[2.375,Inf)",2.5,63,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,31,1,"[0.000,0.125)",0,1667,0.802639472105579,0.163167366526695,0.0461907618476305
+"dispersion_balanced","Dispersion","balanced",5000,5000,31,2,"[0.125,0.375)",0.25,2077,0.828117477130477,0.264805007221955,0.00866634569090034
+"dispersion_balanced","Dispersion","balanced",5000,5000,31,3,"[0.375,0.625)",0.5,3227,0.792066935233963,0.525565540749923,0.00123954136969321
+"dispersion_balanced","Dispersion","balanced",5000,5000,31,4,"[0.625,0.875)",0.75,1617,0.78726035868893,0.794063079777366,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,31,5,"[0.875,1.125)",1,336,0.520833333333333,0.788690476190476,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,31,6,"[1.125,1.375)",1.25,286,0.335664335664336,0.884615384615385,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,31,7,"[1.375,1.625)",1.5,227,0.281938325991189,0.977973568281938,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,31,8,"[1.625,1.875)",1.75,197,0.126903553299492,0.99492385786802,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,31,9,"[1.875,2.125)",2,171,0.0175438596491228,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,31,10,"[2.125,2.375)",2.25,123,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,31,11,"[2.375,Inf)",2.5,72,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,36,1,"[0.000,0.125)",0,1655,0.835045317220544,0.141993957703927,0.0338368580060423
+"dispersion_balanced","Dispersion","balanced",5000,5000,36,2,"[0.125,0.375)",0.25,2028,0.846153846153846,0.180966469428008,0.0118343195266272
+"dispersion_balanced","Dispersion","balanced",5000,5000,36,3,"[0.375,0.625)",0.5,3213,0.747587924058512,0.404917522564581,0.00124494242141301
+"dispersion_balanced","Dispersion","balanced",5000,5000,36,4,"[0.625,0.875)",0.75,1638,0.683150183150183,0.637362637362637,0.000610500610500611
+"dispersion_balanced","Dispersion","balanced",5000,5000,36,5,"[0.875,1.125)",1,352,0.303977272727273,0.613636363636364,0.00284090909090909
+"dispersion_balanced","Dispersion","balanced",5000,5000,36,6,"[1.125,1.375)",1.25,296,0.175675675675676,0.783783783783784,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,36,7,"[1.375,1.625)",1.5,258,0.112403100775194,0.922480620155039,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,36,8,"[1.625,1.875)",1.75,202,0.0445544554455446,0.99009900990099,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,36,9,"[1.875,2.125)",2,166,0.0240963855421687,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,36,10,"[2.125,2.375)",2.25,125,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,36,11,"[2.375,Inf)",2.5,67,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,41,1,"[0.000,0.125)",0,1657,0.7990343995172,0.167773083886542,0.0464695232347616
+"dispersion_balanced","Dispersion","balanced",5000,5000,41,2,"[0.125,0.375)",0.25,2038,0.796368989205103,0.290480863591757,0.0176643768400393
+"dispersion_balanced","Dispersion","balanced",5000,5000,41,3,"[0.375,0.625)",0.5,3214,0.771001866832607,0.522713130056005,0.00217797137523335
+"dispersion_balanced","Dispersion","balanced",5000,5000,41,4,"[0.625,0.875)",0.75,1647,0.724954462659381,0.746205221615058,0.000607164541590771
+"dispersion_balanced","Dispersion","balanced",5000,5000,41,5,"[0.875,1.125)",1,351,0.49002849002849,0.746438746438747,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,41,6,"[1.125,1.375)",1.25,287,0.289198606271777,0.874564459930314,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,41,7,"[1.375,1.625)",1.5,219,0.141552511415525,0.926940639269407,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,41,8,"[1.625,1.875)",1.75,222,0.0405405405405405,0.981981981981982,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,41,9,"[1.875,2.125)",2,168,0.0178571428571429,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,41,10,"[2.125,2.375)",2.25,117,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,41,11,"[2.375,Inf)",2.5,80,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,46,1,"[0.000,0.125)",0,1600,0.81125,0.17,0.031875
+"dispersion_balanced","Dispersion","balanced",5000,5000,46,2,"[0.125,0.375)",0.25,2029,0.833415475603746,0.345983242976836,0.00887136520453425
+"dispersion_balanced","Dispersion","balanced",5000,5000,46,3,"[0.375,0.625)",0.5,3260,0.875153374233129,0.731901840490798,0.000613496932515337
+"dispersion_balanced","Dispersion","balanced",5000,5000,46,4,"[0.625,0.875)",0.75,1680,0.886904761904762,0.917261904761905,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,46,5,"[0.875,1.125)",1,351,0.763532763532764,0.954415954415955,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,46,6,"[1.125,1.375)",1.25,274,0.613138686131387,0.989051094890511,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,46,7,"[1.375,1.625)",1.5,250,0.4,0.996,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,46,8,"[1.625,1.875)",1.75,195,0.041025641025641,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,46,9,"[1.875,2.125)",2,174,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,46,10,"[2.125,2.375)",2.25,125,0,1,0
+"dispersion_balanced","Dispersion","balanced",5000,5000,46,11,"[2.375,Inf)",2.5,62,0,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,1,1,"[0.000,0.125)",0,827,1,0,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,1,2,"[0.125,0.375)",0.25,1701,1,0.0495336120939209,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,1,3,"[0.375,0.625)",0.5,1651,0.999670510708402,0.417133443163097,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,1,4,"[0.625,0.875)",0.75,1386,0.998814229249012,0.830434782608696,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,1,5,"[0.875,1.125)",1,1269,0.979644867908186,0.936336076223473,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,1,6,"[1.125,1.375)",1.25,927,0.974358974358974,0.979362101313321,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,1,7,"[1.375,1.625)",1.5,779,0.941135248773651,0.985283812193413,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,1,8,"[1.625,1.875)",1.75,505,0.916354556803995,0.998751560549313,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,1,9,"[1.875,2.125)",2,374,0.785915492957746,0.997183098591549,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,1,10,"[2.125,2.375)",2.25,241,0.704834605597964,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,1,11,"[2.375,Inf)",2.5,340,0.262773722627737,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,6,1,"[0.000,0.125)",0,881,1,0,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,6,2,"[0.125,0.375)",0.25,1723,1,0.025558071821417,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,6,3,"[0.375,0.625)",0.5,1633,1,0.464561639234128,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,6,4,"[0.625,0.875)",0.75,1472,1,0.862003058103976,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,6,5,"[0.875,1.125)",1,1181,0.99953466728711,0.968822708236389,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,6,6,"[1.125,1.375)",1.25,959,0.998831092928112,0.98947983635301,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,6,7,"[1.375,1.625)",1.5,708,0.98135593220339,0.990677966101695,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,6,8,"[1.625,1.875)",1.75,527,0.954118873826903,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,6,9,"[1.875,2.125)",2,355,0.905933429811867,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,6,10,"[2.125,2.375)",2.25,251,0.838779956427015,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,6,11,"[2.375,Inf)",2.5,310,0.162544169611307,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,11,1,"[0.000,0.125)",0,889,1,0,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,11,2,"[0.125,0.375)",0.25,1774,1,0.0276225946617008,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,11,3,"[0.375,0.625)",0.5,1645,0.999664542099966,0.406910432740691,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,11,4,"[0.625,0.875)",0.75,1416,1,0.831683168316832,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,11,5,"[0.875,1.125)",1,1183,0.998635743519782,0.972714870395634,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,11,6,"[1.125,1.375)",1.25,953,0.987285793255942,0.991708126036484,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,11,7,"[1.375,1.625)",1.5,730,0.981937602627258,0.990147783251232,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,11,8,"[1.625,1.875)",1.75,570,0.984787018255578,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,11,9,"[1.875,2.125)",2,330,0.94408945686901,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,11,10,"[2.125,2.375)",2.25,219,0.793650793650794,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,11,11,"[2.375,Inf)",2.5,291,0.411334552102377,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,16,1,"[0.000,0.125)",0,880,1,0,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,16,2,"[0.125,0.375)",0.25,1720,1,0.0279562982005141,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,16,3,"[0.375,0.625)",0.5,1593,1,0.492124606230312,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,16,4,"[0.625,0.875)",0.75,1443,1,0.9139201240791,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,16,5,"[0.875,1.125)",1,1270,1,0.97585601404741,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,16,6,"[1.125,1.375)",1.25,958,1,0.99647473560517,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,16,7,"[1.375,1.625)",1.5,711,1,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,16,8,"[1.625,1.875)",1.75,516,0.994725738396624,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,16,9,"[1.875,2.125)",2,356,0.968120805369128,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,16,10,"[2.125,2.375)",2.25,229,0.878587196467991,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,16,11,"[2.375,Inf)",2.5,324,0.444656488549618,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,21,1,"[0.000,0.125)",0,890,0.99820788530466,0.013142174432497,0.000597371565113501
+"global_unbalanced","Global Shift","unbalanced",9000,1000,21,2,"[0.125,0.375)",0.25,1710,0.999680918953414,0.0871091257179324,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,21,3,"[0.375,0.625)",0.5,1606,0.999257609502598,0.510764662212324,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,21,4,"[0.625,0.875)",0.75,1445,0.999227500965624,0.8798764001545,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,21,5,"[0.875,1.125)",1,1210,0.991971454058876,0.964317573595004,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,21,6,"[1.125,1.375)",1.25,947,0.997344662772172,0.996282527881041,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,21,7,"[1.375,1.625)",1.5,802,0.997080291970803,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,21,8,"[1.625,1.875)",1.75,525,0.978189749182116,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,21,9,"[1.875,2.125)",2,347,0.971978984238179,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,21,10,"[2.125,2.375)",2.25,227,0.850129198966408,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,21,11,"[2.375,Inf)",2.5,291,0.309833024118738,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,26,1,"[0.000,0.125)",0,881,1,0,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,26,2,"[0.125,0.375)",0.25,1795,1,0.0327146901541365,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,26,3,"[0.375,0.625)",0.5,1688,1,0.524675324675325,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,26,4,"[0.625,0.875)",0.75,1393,1,0.916018025399426,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,26,5,"[0.875,1.125)",1,1190,1,0.981783317353787,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,26,6,"[1.125,1.375)",1.25,933,1,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,26,7,"[1.375,1.625)",1.5,707,0.992156862745098,0.992941176470588,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,26,8,"[1.625,1.875)",1.75,496,1,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,26,9,"[1.875,2.125)",2,388,0.982044198895028,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,26,10,"[2.125,2.375)",2.25,225,0.932467532467532,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,26,11,"[2.375,Inf)",2.5,304,0.420833333333333,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,31,1,"[0.000,0.125)",0,880,1,0,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,31,2,"[0.125,0.375)",0.25,1803,1,0.0744976816074189,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,31,3,"[0.375,0.625)",0.5,1549,0.99965433805738,0.520566885585897,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,31,4,"[0.625,0.875)",0.75,1396,0.998768472906404,0.882594417077176,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,31,5,"[0.875,1.125)",1,1214,0.998609823911029,0.974976830398517,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,31,6,"[1.125,1.375)",1.25,982,0.988623435722412,0.99032992036405,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,31,7,"[1.375,1.625)",1.5,733,0.971631205673759,0.990543735224586,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,31,8,"[1.625,1.875)",1.75,537,0.951269035532995,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,31,9,"[1.875,2.125)",2,365,0.877519379844961,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,31,10,"[2.125,2.375)",2.25,246,0.784140969162996,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,31,11,"[2.375,Inf)",2.5,295,0.227005870841487,0.998043052837573,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,36,1,"[0.000,0.125)",0,865,1,0.000647249190938511,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,36,2,"[0.125,0.375)",0.25,1717,1,0.0603031280232183,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,36,3,"[0.375,0.625)",0.5,1612,0.998601398601399,0.532517482517483,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,36,4,"[0.625,0.875)",0.75,1411,0.996584440227704,0.880455407969639,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,36,5,"[0.875,1.125)",1,1189,0.998614318706697,0.973672055427252,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,36,6,"[1.125,1.375)",1.25,988,0.99945295404814,0.991247264770241,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,36,7,"[1.375,1.625)",1.5,761,0.998428908091123,0.999214454045562,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,36,8,"[1.625,1.875)",1.75,532,0.991189427312775,0.997797356828194,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,36,9,"[1.875,2.125)",2,349,0.985691573926868,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,36,10,"[2.125,2.375)",2.25,241,0.923413566739606,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,36,11,"[2.375,Inf)",2.5,335,0.52754590984975,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,41,1,"[0.000,0.125)",0,940,1,0,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,41,2,"[0.125,0.375)",0.25,1724,1,0.0582403965303594,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,41,3,"[0.375,0.625)",0.5,1622,1,0.411764705882353,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,41,4,"[0.625,0.875)",0.75,1368,1,0.867524916943522,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,41,5,"[0.875,1.125)",1,1238,0.999580184718724,0.974811083123426,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,41,6,"[1.125,1.375)",1.25,998,0.998925886143931,0.996240601503759,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,41,7,"[1.375,1.625)",1.5,716,0.989164086687307,0.999226006191951,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,41,8,"[1.625,1.875)",1.75,501,0.956429330499469,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,41,9,"[1.875,2.125)",2,361,0.932203389830509,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,41,10,"[2.125,2.375)",2.25,251,0.749295774647887,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,41,11,"[2.375,Inf)",2.5,281,0.343035343035343,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,46,1,"[0.000,0.125)",0,886,1,0,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,46,2,"[0.125,0.375)",0.25,1722,1,0.0795235028976175,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,46,3,"[0.375,0.625)",0.5,1647,1,0.577045696068013,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,46,4,"[0.625,0.875)",0.75,1403,1,0.933438361559669,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,46,5,"[0.875,1.125)",1,1185,1,0.99452804377565,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,46,6,"[1.125,1.375)",1.25,981,1,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,46,7,"[1.375,1.625)",1.5,734,1,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,46,8,"[1.625,1.875)",1.75,521,0.990312163616792,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,46,9,"[1.875,2.125)",2,383,0.984352773826458,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,46,10,"[2.125,2.375)",2.25,259,0.967816091954023,1,0
+"global_unbalanced","Global Shift","unbalanced",9000,1000,46,11,"[2.375,Inf)",2.5,279,0.451905626134301,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,1,1,"[0.000,0.125)",0,1633,0.924822214696918,0.0826278360988825,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,1,2,"[0.125,0.375)",0.25,1946,0.973684210526316,0.0839335180055402,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,1,3,"[0.375,0.625)",0.5,1680,0.973666666666667,0.391,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,1,4,"[0.625,0.875)",0.75,1446,0.949166004765687,0.808181096108022,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,1,5,"[0.875,1.125)",1,1212,0.850626118067979,0.931574239713775,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,1,6,"[1.125,1.375)",1.25,918,0.677096370463079,0.995619524405507,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,1,7,"[1.375,1.625)",1.5,677,0.464962901896125,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,1,8,"[1.625,1.875)",1.75,403,0.182679296346414,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,1,9,"[1.875,2.125)",2,85,0,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,1,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,1,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,6,1,"[0.000,0.125)",0,1561,0.881434149804757,0.121050763223287,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,6,2,"[0.125,0.375)",0.25,1914,0.949203734211971,0.125755079626579,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,6,3,"[0.375,0.625)",0.5,1638,0.979971890372452,0.470836261419536,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,6,4,"[0.625,0.875)",0.75,1533,0.994727592267135,0.861511423550088,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,6,5,"[0.875,1.125)",1,1249,0.972185430463576,0.993377483443709,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,6,6,"[1.125,1.375)",1.25,962,0.804733727810651,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,6,7,"[1.375,1.625)",1.5,673,0.43010752688172,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,6,8,"[1.625,1.875)",1.75,388,0.241007194244604,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,6,9,"[1.875,2.125)",2,82,0.0769230769230769,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,6,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,6,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,11,1,"[0.000,0.125)",0,1678,0.8571889103804,0.147646679561573,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,11,2,"[0.125,0.375)",0.25,1938,0.957593123209169,0.092836676217765,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,11,3,"[0.375,0.625)",0.5,1655,0.981848739495798,0.476974789915966,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,11,4,"[0.625,0.875)",0.75,1433,0.982582355168497,0.814085573646346,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,11,5,"[0.875,1.125)",1,1225,0.972503617945007,0.981669078630005,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,11,6,"[1.125,1.375)",1.25,1001,0.920652785593697,0.999437253798537,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,11,7,"[1.375,1.625)",1.5,640,0.745748299319728,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,11,8,"[1.625,1.875)",1.75,350,0.532646048109966,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,11,9,"[1.875,2.125)",2,80,0.135869565217391,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,11,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,11,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,16,1,"[0.000,0.125)",0,1605,0.877628403998621,0.13374698379869,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,16,2,"[0.125,0.375)",0.25,1892,0.971281741233374,0.0858524788391778,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,16,3,"[0.375,0.625)",0.5,1703,0.990049751243781,0.418905472636816,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,16,4,"[0.625,0.875)",0.75,1456,0.99406528189911,0.877225519287834,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,16,5,"[0.875,1.125)",1,1202,0.96718322698268,0.986782133090246,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,16,6,"[1.125,1.375)",1.25,1000,0.864893617021277,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,16,7,"[1.375,1.625)",1.5,690,0.520798668885191,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,16,8,"[1.625,1.875)",1.75,371,0.0689655172413793,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,16,9,"[1.875,2.125)",2,81,0.0072992700729927,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,16,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,16,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,21,1,"[0.000,0.125)",0,1648,0.891801075268817,0.118951612903226,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,21,2,"[0.125,0.375)",0.25,1923,0.977687074829932,0.083265306122449,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,21,3,"[0.375,0.625)",0.5,1658,0.980222068008327,0.395211658570437,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,21,4,"[0.625,0.875)",0.75,1524,0.9822206095791,0.785195936139332,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,21,5,"[0.875,1.125)",1,1184,0.943139097744361,0.971804511278195,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,21,6,"[1.125,1.375)",1.25,946,0.719953325554259,0.994749124854142,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,21,7,"[1.375,1.625)",1.5,684,0.418384879725086,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,21,8,"[1.625,1.875)",1.75,350,0.245519713261649,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,21,9,"[1.875,2.125)",2,83,0.0204081632653061,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,21,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,21,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,26,1,"[0.000,0.125)",0,1610,0.87375415282392,0.134551495016611,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,26,2,"[0.125,0.375)",0.25,1940,0.950399087799316,0.0983466362599772,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,26,3,"[0.375,0.625)",0.5,1605,0.988559170539864,0.400786557025384,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,26,4,"[0.625,0.875)",0.75,1491,0.983522519223728,0.822775540095203,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,26,5,"[0.875,1.125)",1,1200,0.856517509727627,0.987354085603113,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,26,6,"[1.125,1.375)",1.25,997,0.478741991846243,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,26,7,"[1.375,1.625)",1.5,706,0.148535564853556,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,26,8,"[1.625,1.875)",1.75,373,0.0144927536231884,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,26,9,"[1.875,2.125)",2,78,0,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,26,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,26,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,31,1,"[0.000,0.125)",0,1606,0.919084461637653,0.0909090909090909,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,31,2,"[0.125,0.375)",0.25,1915,0.958071278825996,0.107517220724768,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,31,3,"[0.375,0.625)",0.5,1698,0.98313554028732,0.374765771392879,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,31,4,"[0.625,0.875)",0.75,1472,0.945454545454545,0.746969696969697,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,31,5,"[0.875,1.125)",1,1209,0.912245909766981,0.970252850768468,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,31,6,"[1.125,1.375)",1.25,1011,0.760683760683761,0.999430199430199,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,31,7,"[1.375,1.625)",1.5,631,0.332510288065844,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,31,8,"[1.625,1.875)",1.75,359,0.032258064516129,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,31,9,"[1.875,2.125)",2,99,0,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,31,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,31,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,36,1,"[0.000,0.125)",0,1548,0.904580152671756,0.10763358778626,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,36,2,"[0.125,0.375)",0.25,1919,0.973451327433628,0.0716528689694547,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,36,3,"[0.375,0.625)",0.5,1664,0.982534246575342,0.325,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,36,4,"[0.625,0.875)",0.75,1481,0.961411245865491,0.76111723631018,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,36,5,"[0.875,1.125)",1,1255,0.848117697966248,0.951968844655993,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,36,6,"[1.125,1.375)",1.25,971,0.621727019498607,0.997771587743733,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,36,7,"[1.375,1.625)",1.5,696,0.292701863354037,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,36,8,"[1.625,1.875)",1.75,386,0.0616438356164384,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,36,9,"[1.875,2.125)",2,80,0,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,36,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,36,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,41,1,"[0.000,0.125)",0,1573,0.853649766271126,0.167925206760158,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,41,2,"[0.125,0.375)",0.25,1878,0.954388984509466,0.131095811818703,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,41,3,"[0.375,0.625)",0.5,1695,0.972072357981593,0.464614408124405,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,41,4,"[0.625,0.875)",0.75,1492,0.991221374045802,0.851526717557252,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,41,5,"[0.875,1.125)",1,1279,0.967979229770662,0.990047598442233,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,41,6,"[1.125,1.375)",1.25,963,0.837273227047828,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,41,7,"[1.375,1.625)",1.5,663,0.528978840846366,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,41,8,"[1.625,1.875)",1.75,373,0.323283082077052,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,41,9,"[1.875,2.125)",2,84,0.108108108108108,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,41,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,41,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,46,1,"[0.000,0.125)",0,1551,0.84495843874232,0.16805204192266,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,46,2,"[0.125,0.375)",0.25,2022,0.953168816601234,0.109085810431856,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,46,3,"[0.375,0.625)",0.5,1671,0.983886561392201,0.550112794070255,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,46,4,"[0.625,0.875)",0.75,1513,0.999269272926562,0.959079283887468,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,46,5,"[0.875,1.125)",1,1166,0.989371980676328,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,46,6,"[1.125,1.375)",1.25,964,0.908791208791209,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,46,7,"[1.375,1.625)",1.5,645,0.621333333333333,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,46,8,"[1.625,1.875)",1.75,393,0.133729569093611,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,46,9,"[1.875,2.125)",2,75,0,1,0
+"location_unbalanced","Location Shift","unbalanced",9000,1000,46,10,"[2.125,2.375)",2.25,0,NA,NA,NA
+"location_unbalanced","Location Shift","unbalanced",9000,1000,46,11,"[2.375,Inf)",2.5,0,NA,NA,NA
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,1,1,"[0.000,0.125)",0,1659,0.987993138936535,0.0171526586620926,0.000686106346483705
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,1,2,"[0.125,0.375)",0.25,1984,0.885416666666667,0.00657894736842105,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,1,3,"[0.375,0.625)",0.5,2754,0.466746657524854,0.020911895783339,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,1,4,"[0.625,0.875)",0.75,1441,0.122937015830246,0.0370495116200741,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,1,5,"[0.875,1.125)",1,486,0.0422740524781341,0.0408163265306122,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,1,6,"[1.125,1.375)",1.25,366,0.00649350649350649,0.0584415584415584,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,1,7,"[1.375,1.625)",1.5,379,0,0.065359477124183,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,1,8,"[1.625,1.875)",1.75,351,0,0.130120481927711,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,1,9,"[1.875,2.125)",2,277,0,0.116040955631399,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,1,10,"[2.125,2.375)",2.25,190,0,0.242424242424242,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,1,11,"[2.375,Inf)",2.5,113,0,0.487603305785124,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,6,1,"[0.000,0.125)",0,1577,0.969455050329747,0.0385282887886151,0.00451232211037834
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,6,2,"[0.125,0.375)",0.25,1959,0.907987581145922,0.039232289020604,0.000846740050804403
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,6,3,"[0.375,0.625)",0.5,2855,0.77741461023043,0.0900473933649289,0.000163425396306586
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,6,4,"[0.625,0.875)",0.75,1487,0.529075630252101,0.253781512605042,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,6,5,"[0.875,1.125)",1,471,0.172143974960876,0.270735524256651,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,6,6,"[1.125,1.375)",1.25,393,0,0.4,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,6,7,"[1.375,1.625)",1.5,346,0,0.567567567567568,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,6,8,"[1.625,1.875)",1.75,338,0,0.786802030456853,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,6,9,"[1.875,2.125)",2,269,0,0.887043189368771,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,6,10,"[2.125,2.375)",2.25,193,0,0.965174129353234,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,6,11,"[2.375,Inf)",2.5,112,0,1,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,11,1,"[0.000,0.125)",0,1703,0.992184956040378,0.00521002930641485,0.00358189514816021
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,11,2,"[0.125,0.375)",0.25,1999,0.92433592701905,0.0147571773544406,0.00268312315535283
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,11,3,"[0.375,0.625)",0.5,2765,0.530794304340367,0.0231600617601647,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,11,4,"[0.625,0.875)",0.75,1462,0.19544527532291,0.0825968728755948,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,11,5,"[0.875,1.125)",1,450,0.0462633451957295,0.0498220640569395,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,11,6,"[1.125,1.375)",1.25,375,0.00424628450106157,0.0934182590233546,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,11,7,"[1.375,1.625)",1.5,342,0,0.141361256544503,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,11,8,"[1.625,1.875)",1.75,315,0,0.160949868073879,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,11,9,"[1.875,2.125)",2,284,0,0.279220779220779,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,11,10,"[2.125,2.375)",2.25,206,0,0.48695652173913,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,11,11,"[2.375,Inf)",2.5,99,0,0.717171717171717,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,16,1,"[0.000,0.125)",0,1697,0.93616298811545,0.065874363327674,0.00169779286926995
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,16,2,"[0.125,0.375)",0.25,1941,0.941311193816204,0.0469510449470369,0.00114514743773261
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,16,3,"[0.375,0.625)",0.5,2717,0.668050510292337,0.117799688635184,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,16,4,"[0.625,0.875)",0.75,1506,0.31629392971246,0.264536741214058,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,16,5,"[0.875,1.125)",1,495,0.112676056338028,0.112676056338028,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,16,6,"[1.125,1.375)",1.25,407,0.0399274047186933,0.157894736842105,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,16,7,"[1.375,1.625)",1.5,377,0.00211416490486258,0.274841437632135,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,16,8,"[1.625,1.875)",1.75,311,0,0.508951406649616,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,16,9,"[1.875,2.125)",2,251,0,0.570909090909091,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,16,10,"[2.125,2.375)",2.25,196,0,0.857843137254902,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,16,11,"[2.375,Inf)",2.5,102,0,0.966101694915254,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,21,1,"[0.000,0.125)",0,1626,0.971672354948806,0.0300341296928328,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,21,2,"[0.125,0.375)",0.25,1998,0.947823807026744,0.0217619297325642,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,21,3,"[0.375,0.625)",0.5,2847,0.531595980241867,0.0197581331970703,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,21,4,"[0.625,0.875)",0.75,1411,0.117173837005946,0.0405736271423575,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,21,5,"[0.875,1.125)",1,475,0.0759289176090469,0.0581583198707593,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,21,6,"[1.125,1.375)",1.25,413,0.0368763557483731,0.136659436008677,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,21,7,"[1.375,1.625)",1.5,370,0.00401606425702811,0.126506024096386,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,21,8,"[1.625,1.875)",1.75,312,0,0.258152173913043,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,21,9,"[1.875,2.125)",2,250,0,0.37593984962406,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,21,10,"[2.125,2.375)",2.25,179,0,0.561497326203208,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,21,11,"[2.375,Inf)",2.5,119,0,0.818897637795276,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,26,1,"[0.000,0.125)",0,1677,0.99648,0.01216,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,26,2,"[0.125,0.375)",0.25,2000,0.962678936605317,0.00613496932515337,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,26,3,"[0.375,0.625)",0.5,2690,0.485956067698956,0.00972272236226143,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,26,4,"[0.625,0.875)",0.75,1491,0.0973913043478261,0.0410434782608696,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,26,5,"[0.875,1.125)",1,461,0.0692167577413479,0.092896174863388,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,26,6,"[1.125,1.375)",1.25,416,0.00396825396825397,0.0912698412698413,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,26,7,"[1.375,1.625)",1.5,366,0,0.181818181818182,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,26,8,"[1.625,1.875)",1.75,321,0,0.214854111405836,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,26,9,"[1.875,2.125)",2,260,0,0.366883116883117,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,26,10,"[2.125,2.375)",2.25,215,0,0.567441860465116,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,26,11,"[2.375,Inf)",2.5,103,0,0.857142857142857,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,31,1,"[0.000,0.125)",0,1706,0.98283534647171,0.0238397965670693,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,31,2,"[0.125,0.375)",0.25,2000,0.943829113924051,0.027162447257384,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,31,3,"[0.375,0.625)",0.5,2748,0.584781097984712,0.0658443363446838,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,31,4,"[0.625,0.875)",0.75,1440,0.278682719546742,0.150849858356941,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,31,5,"[0.875,1.125)",1,461,0.101663585951941,0.0979667282809612,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,31,6,"[1.125,1.375)",1.25,406,0.0319148936170213,0.140425531914894,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,31,7,"[1.375,1.625)",1.5,340,0,0.213963963963964,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,31,8,"[1.625,1.875)",1.75,297,0,0.286118980169972,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,31,9,"[1.875,2.125)",2,279,0,0.492163009404389,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,31,10,"[2.125,2.375)",2.25,207,0,0.649350649350649,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,31,11,"[2.375,Inf)",2.5,116,0,0.895161290322581,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,36,1,"[0.000,0.125)",0,1679,0.988966900702106,0.0160481444332999,0.00133734536944166
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,36,2,"[0.125,0.375)",0.25,1990,0.903490216816499,0.0169222633527234,0.000264410364886304
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,36,3,"[0.375,0.625)",0.5,2749,0.407609652985732,0.0167341905936234,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,36,4,"[0.625,0.875)",0.75,1447,0.0788839131932484,0.0544264553909749,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,36,5,"[0.875,1.125)",1,467,0.0425531914893617,0.027823240589198,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,36,6,"[1.125,1.375)",1.25,425,0,0.0652591170825336,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,36,7,"[1.375,1.625)",1.5,379,0,0.054989816700611,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,36,8,"[1.625,1.875)",1.75,304,0,0.09375,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,36,9,"[1.875,2.125)",2,259,0,0.145015105740181,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,36,10,"[2.125,2.375)",2.25,195,0,0.180616740088106,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,36,11,"[2.375,Inf)",2.5,106,0,0.245614035087719,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,41,1,"[0.000,0.125)",0,1633,0.928787369835405,0.0597917366476318,0.0144440712126302
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,41,2,"[0.125,0.375)",0.25,1990,0.873050026896181,0.057557826788596,0.00699300699300699
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,41,3,"[0.375,0.625)",0.5,2754,0.643010368251698,0.162495530925992,0.00518412584912406
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,41,4,"[0.625,0.875)",0.75,1466,0.314376996805112,0.290415335463259,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,41,5,"[0.875,1.125)",1,473,0.160453808752026,0.262560777957861,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,41,6,"[1.125,1.375)",1.25,436,0.0549645390070922,0.320921985815603,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,41,7,"[1.375,1.625)",1.5,335,0,0.422343324250681,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,41,8,"[1.625,1.875)",1.75,326,0,0.486033519553073,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,41,9,"[1.875,2.125)",2,261,0,0.652996845425867,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,41,10,"[2.125,2.375)",2.25,203,0,0.854625550660793,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,41,11,"[2.375,Inf)",2.5,123,0,0.984732824427481,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,46,1,"[0.000,0.125)",0,1634,0.97445766270119,0.0447865640307908,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,46,2,"[0.125,0.375)",0.25,1974,0.988752008569898,0.066952329941082,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,46,3,"[0.375,0.625)",0.5,2803,0.895019954884609,0.234947076175603,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,46,4,"[0.625,0.875)",0.75,1460,0.75,0.541827541827542,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,46,5,"[0.875,1.125)",1,465,0.40032414910859,0.588330632090762,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,46,6,"[1.125,1.375)",1.25,395,0.0745697896749522,0.738049713193117,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,46,7,"[1.375,1.625)",1.5,385,0,0.842352941176471,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,46,8,"[1.625,1.875)",1.75,310,0,0.955307262569832,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,46,9,"[1.875,2.125)",2,266,0,0.976510067114094,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,46,10,"[2.125,2.375)",2.25,197,0,0.990243902439024,0
+"dispersion_unbalanced","Dispersion","unbalanced",9000,1000,46,11,"[2.375,Inf)",2.5,111,0,1,0
