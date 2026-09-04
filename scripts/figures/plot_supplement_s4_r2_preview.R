@@ -163,7 +163,7 @@ draw_figure <- function() {
     family = "sans", fg = "#333333", xaxs = "i", yaxs = "i"
   )
   ticks <- seq(0, 1, by = 0.25)
-  repeat_colour <- grDevices::adjustcolor("#707070", alpha.f = 0.34)
+  repeat_colour <- "#C7C7C7"
 
   for (row_index in seq_len(2L)) {
     current_n0 <- expected_sizes$n0[[row_index]]
@@ -186,7 +186,7 @@ draw_figure <- function() {
         curve <- curve[order(curve$nominal_mass), , drop = FALSE]
         graphics::lines(
           curve$nominal_mass, curve$coverage,
-          col = repeat_colour, lwd = 0.9
+          col = repeat_colour, lwd = 1.15
         )
       }
       cell_mean <- mean_data[
@@ -244,7 +244,7 @@ draw_figure <- function() {
   graphics::legend(
     "center",
     legend = c("Average", "Repeats", "Nominal"),
-    col = c("#111111", "#8A8A8A", "#555555"),
+    col = c("#111111", "#A6A6A6", "#555555"),
     lty = c(1, 1, 2), lwd = c(2.7, 2.0, 1.8),
     horiz = TRUE, bty = "n", cex = 1.50,
     x.intersp = 0.8, seg.len = 2.6
@@ -273,9 +273,10 @@ writeLines(c(
   "coverage_group=all_pooled",
   "estimator_fitting=false",
   "rng_consumed=false",
-  "repeat_colour=#707070",
-  "repeat_alpha=0.34",
-  "repeat_linewidth=0.9",
+  "repeat_colour=#C7C7C7",
+  "repeat_legend_colour=#A6A6A6",
+  "repeat_alpha=1",
+  "repeat_linewidth=1.15",
   "average_colour=#111111",
   "average_linewidth=2.7",
   "nominal_colour=#555555",
