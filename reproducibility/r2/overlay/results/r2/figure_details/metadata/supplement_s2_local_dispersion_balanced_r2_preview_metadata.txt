@@ -1,0 +1,17 @@
+figure=Supplementary Figure S2
+scenario=local_dispersion
+n0=5000
+n1=5000
+simulation_repeat=21
+boosting_job_id=boosting_selection_2d_local_dispersion_n0-5000_n1-5000_transformed-false_seed-021
+boosting_sha256=db496ed05a9f48562cf844a1fd64042bfe95d5e7e5557c845371592944990d71
+legacy_detail_sha256=dd19f4155eb70f268303d08185a14ed6bdd42f73567bf208fa1e93ad34e1ff08
+model_sha256=ed19303c802057751b6a28e4ce63be8570bbe29da0da277c4a24c5f05f0f3790
+drt_selection=exponential_loss
+drt_selected_trees=395
+point_size=2
+point_alpha=0.75
+axis_title_size=18
+axis_margin_fraction=0.04_per_side
+panel_background=#EBEBEB
+truth_alignment_max_abs_difference=0e+00

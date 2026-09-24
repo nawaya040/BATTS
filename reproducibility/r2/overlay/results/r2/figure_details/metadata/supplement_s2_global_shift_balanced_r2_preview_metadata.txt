@@ -1,0 +1,17 @@
+figure=Supplementary Figure S2
+scenario=global_shift
+n0=5000
+n1=5000
+simulation_repeat=1
+boosting_job_id=boosting_selection_2d_global_shift_n0-5000_n1-5000_transformed-false_seed-001
+boosting_sha256=d8689405a5aa092f8be4e8c0f1951655dacdcd61227d014a4a16b28f6a24af32
+legacy_detail_sha256=22df06e763a13a73f17a0b681190783d245a80475e8650ee5910dda18df14897
+model_sha256=ed19303c802057751b6a28e4ce63be8570bbe29da0da277c4a24c5f05f0f3790
+drt_selection=exponential_loss
+drt_selected_trees=554
+point_size=2
+point_alpha=0.75
+axis_title_size=18
+axis_margin_fraction=0.04_per_side
+panel_background=#EBEBEB
+truth_alignment_max_abs_difference=0e+00

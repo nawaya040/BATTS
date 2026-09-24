@@ -1,0 +1,17 @@
+figure=Figure 4 R2 preview
+scenario=latent_location_shift
+n0=5000
+n1=5000
+simulation_repeat=21
+boosting_job_id=boosting_selection_20d_latent_location_shift_n0-5000_n1-5000_transformed-false_seed-021
+boosting_sha256=3c125fdd6a07177c9558e9df589268485621a81b0d724c796b8a7a8b3cbf1b0a
+legacy_detail_sha256=33be92979e75fabf95c6f34c44f2c59c99d5ead4824c92a507575b3e562a6c90
+model_sha256=ad2090da5fbc01123e65687b1364a6064f2e5b3b17824ad3b9c4df7152e6eb40
+drt_selection=exponential_loss
+drt_selected_trees=846
+point_size=2
+point_alpha=0.75
+axis_title_size=18
+axis_margin_fraction=0.04_per_side
+panel_background=#EBEBEB
+truth_alignment_max_abs_difference=0e+00

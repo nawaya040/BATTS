@@ -1,0 +1,9 @@
+figure,paper_file,pdf_sha256_identical,same_render_size,paper_pixels,release_pixels,changed_pixel_fraction
+figure1_main,figure1_r2_balanced_sample_size.pdf,False,True,"(1320, 825)","(1320, 825)",0.0
+figure1_supp,figureS6_1d_unbalanced_sample_size_r2.pdf,False,True,"(1320, 825)","(1320, 825)",0.0
+figure2,figure2_r2.pdf,False,True,"(1320, 495)","(1320, 495)",0.17255433119069483
+figure4,figure20d_calibration_compact_r2.pdf,False,True,"(584, 364)","(584, 364)",0.0
+figure5,figure20d_pointwise_evaluation_compact_r2.pdf,False,True,"(584, 364)","(584, 364)",0.0
+supplement_s1,figureS1_r2.pdf,False,True,"(1452, 1540)","(1452, 1540)",0.0
+supplement_s4,figureS4_compact_r2.pdf,False,True,"(454, 364)","(454, 364)",0.0
+supplement_s6,figureS6_compact_r2.pdf,False,True,"(511, 286)","(511, 286)",0.0

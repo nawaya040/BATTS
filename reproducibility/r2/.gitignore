@@ -1,0 +1,6 @@
+# Locally assembled scientific results and review artifacts.
+/reproducibility_materials/
+/reproducibility_materials_review/
+/validation_outputs/
+/*.zip
+__pycache__/
