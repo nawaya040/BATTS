@@ -1,0 +1,16 @@
+figure,paper_file,same_render_size,changed_pixel_fraction
+figure1_main,figure1_r2_balanced_sample_size.pdf,True,0.0
+figure1_supp,figureS6_1d_unbalanced_sample_size_r2.pdf,True,0.0
+figure2,figure2_r2.pdf,True,0.17255433119069483
+figure4,figure20d_calibration_compact_r2.pdf,True,0.0
+figure5,figure20d_pointwise_evaluation_compact_r2.pdf,True,0.0
+supplement_s1,figureS1_r2.pdf,True,0.0
+supplement_s4,figureS4_compact_r2.pdf,True,0.0
+supplement_s6,figureS6_compact_r2.pdf,True,0.0
+figure3,figure3_compact_r2.pdf,True,0.0
+s2_global_shift_balanced,figureS2_global_shift_balanced_compact_r2.pdf,True,0.0
+s2_local_dispersion_balanced,figureS2_local_dispersion_balanced_compact_r2.pdf,True,0.0
+s3_global_shift_unbalanced,figureS3_global_shift_unbalanced_compact_r2.pdf,True,0.0
+s3_local_shift_unbalanced,figureS3_local_shift_unbalanced_compact_r2.pdf,True,0.0
+s3_local_dispersion_unbalanced,figureS3_local_dispersion_unbalanced_compact_r2.pdf,True,0.0
+s5_latent_location_balanced,figureS5_latent_location_compact_r2.pdf,True,0.0

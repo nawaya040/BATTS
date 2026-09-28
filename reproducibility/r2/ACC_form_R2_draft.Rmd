@@ -1,12 +1,9 @@
 ---
-title: "Author Contributions Checklist (ACC) form — Round 2 draft"
-output: pdf_document
+title: "ACC form - Round 2 author-review draft"
+output:
+  pdf_document:
+    latex_engine: xelatex
 ---
-
-<!-- Author review draft, prepared by Codex on 2026-09-24. This file follows
-the JASA-ACS acc_form.Rmd template. Bracketed AUTHOR/COAUTHOR items require
-completion before rendering the submission PDF. Package paths currently refer
-to the review candidate and must be updated if the final archive is renamed. -->
 
 This form documents the artifacts associated with the article (i.e., the data and code supporting the computational findings) and describes how to reproduce the findings.
 
@@ -32,7 +29,7 @@ If the data are publicly available, see the *Publicly available data* section. O
 - [ ] Data are available online at:
   - Upstream application-data source: `curatedMetagenomicData`, <https://bioconductor.org/packages/release/data/experiment/html/curatedMetagenomicData.html>. **[COAUTHOR TO CONFIRM version, citation, and terms.]**
 - [ ] Data are available as part of the paper's supplementary material.
-  - The current review archive is `reproducibility_materials_review.zip`. It contains `reproducibility_materials_review/reference/r1/data/`, saved technical results in `results/r2/`, and the provenance inventory `SOURCE_MANIFEST.csv`. **[AUTHOR TO CHECK this box and replace the archive name after the final submission ZIP is fixed.]**
+  - The current review archive is `reproducibility_materials_anonymous.zip`. It contains `reproducibility_materials_anonymous/reference/r1/data/`, saved technical results in `results/r2/`, and the provenance inventory `SOURCE_MANIFEST.csv`. **[AUTHOR TO CHECK this box after final submission materials and redistribution rights are confirmed.]**
 - [ ] Data are publicly available by request, following the process described here:
 - [ ] Data are or will be made available through some other mechanism, described here:
 
@@ -51,7 +48,7 @@ If the data are publicly available, see the *Publicly available data* section. O
 
 ### Data dictionary
 
-- [x] Provided by authors in the following file(s): `reproducibility_materials_review/README.md`, `FIGURE_TABLE_MAP.md`, `COAUTHOR_SECTION5.md`, and `SOURCE_MANIFEST.csv` describe the technical data and file roles. **[COAUTHOR TO ADD a Section 5 data dictionary, including variables and units, if the existing documentation is insufficient.]**
+- [x] Provided by authors in the following file(s): `reproducibility_materials_anonymous/README.md`, `FIGURE_TABLE_MAP.md`, `COAUTHOR_SECTION5.md`, and `SOURCE_MANIFEST.csv` describe the technical data and file roles. **[COAUTHOR TO ADD a Section 5 data dictionary, including variables and units, if the existing documentation is insufficient.]**
 - [ ] Data file(s) is(are) self-describing (e.g., netCDF files)
 - [ ] Available at the following URL:
 
@@ -63,7 +60,7 @@ The original public source for the application is `curatedMetagenomicData` (Paso
 
 ## Abstract
 
-The archive contains the BATTS source revision used by the Round 2 simulations, the prior submitted method and comparator source, scripts for simulation, summarization, and figure rendering, and release-specific commands for drawing and light runs. Saved seed-level results permit regeneration of the technical tables and most figures without rerunning all 50 seeds. The Section 5 code and inputs are included as prior-submission reference material pending final coauthor confirmation.
+The archive contains an anonymized local source package, `ReviewPkg` 0.0.0.9001, corresponding to the implementation used by the Round 2 simulations, the prior submitted method and comparator source, scripts for simulation, summarization, and figure rendering, and release-specific commands for drawing and light runs. Saved seed-level results permit regeneration of the technical tables and most figures without rerunning all 50 seeds. The Section 5 code and inputs are included as prior-submission reference material pending final coauthor confirmation.
 
 ## Description
 
@@ -90,21 +87,25 @@ The archive contains the BATTS source revision used by the Round 2 simulations, 
 
 #### Version of primary software used
 
-The original and local Round 2 checks used R 4.5.2. The portable table command uses Python 3; **[AUTHOR TO RECORD the tested Python version before submission]**. A compatible C++ compiler toolchain is needed to install the bundled R source packages. The Section 5 Python environment and its final code path require coauthor confirmation.
+The original and local Round 2 checks used R 4.5.2. The portable table command was checked with Python 3.14.4 and uses only the Python standard library. A compatible C++ compiler toolchain is needed to install the bundled R source packages. The Section 5 Python environment and its final code path require coauthor confirmation.
 
 #### Libraries and dependencies used by the code
 
-`code/BATTS/` is the BATTS source at Git commit `6f625bad83702b36e5480be1ed1343258a9b075a`. The Round 2 workflow source is identified as commit `f921525711faef2a326c561820749e0c70f1bf42`. Prior source copies of `ReviewPkg` 0.0.0.9000 and the corrected `densratio` 0.2.1 are in `reference/r1/code/methods/`. Local drawing checks used `ggplot2` 4.0.3, `patchwork` 1.3.2, `scales` 1.4.0, `mvtnorm` 1.3.3, and `pracma` 2.4.6. The completed light checks used `ReviewPkg` 0.0.0.9000, `densratio` 0.2.1, `mvtnorm` 1.3.6, and `ada` 2.0.5.1; the 20D path also uses `pracma`. Further dependencies for canonical recomputation are identified in `code/r2/scripts/` and `ENVIRONMENT.md`. **[AUTHOR TO ADD the clean-environment dependency record and final package versions.]**
+`code/methods/ReviewPkg/` contains the anonymized Round 2 method source, version 0.0.0.9001. It preserves the numerical implementation, defaults, and compiler options of the Round 2 source while using the anonymous package and function names established in Round 1. The unchanged Round 1 `ReviewPkg` 0.0.0.9000 and corrected `densratio` 0.2.1 are under `reference/r1/code/methods/`. The two method versions must be installed in separate local libraries and run in separate R processes.
+
+Use `Rscript code/setup_review.R --variant=r2 --lib-dir=<new-r2-library>` to compile the supplied Round 2 source. For historical Round 1 execution, select `--variant=r1` and a different library. No public method repository is required. Anonymous source identifiers and release-file SHA-256 values provide the submitted provenance record; the mapping to original source identities is retained privately.
+
+Current local checks used `Rcpp` 1.1.1-1, `RcppArmadillo` 14.4.1-1, `ggplot2` 4.0.3, `patchwork` 1.3.2, `scales` 1.4.0, `mvtnorm` 1.3-3, `pracma` 2.4.6, and `ada` 2.0-5, together with the supplied corrected `densratio`. Full Round 2 workflows additionally use `digest`, `matrixStats`, and `rpart`. See `ENVIRONMENT.md` and the verification records for the tested environment. **[AUTHOR TO COMPLETE a fully isolated dependency installation check and final dependency lock or equivalent version record.]**
 
 #### Supporting system/hardware requirements (optional)
 
-The saved-result rendering and light checks ran on a desktop with R 4.5.2. A compatible compiler is required for source packages with C++ code. The two measured light runs took approximately five minutes (2D) and six minutes (20D) on the authors' current PC. **[AUTHOR TO ADD OS/compiler details, peak memory, and a clean-environment test result.]** Full 50-seed recomputation is substantially more expensive; the supplied saved results support inspection without that rerun.
+The anonymized and original Round 2 method sources were compiled with R 4.5.2 on Windows 11 x64 using Rtools45 / GCC 14.3.0. Twelve reduced test cases gave exactly identical fitted objects, predictions, posterior draws, and post-fit/post-prediction RNG states. The anonymous R2 light run for the displayed 2D local-shift seed took 355.9 seconds; its checks and limits are recorded in `VALIDATION_STATUS.md`. **[AUTHOR TO ADD complete peak-resource measurements and a fully isolated dependency test result.]** Full 50-seed recomputation is substantially more expensive; the supplied saved results support inspection without that rerun.
 
 ### Parallelization used
 
 - [ ] No parallel code used
 - [x] Multi-core parallelization on a single machine/node
-    - Number of cores used: **[AUTHOR TO RECORD the canonical worker counts for each study and the reviewer light-run default.]** The supplied workflow also supports serial execution where documented.
+    - Number of cores used: **[AUTHOR TO RECORD the worker counts used for the full simulations for each study and the reviewer light-run default.]** The supplied workflow also supports serial execution where documented.
 - [ ] Multi-machine/multi-node parallelization
     - Number of nodes and cores used:
 
@@ -114,11 +115,11 @@ The saved-result rendering and light checks ran on a desktop with R 4.5.2. A com
 - [ ] BSD
 - [ ] GPL v3.0
 - [ ] Creative Commons
-- [ ] Other: **[AUTHOR TO CONFIRM the license for the assembled workflow and each redistributed third-party source package. BATTS declares MIT; do not infer one license for all bundled code.]**
+- [ ] Other: **[AUTHOR TO CONFIRM the license for the assembled workflow and each redistributed third-party source package. The supplied ReviewPkg sources declare MIT; do not infer one license for all bundled code.]**
 
 ### Additional information (optional)
 
-The review candidate contains `code/`, `reference/r1/`, `results/r2/`, `README.md`, `FIGURE_TABLE_MAP.md`, `ENVIRONMENT.md`, `VALIDATION_STATUS.md`, `COAUTHOR_SECTION5.md`, and `SOURCE_MANIFEST.csv`. The manifest records source and release hashes for copied files; local paths in selected provenance text and CSV files were replaced with stable aliases. The R1 installed binary R library was omitted because it is platform dependent.
+The review candidate contains `code/`, `reference/r1/`, `results/r2/`, `README.md`, `FIGURE_TABLE_MAP.md`, `ENVIRONMENT.md`, `VALIDATION_STATUS.md`, `COAUTHOR_SECTION5.md`, and `SOURCE_MANIFEST.csv`. The submitted file inventory (manifest) records relative paths, byte counts, and hashes of the anonymous release files. Direct method identifiers, public source references, and personal paths were adapted for anonymous review. Seven saved boosting RDS files have only identity metadata adapted; their scientific contents are unchanged, and the remaining 985 RDS files are byte-identical copies. Original identities and the transformation record are retained privately. The R1 installed binary R library was omitted because it is platform dependent.
 
 # Part 3: Reproducibility workflow
 
@@ -131,7 +132,7 @@ The provided workflow reproduces:
 - [ ] All tables and figures in the paper
 - [x] Selected tables and figures in the paper, as explained and justified below:
 
-The supplied saved inputs and commands regenerate Main Tables 1–2, the transformed 20D and CDC supplementary tables, and the technical main and supplementary figures described in `FIGURE_TABLE_MAP.md`. All 264 displayed numerical table entries were checked against the final local TeX after rounding to three decimals. Fourteen regenerated technical PDFs matched the corresponding local manuscript assets pixel for pixel at 110 dpi. Main Figure 2 can be regenerated at its fixed seed, although its current panel geometry differs from the manuscript PDF. Section 5 final figures remain pending coauthor confirmation of their Round 2 data and code lineage. The source scripts allow full 50-seed recomputation, while the archive retains seed-level summaries and selected detailed RDS files for practical review. The light run uses the displayed data seed with reduced computational settings; its estimates can differ from the paper and are labeled `SMOKE_NOT_FOR_PAPER`.
+The supplied saved inputs and commands regenerate Main Tables 1–2, the transformed 20D and CDC supplementary tables, and the technical main and supplementary figures described in `FIGURE_TABLE_MAP.md`. All 264 displayed numerical table entries were checked against the final local TeX after rounding to three decimals. All fifteen technical PDFs were regenerated from the anonymous candidate; fourteen match the corresponding manuscript assets pixel for pixel at 110 dpi. Current comparison records are in `verification/anonymous_20260928/`. Main Figure 2 can be regenerated at its fixed seed, although its current panel geometry differs from the manuscript PDF. Section 5 final figures remain pending coauthor confirmation of their Round 2 data and code lineage. The archive includes source scripts for full 50-seed recomputation; their full execution has not been repeated as part of anonymization, while the archive retains seed-level summaries and selected detailed RDS files for practical review. The light run uses the displayed data seed with reduced computational settings; its estimates can differ from the paper and are labeled `SMOKE_NOT_FOR_PAPER`.
 
 ## Workflow
 
@@ -139,7 +140,10 @@ The supplied saved inputs and commands regenerate Main Tables 1–2, the transfo
 
 The workflow is available:
 
-- [x] As part of the paper's supplementary material: the current review candidate is `reproducibility_materials_review.zip`, containing the top-level directory `reproducibility_materials_review/`. **[AUTHOR TO UPDATE to the final submission archive name.]**
+- [x] As part of the paper's supplementary material:
+  - Archive: `reproducibility_materials_anonymous.zip`.
+  - Top-level directory: `reproducibility_materials_anonymous/`.
+  - **[AUTHOR TO CONFIRM these names after Section 5 integration.]**
 - [ ] In this Git repository:
 - [ ] Other (please specify):
 
@@ -153,9 +157,11 @@ The workflow is available:
 
 ### Instructions
 
-Unzip the archive and work from `reproducibility_materials_review/`. Read `README.md` for the directory layout, exact commands, and the requirement to write into a new output directory outside the supplied `reference/` and `results/` trees. `FIGURE_TABLE_MAP.md` identifies each technical table and figure, its saved inputs, code, and verification status. `ENVIRONMENT.md` documents source revisions and locally tested dependencies; `VALIDATION_STATUS.md` records completed checks and unresolved items. Verify the package inventory with `python code/verify_bundle.py`.
+Unzip the archive and work from `reproducibility_materials_anonymous/`. Read `README.md` for the directory layout, exact commands, and the requirement to write into a new output directory outside the supplied `reference/` and `results/` trees. `FIGURE_TABLE_MAP.md` identifies each technical table and figure, its saved inputs, code, and verification status. `ENVIRONMENT.md` documents anonymous source identifiers and locally tested dependencies; `VALIDATION_STATUS.md` records completed checks and unresolved items. Verify the package inventory with `python code/verify_bundle.py`.
 
-For the four technical tables, run `python code/portable/reproduce_tables.py <new-output-dir>`. The README gives individual drawing commands for the main and supplementary figures; each command takes saved results and writes to a separate new output directory. To exercise a simulation computation at the displayed 2D Figure 3 seed, use `Rscript code/light/run_light.R --family=2d --scenario=local_shift --n0=5000 --n1=5000 --seed=1 --lib-dir=<installed-R-library> --output-dir=<new-output-dir>`. For the 20D supplementary location surface, use the same entry point with `--family=20d --scenario=latent_location_shift --n0=5000 --n1=5000 --seed=21`. The 2D supplementary surface settings and data seeds are listed in `FIGURE_TABLE_MAP.md`. These reduced runs are workflow checks; the archived seed-level results are used for the reported 50-repeat summaries.
+Install the anonymous method source using `code/setup_review.R` as described in Part 2. The default light runner requires the R2 method version; use `--source-variant=r1` with the separate R1 library only for historical checks. R2 coverage and boosting commands verify the release source manifest; the global/null runners use `--release-id` with the value in `RELEASE_ID.txt`, so the review workflow does not require an identifying Git checkout.
+
+For the four technical tables, run `python code/portable/reproduce_tables.py <new-output-dir>`. The README gives individual drawing commands for the main and supplementary figures; each command takes saved results and writes to a separate new output directory. To exercise a simulation computation at the displayed 2D Figure 3 seed, use `Rscript code/light/run_light.R --family=2d --scenario=local_shift --n0=5000 --n1=5000 --seed=1 --lib-dir=<installed-R-library> --output-dir=<new-output-dir>`. For the 20D supplementary location surface, use the same entry point with `--family=20d --scenario=latent_location_shift --n0=5000 --n1=5000 --seed=21`. The 2D supplementary surface settings and data seeds are listed in `FIGURE_TABLE_MAP.md`. These reduced runs use the selected method source with archived light hyperparameters. They are workflow checks; the archived seed-level results are used for the reported 50-repeat summaries.
 
 #### Section 5 application — coauthor completion placeholder
 
@@ -181,12 +187,12 @@ Approximate time needed to reproduce the analyses on a standard desktop machine:
 - [ ] > 8 hours
 - [ ] Not feasible to run on a desktop machine, as described here:
 
-The two measured light runs took approximately five and six minutes on the authors' current PC; rendering and table regeneration add time. **[AUTHOR TO MEASURE the complete documented reviewer workflow and check the matching box. Give a separate estimate or resource statement for full canonical recomputation and the Section 5 workflow.]**
+The anonymous R2 light run at the displayed 2D local-shift seed took 355.9 seconds on the checked PC. Measurements and scope are given in `VALIDATION_STATUS.md`. Rendering and table regeneration add time. **[AUTHOR TO MEASURE the complete documented reviewer workflow and check the matching box. Give a separate estimate or resource statement for full simulation recomputation and the Section 5 workflow.]**
 
 ### Additional information (optional)
 
-`VALIDATION_STATUS.md` records the local output comparisons and limits of verification. A clean-environment installation and light run, an exact dependency record, a peak-resource measurement, the Main Figure 2 layout difference, and Section 5 handoff remain open. The review ZIP has been manifest- and member-hash checked; **[AUTHOR TO RECORD the final archive hash after the coauthor material is integrated.]**
+`VALIDATION_STATUS.md` records the local output comparisons and limits of verification. A clean-environment installation and light run, an exact dependency record, a peak-resource measurement, the Main Figure 2 layout difference, and completion of the Section 5 materials remain open. The anonymous review ZIP is identified by its adjacent SHA-256 record and release manifest; **[AUTHOR TO RECORD the final archive hash after the coauthor material is integrated.]**
 
 # Notes (optional)
 
-This document is an author-review draft prepared by Codex. Authors should review and edit it before submission. The bracketed fields are deliberate completion markers. The final PDF and reproduction archive should use identical file names, availability claims, scope, and Section 5 instructions.
+Please complete and review the bracketed fields before submission. The final PDF and reproduction archive should use identical file names, availability claims, scope, and Section 5 instructions.

@@ -1,0 +1,8 @@
+"file","scientific_content_identical"
+"results/r2/figure_details/boosting/boosting_selection_20d_latent_location_shift_n0-5000_n1-5000_transformed-false_seed-021.rds",TRUE
+"results/r2/figure_details/boosting/boosting_selection_2d_global_shift_n0-5000_n1-5000_transformed-false_seed-001.rds",TRUE
+"results/r2/figure_details/boosting/boosting_selection_2d_global_shift_n0-9000_n1-1000_transformed-false_seed-001.rds",TRUE
+"results/r2/figure_details/boosting/boosting_selection_2d_local_dispersion_n0-5000_n1-5000_transformed-false_seed-021.rds",TRUE
+"results/r2/figure_details/boosting/boosting_selection_2d_local_dispersion_n0-9000_n1-1000_transformed-false_seed-016.rds",TRUE
+"results/r2/figure_details/boosting/boosting_selection_2d_local_shift_n0-5000_n1-5000_transformed-false_seed-001.rds",TRUE
+"results/r2/figure_details/boosting/boosting_selection_2d_local_shift_n0-9000_n1-1000_transformed-false_seed-016.rds",TRUE

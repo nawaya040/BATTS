@@ -1,0 +1,1 @@
+PASS: 12 cases; fitted objects, predictions, posterior draws, and post-fit/post-prediction RNG states are exactly identical

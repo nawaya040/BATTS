@@ -1,0 +1,3 @@
+PASS: intact source manifest accepted
+PASS: modified source rejected before execution
+PASS: 2D light outputs: finite MSE, 10000 x 2 data, finite posterior means, coverage within [0,1]

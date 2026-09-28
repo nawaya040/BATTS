@@ -1,0 +1,15 @@
+package,version,role
+ReviewPkg,0.0.0.9001,current R2
+ReviewPkg,0.0.0.9000,historical R1 separate library
+densratio,0.2.1,bundled corrected source
+Rcpp,1.1.1-1,build
+RcppArmadillo,14.4.1-1,build
+ggplot2,4.0.3,drawing
+patchwork,1.3.2,drawing
+scales,1.4.0,drawing
+mvtnorm,1.3-3,simulation
+pracma,2.4.6,simulation
+ada,2.0-5,simulation
+digest,0.6.37,workflow
+matrixStats,1.5.0,workflow
+rpart,4.1.24,simulation

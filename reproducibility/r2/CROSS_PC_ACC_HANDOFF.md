@@ -1,3 +1,8 @@
+> Update 2026-09-28: the active candidate on this PC is now
+> `reproducibility_materials_anonymous.zip`, with R2 ReviewPkg 0.0.0.9001 and
+> the revised `ACC_form_R2_draft.Rmd`. See `STATUS.md` and `ANONYMIZATION_BUILD.md`.
+> The previous archive and the handoff notes below are preserved as history.
+
 # Round 2 ACC: continue on another computer
 
 This handoff records the editable ACC draft and the corresponding technical review package as of 2026-09-28. It is for author and coauthor review. The archive is a review candidate; Section 5 and the items listed in `STATUS.md` still need completion before journal submission.
