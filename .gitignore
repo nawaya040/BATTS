@@ -27,3 +27,7 @@ results/generated/
 /sample_boostPM.csv
 /test*.csv
 /test*.txt
+
+# Separate Overleaf manuscript repository
+/density-ratio-paper/
+/output/pdf/ACC_form_R2_draft.pdf
