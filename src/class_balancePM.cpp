@@ -328,9 +328,9 @@ void class_balancePM::do_boosting(){
 
         // multiply n to control the scale (we don't in this version)
         if(group_labels(index) == 0){;
-          gradient_current(index) = - balance_inv_current(index) / (double) n_vec(0) ;
+          gradient_current(index) = - balance_inv_current(index) / (double) n0_learn ;
         }else{
-          gradient_current(index) = balance_current(index) / (double) n_vec(1);
+          gradient_current(index) = balance_current(index) / (double) n1_learn;
         }
       }
     }
