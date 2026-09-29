@@ -77,7 +77,7 @@ vec get_subvector_double(vec x, vector<int> indices, int size){
   return out;
 }
 
-mat get_submat_double(mat x, vector<int> indices, int size){
+mat get_submat_double(const mat& x, vector<int> indices, int size){
   int dim = x.n_rows;
   mat out(dim, size);
   for(int i=0; i<size; i++){

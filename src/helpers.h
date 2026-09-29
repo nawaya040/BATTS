@@ -19,7 +19,7 @@ mat log_normalize_mat(const mat& log_x);
 ivec convert_vector_to_ivec(vector<int> vector);
 ivec get_subvector_int(ivec x, vector<int> indices, int size);
 vec get_subvector_double(vec x, vector<int> indices, int size);
-mat get_submat_double(mat x, vector<int> indices, int size);
+mat get_submat_double(const mat& x, vector<int> indices, int size);
 
 double logit(double x);
 double logit_inv(double x);

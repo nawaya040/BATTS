@@ -127,10 +127,6 @@ void class_balancePM::init(){ //Initialization
   balance_current = zeros(n);
   balance_inv_current = zeros(n);
 
-  // matrix to store the estimated balancing weights
-  // (requires a lot of memory, should be optimized later)
-  balance_store_boosting = zeros(n, num_trees);
-
   // vector to store the current gradients (necessary if we use the gradient boosting)
   gradient_current = zeros(n);
 
@@ -391,9 +387,6 @@ void class_balancePM::do_boosting(){
       balance_current = c_normalize * balance_current;
       balance_inv_current = 1.0 / c_normalize * balance_inv_current;
     }
-
-    // store the current weight
-    balance_store_boosting.col(index_tree) = balance_current;
 
     // loss given by the validation set (after constructing the tree)
     double loss_temp0 = 0.0;
