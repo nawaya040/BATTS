@@ -1,3 +1,14 @@
+.validate_group_labels = function(data, group_labels){
+  if(is.null(nrow(data)) || !is.numeric(group_labels) ||
+     !is.null(dim(group_labels)) ||
+     length(group_labels) != nrow(data) ||
+     anyNA(group_labels) || !all(is.finite(group_labels)) ||
+     !all(group_labels %in% c(0, 1)) ||
+     !any(group_labels == 0) || !any(group_labels == 1)){
+    stop("group_labels must have one 0 or 1 per data row, with both groups present")
+  }
+}
+
 #' @export
 boots = function(data,
                      group_labels,
@@ -18,6 +29,7 @@ boots = function(data,
      !is.finite(n_ratio_per_node) || n_ratio_per_node != 1e-100){
     stop("n_ratio_per_node is not implemented; use its default value")
   }
+  .validate_group_labels(data, group_labels)
 
   #Re-scale the data
   d = ncol(data)
@@ -205,6 +217,11 @@ batts = function(data,
      !is.finite(n_ratio_per_node) || n_ratio_per_node != 1e-100){
     stop("n_ratio_per_node is not implemented; use its default value")
   }
+  if(!is.numeric(max_resol) || length(max_resol) != 1L ||
+     is.na(max_resol) || max_resol != 0){
+    stop("batts() requires max_resol = 0 so every initial tree is unsplit")
+  }
+  .validate_group_labels(data, group_labels)
 
   if(is.null(size_burnin)){
     size_burnin = floor(size_backfitting / 2)

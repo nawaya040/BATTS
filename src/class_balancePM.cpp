@@ -86,6 +86,24 @@ void class_balancePM::init(){ //Initialization
   n = X.n_rows;
   d = X.n_cols;
 
+  if(group_labels.n_elem != (uword) n){
+    Rcpp::stop("group_labels must have one value per data row");
+  }
+  int count_0 = 0;
+  int count_1 = 0;
+  for(int i=0; i<n; i++){
+    if(group_labels(i) == 0){
+      count_0++;
+    }else if(group_labels(i) == 1){
+      count_1++;
+    }else{
+      Rcpp::stop("group_labels must contain only 0 and 1");
+    }
+  }
+  if(count_0 == 0 || count_1 == 0){
+    Rcpp::stop("group_labels must contain both groups");
+  }
+
   n_cut_points = L_candidates.n_rows;
   n_cells = n_cut_points + 1;
 

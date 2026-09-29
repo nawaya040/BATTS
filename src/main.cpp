@@ -35,6 +35,12 @@ List run_adaboost(mat X,
               bool quiet
 ){
 
+  // BART starts from unsplit trees; split boosting trees can carry an
+  // external normalization factor into the posterior updates.
+  if(size_backfitting > 0 && max_resol != 0){
+    Rcpp::stop("BART requires max_resol = 0 so every initial tree is unsplit");
+  }
+
   class_balancePM my_boosting(
       X,
       group_labels,
