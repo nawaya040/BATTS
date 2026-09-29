@@ -14,6 +14,11 @@ boots = function(data,
                      quiet = FALSE
                      ){
 
+  if(!is.numeric(n_ratio_per_node) || length(n_ratio_per_node) != 1L ||
+     !is.finite(n_ratio_per_node) || n_ratio_per_node != 1e-100){
+    stop("n_ratio_per_node is not implemented; use its default value")
+  }
+
   #Re-scale the data
   d = ncol(data)
   min_max_values = matrix(NA, nrow = d, ncol = 2)
@@ -22,6 +27,9 @@ boots = function(data,
     for(j in 1:d){
       min_j = min(data[,j])
       max_j = max(data[,j])
+      if(max_j == min_j){
+        stop(sprintf("Column %d is constant; remove constant columns before fitting", j))
+      }
 
       margin_size = (max_j - min_j) * margin_scale
       min_j_new = min_j - margin_size
@@ -40,6 +48,11 @@ boots = function(data,
   #obtain the information of the data
   n0 = sum(group_labels == 0)
   n1 = sum(group_labels == 1)
+  if(!is.numeric(K_CV) || length(K_CV) != 1L || !is.finite(K_CV) ||
+     K_CV != floor(K_CV) ||
+     (K_CV != 0 && (K_CV < 2 || K_CV > min(n0, n1)))){
+    stop("K_CV must be 0 or an integer between 2 and min(n0, n1)")
+  }
 
   data_info = list("n0" = n0,
                    "n1" = n1,
@@ -171,7 +184,7 @@ batts = function(data,
                                      margin_scale = 0.1,
                                      use_gradient = FALSE,
                                      size_burnin = NULL,
-                                     size_backfitting = 0,
+                                     size_backfitting = NULL,
                                      thin = 1,
                                      prob_moves = c(1/3,1/3,1/3),
                                      lambda_0 = 5,
@@ -183,8 +196,18 @@ batts = function(data,
                                      quiet = FALSE
 ){
 
+  if(!is.numeric(size_backfitting) || length(size_backfitting) != 1L ||
+     !is.finite(size_backfitting) || size_backfitting <= 0 ||
+     size_backfitting != floor(size_backfitting)){
+    stop("size_backfitting must be supplied as a positive integer for batts()")
+  }
+  if(!is.numeric(n_ratio_per_node) || length(n_ratio_per_node) != 1L ||
+     !is.finite(n_ratio_per_node) || n_ratio_per_node != 1e-100){
+    stop("n_ratio_per_node is not implemented; use its default value")
+  }
+
   if(is.null(size_burnin)){
-    size_burnin = size_backfitting / 2
+    size_burnin = floor(size_backfitting / 2)
   }
 
   #Re-scale the data
@@ -195,6 +218,9 @@ batts = function(data,
     for(j in 1:d){
       min_j = min(data[,j])
       max_j = max(data[,j])
+      if(max_j == min_j){
+        stop(sprintf("Column %d is constant; remove constant columns before fitting", j))
+      }
 
       margin_size = (max_j - min_j) * margin_scale
       min_j_new = min_j - margin_size
@@ -301,4 +327,3 @@ eval_balance_weight = function(list_result, eval_points, is_Bayes = FALSE){
   return(out)
 
 }
-
