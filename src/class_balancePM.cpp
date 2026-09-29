@@ -1277,6 +1277,8 @@ void class_balancePM::GROW(Node* node){
   //}
 
     if(accept){
+      // Internal nodes do not retain observations already held by their leaves.
+      vector<int>().swap(node->indices);
     }else{
       // reject: delete the new nodes
       clear_node(node->left);
@@ -1328,9 +1330,9 @@ void class_balancePM::PRUNE(Node* node){
     node->left = nullptr;
     node->right = nullptr;
 
-    node->indices = indices_A;
   }else{
-    // reject: keep the children nodes
+    // reject: keep the children and release the temporary parent indices
+    vector<int>().swap(node->indices);
   }
 
 }
