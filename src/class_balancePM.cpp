@@ -1087,7 +1087,12 @@ void class_balancePM::update_beta(Node* node){
     int n_total_A = indices_A.size();
 
     if(n_total_A == 0){
-      // if this node is empty, do nothing
+      // With no observations, the conditional distribution is the prior.
+      double beta_sq_new = rinversegauss_single(mu_prior, lambda_prior);
+      if(even_or_odd != 0){
+        beta_sq_new = 1.0 / beta_sq_new;
+      }
+      node->beta = pow(beta_sq_new, 2.0);
     }else{
 
       vec balance_A = get_subvector_double(balance_current, indices_A, n_total_A);
@@ -1159,8 +1164,7 @@ void class_balancePM::GROW(Node* node){
   vector<int> indices_A = node->indices;
   int n_total_A = indices_A.size();
 
-  // no observation -> no need to split
-  if(n_total_A > 0){
+  // Empty leaves are valid tree states and use the same GROW proposal.
 
     // before generating candidate nodes, check the status of this node
     bool root_or_has_nieces_current = root_or_has_nieces(node);
@@ -1240,8 +1244,6 @@ void class_balancePM::GROW(Node* node){
       node->right = nullptr;
     }
 
-
-  }
 
 }
 
