@@ -262,7 +262,7 @@ Node* find_terminal_node(Node* root, vec& x){
   while(curr->left != nullptr){
     int dim_selected = curr->dim_selected;
 
-    if(x(dim_selected) <= curr->partition_point){
+    if(x(dim_selected) < curr->partition_point){
       curr = curr->left;
     }else{
       curr = curr->right;

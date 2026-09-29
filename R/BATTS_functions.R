@@ -70,7 +70,9 @@ boots = function(data,
   # optimize the number of trees if the option is yes
   if(K_CV > 0){
 
-    labels_CV = c(sample(rep(1:K_CV, length.out = sum(group_labels==0))), sample(rep(1:K_CV, length.out = sum(group_labels==1))))
+    labels_CV = integer(length(group_labels))
+    labels_CV[which(group_labels == 0)] = sample(rep(1:K_CV, length.out = sum(group_labels == 0)))
+    labels_CV[which(group_labels == 1)] = sample(rep(1:K_CV, length.out = sum(group_labels == 1)))
     loss_CV_store = matrix(NA, nrow = K_CV, ncol = num_trees_max)
 
     for(k in 1:K_CV){
@@ -266,6 +268,10 @@ eval_balance_weight = function(list_result, eval_points, is_Bayes = FALSE){
     stop("The tree list is empty")
 
   }else{
+    if(is_Bayes && (is.null(list_result$forest_list) || length(list_result$forest_list) == 0)){
+      stop("Posterior forests were not saved; fit with output_BART_ensembles = TRUE")
+    }
+
     #re-scale the input data
     min_max_values = data_info$min_max_values
     d = data_info$d
@@ -284,11 +290,11 @@ eval_balance_weight = function(list_result, eval_points, is_Bayes = FALSE){
     out = list()
 
     out_temp = evaluate_balance_weight_boosting(list_result$tree_list, eval_points)
-    out$balancing_weight_boosting = out_temp$balance_current
+    out$balancing_weight_boosting = list_result$c * out_temp$balance_current
 
     if(is_Bayes){
       out_temp = evaluate_balance_weight_BART(list_result$forest_list, eval_points)
-      out$balancing_weight_BART = out_temp$balance_store
+      out$balancing_weight_BART = list_result$c * out_temp$balance_store
     }
   }
 

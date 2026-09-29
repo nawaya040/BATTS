@@ -364,8 +364,8 @@ void class_balancePM::do_boosting(){
     }
 
     if(!use_gradient){
-      double c_normalize = (sum_balance_inv_0 / (double) n0_learn) /
-        (sum_balance_1 / (double) n1_learn);
+      double c_normalize = std::sqrt((sum_balance_inv_0 / (double) n0_learn) /
+        (sum_balance_1 / (double) n1_learn));
 
       prod_c = prod_c * c_normalize;
 
@@ -671,7 +671,7 @@ bool class_balancePM::split_node(Node* node){
             loss_left_matrix(j,l) = var_left;
             loss_right_matrix(j,l) = var_right;
 
-            loss_matrix(j,l) = left_count_total / (double) size_subsample * var_left + right_count_total / (double) size_subsample * var_right;
+            loss_matrix(j,l) = left_count_total / (double) n_total_A * var_left + right_count_total / (double) n_total_A * var_right;
 
           }
 
@@ -829,7 +829,7 @@ Node* class_balancePM::find_terminal_node(Node* root, vec& x){
   while(curr->left != nullptr){
     int dim_selected = curr->dim_selected;
 
-    if(x(dim_selected) <= curr->partition_point){
+    if(x(dim_selected) < curr->partition_point){
       curr = curr->left;
     }else{
       curr = curr->right;
@@ -924,10 +924,8 @@ void class_balancePM::backfitting(){
   // repeat the back-fitting updates
   for(int index_back=-size_burnin; index_back < size_backfitting; index_back++){
 
-    if(output_BART_ensembles){
-      // prepare to save the forests
-      tree_list = List();
-    }
+    // prepare a separate list for this posterior forest
+    List posterior_tree_list;
 
     for(int index_thin=0; index_thin < thin; index_thin++){
 
@@ -1021,7 +1019,7 @@ void class_balancePM::backfitting(){
                                                    Rcpp::Named("beta") = beta_store
           );
 
-          tree_list.push_back(list_curr_tree);
+          posterior_tree_list.push_back(list_curr_tree);
         }
 
 
@@ -1061,7 +1059,9 @@ void class_balancePM::backfitting(){
         omega_store(index_back) = omega;
         lambda_store(index_back) = lambda_prior;
 
-        forest_list.push_back(tree_list);
+        if(output_BART_ensembles){
+          forest_list.push_back(posterior_tree_list);
+        }
 
         // print the progress
         if(!quiet){
@@ -1259,6 +1259,7 @@ void class_balancePM::PRUNE(Node* node){
   indices_A.insert(indices_A.end(), indices_A_r.begin(), indices_A_r.end());
 
   // compute the log-ML for the nodes
+  node->indices = indices_A;
   double log_ML_A = compute_log_ML(node);
   double log_ML_A_l = compute_log_ML(node->left);
   double log_ML_A_r = compute_log_ML(node->right);
