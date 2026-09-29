@@ -18,6 +18,22 @@ using namespace std;
 #define LARGE_NUMBER 1e+100
 #define SMALL_NUMBER 1e-100
 
+namespace {
+void split_side_sums(const vec& values, vec& prefix, vec& suffix){
+  prefix.set_size(values.n_elem);
+  suffix.set_size(values.n_elem);
+  double left = 0.0;
+  double right = 0.0;
+  for(uword i=0; i<values.n_elem; i++){
+    left += values(i);
+    prefix(i) = left;
+    uword j = values.n_elem - 1 - i;
+    right += values(j);
+    suffix(j) = right;
+  }
+}
+}
+
 class_balancePM::class_balancePM(
   mat X,
   ivec group_labels,
@@ -570,19 +586,26 @@ bool class_balancePM::split_node(Node* node){
         vec count_0_j = count_0_mat.row(j).t();
         vec count_1_j = count_1_mat.row(j).t();
 
+        vec inv_0_prefix, inv_0_suffix, sum_1_prefix, sum_1_suffix;
+        vec count_0_prefix, count_0_suffix, count_1_prefix, count_1_suffix;
+        split_side_sums(sum_inv_0_j, inv_0_prefix, inv_0_suffix);
+        split_side_sums(sum_1_j, sum_1_prefix, sum_1_suffix);
+        split_side_sums(count_0_j, count_0_prefix, count_0_suffix);
+        split_side_sums(count_1_j, count_1_prefix, count_1_suffix);
+
         for(int l=0; l<n_cut_points; l++){
 
-          double left_sum_inv_0 = sum(sum_inv_0_j.subvec(0, l));
-          double right_sum_inv_0 = sum(sum_inv_0_j.subvec(l+1, n_cells-1));
+          double left_sum_inv_0 = inv_0_prefix(l);
+          double right_sum_inv_0 = inv_0_suffix(l+1);
 
-          double left_sum_1 = sum(sum_1_j.subvec(0, l));
-          double right_sum_1 = sum(sum_1_j.subvec(l+1, n_cells-1));
+          double left_sum_1 = sum_1_prefix(l);
+          double right_sum_1 = sum_1_suffix(l+1);
 
-          double left_count_0 = sum(count_0_j.subvec(0, l));
-          double right_count_0 = sum(count_0_j.subvec(l+1, n_cells-1));
+          double left_count_0 = count_0_prefix(l);
+          double right_count_0 = count_0_suffix(l+1);
 
-          double left_count_1 = sum(count_1_j.subvec(0, l));
-          double right_count_1 = sum(count_1_j.subvec(l+1, n_cells-1));
+          double left_count_1 = count_1_prefix(l);
+          double right_count_1 = count_1_suffix(l+1);
 
 
           // we need to make sure that the base measure is balanced enough
@@ -650,19 +673,26 @@ bool class_balancePM::split_node(Node* node){
         vec count_0_j = count_0_mat.row(j).t();
         vec count_1_j = count_1_mat.row(j).t();
 
+        vec sum_prefix, sum_suffix, square_prefix, square_suffix;
+        vec count_0_prefix, count_0_suffix, count_1_prefix, count_1_suffix;
+        split_side_sums(sum_mat_j, sum_prefix, sum_suffix);
+        split_side_sums(square_mat_j, square_prefix, square_suffix);
+        split_side_sums(count_0_j, count_0_prefix, count_0_suffix);
+        split_side_sums(count_1_j, count_1_prefix, count_1_suffix);
+
         for(int l=0; l<n_cut_points; l++){
 
-          double left_sum = sum(sum_mat_j.subvec(0, l));
-          double right_sum = sum(sum_mat_j.subvec(l+1, n_cells-1));
+          double left_sum = sum_prefix(l);
+          double right_sum = sum_suffix(l+1);
 
-          double left_square = sum(square_mat_j.subvec(0, l));
-          double right_square = sum(square_mat_j.subvec(l+1, n_cells-1));
+          double left_square = square_prefix(l);
+          double right_square = square_suffix(l+1);
 
-          double left_count_0 = sum(count_0_j.subvec(0, l));
-          double right_count_0 = sum(count_0_j.subvec(l+1, n_cells-1));
+          double left_count_0 = count_0_prefix(l);
+          double right_count_0 = count_0_suffix(l+1);
 
-          double left_count_1 = sum(count_1_j.subvec(0, l));
-          double right_count_1 = sum(count_1_j.subvec(l+1, n_cells-1));
+          double left_count_1 = count_1_prefix(l);
+          double right_count_1 = count_1_suffix(l+1);
 
           double left_count_total = left_count_0 + left_count_1;
           double right_count_total = right_count_0 + right_count_1;
