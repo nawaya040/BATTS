@@ -348,7 +348,8 @@ void class_balancePM::do_boosting(){
     // normalize the balancing weights
     // to this end, we need to calculate the sum of the balancing weights again
 
-    //note: in this version, we do the normalization only for the Hellinger algorithm
+    // Gradient boosting intentionally omits multiplicative normalization;
+    // only the Hellinger-based method applies it.
 
     sum_balance_inv_0 = 0.0;
     sum_balance_1 = 0.0;

@@ -24,6 +24,11 @@ BATTS exposes three main user-facing functions:
   posterior samples for uncertainty quantification.
 - `eval_balance_weight()` evaluates fitted models on new points.
 
+`batts()` requires an explicit positive `size_backfitting` to produce posterior
+draws; its default burn-in is half that count, rounded down. Both fitting
+functions reject constant input columns when rescaling is enabled.
+`n_ratio_per_node` is not implemented; non-default values are rejected.
+
 The functions return the square root of the density ratio, so the
 example below converts outputs to log-density ratios for plotting and
 interpretation.
