@@ -15,6 +15,37 @@ library(devtools)
 install_github("nawaya040/BATTS")
 ```
 
+## Releases and reproducibility
+
+The official distribution for this release is
+[nawaya040/BATTS](https://github.com/nawaya040/BATTS). The default `main`
+branch contains integrated package code. For a reproducible installation,
+pin the release instead of following a moving branch:
+
+```r
+remotes::install_github("nawaya040/BATTS@v0.1.0", upgrade = "never")
+```
+
+Building from source requires a C++17 toolchain (Rtools on Windows).
+Version 0.1.0 incorporates the fixes in development commit `909ea357`;
+it can give different numerical results and RNG streams from the former
+`main` at `6f625ba`. See [NEWS.md](NEWS.md) for details. Package version,
+commit, dependency versions, settings and seeds should accompany each run.
+
+This repository contains the estimator package, documentation, small examples
+and regression tests. Paper-scale simulations, comparator configurations,
+case-study data and reproduction workflows are maintained separately.
+The worked example below is an API demonstration with its own settings.
+It does not reproduce a specific paper table or establish MCMC convergence.
+
+`batts()` requires an explicit positive `size_backfitting`. Use
+`output_BART_ensembles = TRUE` when posterior prediction at new points is
+needed. Prediction outside the fitted domain is rejected. All returned
+weights are `sqrt(p/q)`; use `2 * log(w)` for the full log-density ratio.
+Check mixing across chains and sensitivity to limited overlap before
+interpreting posterior intervals. Nominal pointwise intervals do not provide
+a guarantee of frequentist coverage or simultaneous inference.
+
 ## Main functions
 
 BATTS exposes three main user-facing functions:

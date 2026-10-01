@@ -9,6 +9,51 @@
   }
 }
 
+#' Boosting for a two-sample density ratio
+#'
+#' Fit an additive tree estimate of the balancing weight w = sqrt(p/q).
+#' The full log-density ratio is obtained as `2 * log(w)`.
+#'
+#' @param data Numeric matrix with observations in rows and variables in columns.
+#'   Values must be finite. With nonnegative `margin_scale`, each column must vary.
+#' @param group_labels Numeric vector of zeros and ones, one per row of `data`,
+#'   with both groups present. Group 0 has density p and group 1 has density q.
+#' @param max_resol Maximum boosting tree depth. For `batts`, must be zero
+#'   so that all initial trees are unsplit.
+#' @param learn_rate Boosting shrinkage factor; use a positive value.
+#' @param n_bins Number of bins used to construct the boosting cut grid.
+#'   For root-initialized `batts`, retained for interface compatibility.
+#' @param alpha_cutpoint Positive shape parameter for cut locations; one gives
+#'   uniform candidate spacing for boosting and uniform Bayesian proposals.
+#' @param n_min_obs_per_node Minimum count from each group in a boosting child.
+#' @param n_ratio_per_node Reserved argument. Only the default `1e-100` is supported.
+#' @param margin_scale Nonnegative fraction of each training range added at both
+#'   ends of the fitted domain. A negative value uses the fixed unit box and
+#'   requires that the supplied data already lie in that box.
+#' @param use_gradient Logical; use gradient boosting when TRUE and
+#'   forward-stagewise boosting when FALSE. Initialization in `batts` is unsplit.
+#' @param quiet Logical; suppress progress messages.
+#' @param num_trees_max Maximum number of boosting trees.
+#' @param K_CV Number of group-stratified cross-validation folds, or zero to
+#'   fit `num_trees_max` trees without cross-validation. A positive value must
+#'   be an integer between two and the smaller group size. CV selects the
+#'   minimum mean held-out balancing loss.
+#' @details Candidate cuts are relative to the current node. Splits requiring
+#'   children with too few observations from either group are excluded. Under
+#'   complete separation this restriction can prevent informative splits.
+#'   Forward-stagewise fits include a multiplicative normalization constant.
+#' @return A list containing `balance_weight_boosting_data` (training weights),
+#'   `tree_list` (fitted trees), `c` (normalization), `data_info` (training
+#'   domain and group sizes), and `Omega` (domain bounds). With CV, also
+#'   returns `loss_CV_store` (folds by candidate tree count).
+#' @seealso [batts()], [eval_balance_weight()]
+#' @examples
+#' set.seed(1)
+#' x <- matrix(c(rnorm(30), rnorm(30, 0.5)), ncol = 1)
+#' g <- rep(0:1, each = 30)
+#' fit <- boots(x, g, num_trees_max = 5, quiet = TRUE)
+#' head(2 * log(fit$balance_weight_boosting_data))
+#' @md
 #' @export
 boots = function(data,
                      group_labels,
@@ -183,6 +228,51 @@ boots = function(data,
   return(out)
 }
 
+#' Bayesian additive trees for a two-sample density ratio
+#'
+#' Draw generalized Bayesian balancing weights w = sqrt(p/q) by backfitting.
+#'
+#' @inheritParams boots
+#' @param num_trees Number of trees in the Bayesian ensemble.
+#' @param size_burnin Number of discarded backfitting iterations. Defaults to
+#'   `floor(size_backfitting / 2)`; supply a nonnegative integer.
+#' @param size_backfitting Required positive integer giving the number of saved
+#'   draws. This must be specified explicitly.
+#' @param thin Positive integer giving the number of backfitting sweeps per
+#'   iteration, including burn-in iterations.
+#' @param prob_moves Probabilities of GROW, PRUNE, and CHANGE, in that order;
+#'   supply three positive values summing to one.
+#' @param lambda_0 Positive leaf-prior scale per tree; ensemble scale is
+#'   `num_trees * lambda_0` at initialization.
+#' @param lambda_prior_parameters Shape and rate for the optional Gamma
+#'   hyperprior on the leaf-prior scale, as a positive length-two vector.
+#' @param omega_prior_parameters Shape and rate of the Gamma prior on the
+#'   loss temperature, as a positive length-two vector.
+#' @param update_lambda Logical; update the leaf-prior scale when TRUE.
+#' @param tree_priors Two tree-depth prior parameters: split probability at
+#'   depth d is `tree_priors[1] / (1 + d)^tree_priors[2]`.
+#' @param output_BART_ensembles Logical; save posterior forests for subsequent
+#'   evaluation on new points. Training-point draws are returned in either case.
+#' @details Each fit starts with unsplit trees (`max_resol = 0`). Use multiple
+#'   chains and convergence diagnostics for substantive applications. A short
+#'   successful run does not establish convergence or frequentist coverage.
+#'   Sparse overlap and complete separation can produce prior-sensitive
+#'   estimates and slow mixing. The returned intervals are pointwise;
+#'   zero inclusion does not establish equality of distributions.
+#' @return A list containing `balance_weight_BART_data`, an observations-by-draws
+#'   matrix; `forest_list`, saved forests when requested; `omega_store`,
+#'   temperature draws; and `lambda_store`, leaf-scale draws. Also includes
+#'   `tree_list`, `c`, `data_info`, and `Omega` for initialization and evaluation.
+#' @seealso [boots()], [eval_balance_weight()]
+#' @examples
+#' set.seed(2)
+#' x <- matrix(c(rnorm(20), rnorm(20, 0.5)), ncol = 1)
+#' g <- rep(0:1, each = 20)
+#' # Small API demonstration; these settings are not a convergence recommendation.
+#' fit <- batts(x, g, num_trees = 4, size_burnin = 5,
+#'              size_backfitting = 10, output_BART_ensembles = TRUE, quiet = TRUE)
+#' dim(fit$balance_weight_BART_data)
+#' @md
 #' @export
 batts = function(data,
                                      group_labels,
@@ -301,6 +391,31 @@ batts = function(data,
   return(out)
 }
 
+#' Evaluate fitted balancing weights
+#'
+#' Evaluate stored trees at points inside the fitted domain. Weights have scale
+#' w = sqrt(p/q), with group 0 in the numerator; use `2 * log(w)` for log ratios.
+#'
+#' @param list_result Result of [boots()] or [batts()].
+#' @param eval_points Finite numeric matrix with the same columns, in the same
+#'   order, as the training matrix. All points must lie inside `Omega`.
+#' @param is_Bayes Logical; additionally evaluate posterior forests. Requires
+#'   fitting with `output_BART_ensembles = TRUE`.
+#' @return A list with `balancing_weight_boosting`, a one-column numeric matrix,
+#'   and, when
+#'   `is_Bayes = TRUE`, `balancing_weight_BART`, an evaluation-points-by-draws
+#'   matrix. Both include the fitted normalization constant.
+#' @details Prediction does not draw random numbers. With `is_Bayes = TRUE`,
+#'   the boosting component describes the initialization; the posterior draws
+#'   are in `balancing_weight_BART`. Missing posterior forests cause an error.
+#' @seealso [boots()], [batts()]
+#' @examples
+#' set.seed(3)
+#' x <- matrix(c(rnorm(20), rnorm(20, 0.5)), ncol = 1)
+#' fit <- boots(x, rep(0:1, each = 20), num_trees_max = 5, quiet = TRUE)
+#' pred <- eval_balance_weight(fit, x[1:3, , drop = FALSE])
+#' pred$balancing_weight_boosting
+#' @md
 #' @export
 eval_balance_weight = function(list_result, eval_points, is_Bayes = FALSE){
 
