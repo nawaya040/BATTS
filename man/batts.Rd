@@ -64,7 +64,7 @@ draws. This must be specified explicitly.}
 iteration, including burn-in iterations.}
 
 \item{prob_moves}{Probabilities of GROW, PRUNE, and CHANGE, in that order;
-supply three positive values summing to one.}
+supply three finite positive values summing to one (tolerance 1e-12).}
 
 \item{lambda_0}{Positive leaf-prior scale per tree; ensemble scale is
 \code{num_trees * lambda_0} and remains fixed during sampling.}

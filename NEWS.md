@@ -1,3 +1,11 @@
+# BATTS 0.2.1
+
+- Reject invalid burn-in and retained-draw counts before fitting (U22).
+- Reject move probabilities outside the documented positive, length-three,
+  unit-sum contract in R and C++; the sum tolerance is 1e-12 (U23).
+- These guards preserve valid-input calculations and RNG consumption. Invalid
+  inputs now fail before fitting. Inverse-Gaussian limitation U16 is unchanged.
+
 # BATTS 0.2.0
 
 - Require a positive integer `thin` and validate prediction matrix dimensions

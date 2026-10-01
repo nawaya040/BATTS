@@ -35,6 +35,19 @@ List run_adaboost(mat X,
     Rcpp::stop("thin must be a positive integer");
   }
 
+  if(size_burnin < 0 || size_burnin == NA_INTEGER){
+    Rcpp::stop("size_burnin must be a nonnegative integer");
+  }
+  // Zero retained draws is the boosting-only path.
+  if(size_backfitting < 0 || size_backfitting == NA_INTEGER){
+    Rcpp::stop("size_backfitting must be a nonnegative integer");
+  }
+  if(size_backfitting > 0 &&
+     (prob_moves.n_elem != 3 || !prob_moves.is_finite() ||
+      arma::any(prob_moves <= 0) || std::abs(arma::sum(prob_moves) - 1.0) > 1e-12)){
+    Rcpp::stop("prob_moves must contain three finite positive probabilities summing to one");
+  }
+
   // BART starts from unsplit trees; split boosting trees can carry an
   // external normalization factor into the posterior updates.
   if(size_backfitting > 0 && max_resol != 0){

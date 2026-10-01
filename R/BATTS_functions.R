@@ -229,7 +229,7 @@ boots = function(data,
 #' @param thin Positive integer giving the number of backfitting sweeps per
 #'   iteration, including burn-in iterations.
 #' @param prob_moves Probabilities of GROW, PRUNE, and CHANGE, in that order;
-#'   supply three positive values summing to one.
+#'   supply three finite positive values summing to one (tolerance 1e-12).
 #' @param lambda_0 Positive leaf-prior scale per tree; ensemble scale is
 #'   `num_trees * lambda_0` and remains fixed during sampling.
 #' @param omega_prior_parameters Shape and rate of the Gamma prior on the
@@ -286,7 +286,9 @@ batts = function(data,
     stop("thin must be a positive integer within the supported integer range")
   }
   if(!is.numeric(size_backfitting) || length(size_backfitting) != 1L ||
+     !is.null(dim(size_backfitting)) ||
      !is.finite(size_backfitting) || size_backfitting <= 0 ||
+     size_backfitting > .Machine$integer.max ||
      size_backfitting != floor(size_backfitting)){
     stop("size_backfitting must be supplied as a positive integer for batts()")
   }
@@ -302,6 +304,17 @@ batts = function(data,
 
   if(is.null(size_burnin)){
     size_burnin = floor(size_backfitting / 2)
+  }
+  if(!is.numeric(size_burnin) || length(size_burnin) != 1L ||
+     !is.null(dim(size_burnin)) || !is.finite(size_burnin) ||
+     size_burnin < 0 || size_burnin != floor(size_burnin) ||
+     size_burnin > .Machine$integer.max){
+    stop("size_burnin must be a nonnegative integer within the supported integer range")
+  }
+  if(!is.numeric(prob_moves) || length(prob_moves) != 3L ||
+     !is.null(dim(prob_moves)) || any(!is.finite(prob_moves)) ||
+     any(prob_moves <= 0) || abs(sum(prob_moves) - 1) > 1e-12){
+    stop("prob_moves must contain three finite positive probabilities summing to one")
   }
 
   #Re-scale the data
