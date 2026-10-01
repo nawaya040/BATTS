@@ -23,8 +23,6 @@
 #' @param learn_rate Boosting shrinkage factor; use a positive value.
 #' @param n_bins Number of bins used to construct the boosting cut grid.
 #'   For root-initialized `batts`, retained for interface compatibility.
-#' @param alpha_cutpoint Positive shape parameter for cut locations; one gives
-#'   uniform candidate spacing for boosting and uniform Bayesian proposals.
 #' @param n_min_obs_per_node Minimum count from each group in a boosting child.
 #' @param n_ratio_per_node Reserved argument. Only the default `1e-100` is supported.
 #' @param margin_scale Nonnegative fraction of each training range added at both
@@ -38,7 +36,8 @@
 #'   fit `num_trees_max` trees without cross-validation. A positive value must
 #'   be an integer between two and the smaller group size. CV selects the
 #'   minimum mean held-out balancing loss.
-#' @details Candidate cuts are relative to the current node. Splits requiring
+#' @details Boosting uses uniformly spaced candidate cuts; Bayesian cut proposals
+#'   are uniform. Candidate cuts are relative to the current node. Splits requiring
 #'   children with too few observations from either group are excluded. Under
 #'   complete separation this restriction can prevent informative splits.
 #'   Forward-stagewise fits include a multiplicative normalization constant.
@@ -62,7 +61,6 @@ boots = function(data,
                      max_resol = 4,
                      learn_rate = 0.01,
                      n_bins = 32,
-                     alpha_cutpoint = 1,
                      n_min_obs_per_node = 1,
                      n_ratio_per_node = 1e-100,
                      margin_scale = 0.1,
@@ -122,7 +120,7 @@ boots = function(data,
   # make candidates for the cut points
   L_candidates_unif = seq(1/n_bins, 1 - 1/n_bins, by = 1/n_bins)
   y = L_candidates_unif / (1-L_candidates_unif)
-  L_candidates = y^(1/alpha_cutpoint) / (1 + y^(1/alpha_cutpoint))
+  L_candidates = y^(1/1) / (1 + y^(1/1))
 
   # inputs for the Bayes method
   # not used, only for avoiding errors
@@ -131,9 +129,7 @@ boots = function(data,
   thin = 1
   prob_moves = c(1/4, 1/4, 1/2)
   lambda_0 = 10
-  lambda_prior_parameters = c(1,1)
   omega_prior_parameters = c(1,1)
-  update_lambda = FALSE
   tree_priors = c(0.95,2.0)
   output_BART_ensembles = FALSE
 
@@ -161,7 +157,6 @@ boots = function(data,
                          max_resol,
                          learn_rate,
                          L_candidates,
-                         alpha_cutpoint,
                          labels_train,
                          n_min_obs_per_node,
                          n_ratio_per_node,
@@ -171,11 +166,8 @@ boots = function(data,
                          1,
                          prob_moves,
                          lambda_0,
-                         lambda_prior_parameters[1],
-                         lambda_prior_parameters[2],
                          omega_prior_parameters[1],
                          omega_prior_parameters[2],
-                         update_lambda,
                          tree_priors[1],
                          tree_priors[2],
                          FALSE,
@@ -196,7 +188,6 @@ boots = function(data,
                  max_resol,
                  learn_rate,
                  L_candidates,
-                 alpha_cutpoint,
                  rep(1, length(group_labels)),
                  n_min_obs_per_node,
                  n_ratio_per_node,
@@ -206,11 +197,8 @@ boots = function(data,
                  thin,
                  prob_moves,
                  lambda_0,
-                 lambda_prior_parameters[1],
-                 lambda_prior_parameters[2],
                  omega_prior_parameters[1],
                  omega_prior_parameters[2],
-                 update_lambda,
                  tree_priors[1],
                  tree_priors[2],
                  output_BART_ensembles,
@@ -243,12 +231,9 @@ boots = function(data,
 #' @param prob_moves Probabilities of GROW, PRUNE, and CHANGE, in that order;
 #'   supply three positive values summing to one.
 #' @param lambda_0 Positive leaf-prior scale per tree; ensemble scale is
-#'   `num_trees * lambda_0` at initialization.
-#' @param lambda_prior_parameters Shape and rate for the optional Gamma
-#'   hyperprior on the leaf-prior scale, as a positive length-two vector.
+#'   `num_trees * lambda_0` and remains fixed during sampling.
 #' @param omega_prior_parameters Shape and rate of the Gamma prior on the
 #'   loss temperature, as a positive length-two vector.
-#' @param update_lambda Logical; update the leaf-prior scale when TRUE.
 #' @param tree_priors Two tree-depth prior parameters: split probability at
 #'   depth d is `tree_priors[1] / (1 + d)^tree_priors[2]`.
 #' @param output_BART_ensembles Logical; save posterior forests for subsequent
@@ -261,7 +246,7 @@ boots = function(data,
 #'   zero inclusion does not establish equality of distributions.
 #' @return A list containing `balance_weight_BART_data`, an observations-by-draws
 #'   matrix; `forest_list`, saved forests when requested; `omega_store`,
-#'   temperature draws; and `lambda_store`, leaf-scale draws. Also includes
+#'   temperature draws; and `lambda_store`, fixed leaf-scale values. Also includes
 #'   `tree_list`, `c`, `data_info`, and `Omega` for initialization and evaluation.
 #' @seealso [boots()], [eval_balance_weight()]
 #' @examples
@@ -280,7 +265,6 @@ batts = function(data,
                                      max_resol = 0,
                                      learn_rate = 0.01,
                                      n_bins = 100, # this parameter is to be removed
-                                     alpha_cutpoint = 1,
                                      n_min_obs_per_node = 1,
                                      n_ratio_per_node = 1e-100,
                                      margin_scale = 0.1,
@@ -290,14 +274,17 @@ batts = function(data,
                                      thin = 1,
                                      prob_moves = c(1/3,1/3,1/3),
                                      lambda_0 = 5,
-                                     lambda_prior_parameters = c(1,1),
                                      omega_prior_parameters = c(1,1),
-                                     update_lambda = FALSE,
                                      tree_priors = c(0.95,2.0),
                                      output_BART_ensembles = FALSE,
                                      quiet = FALSE
 ){
 
+  if(!is.numeric(thin) || length(thin) != 1L || !is.null(dim(thin)) ||
+     !is.finite(thin) || thin < 1 || thin != floor(thin) ||
+     thin > .Machine$integer.max){
+    stop("thin must be a positive integer within the supported integer range")
+  }
   if(!is.numeric(size_backfitting) || length(size_backfitting) != 1L ||
      !is.finite(size_backfitting) || size_backfitting <= 0 ||
      size_backfitting != floor(size_backfitting)){
@@ -355,7 +342,7 @@ batts = function(data,
 
   L_candidates_unif = seq(1/n_bins, 1 - 1/n_bins, by = 1/n_bins)
   y = L_candidates_unif / (1-L_candidates_unif)
-  L_candidates = y^(1/alpha_cutpoint) / (1 + y^(1/alpha_cutpoint))
+  L_candidates = y^(1/1) / (1 + y^(1/1))
 
   #Run the preliminary boosting and the back-fitting method
   out = run_adaboost(data,
@@ -364,7 +351,6 @@ batts = function(data,
                      max_resol,
                      learn_rate,
                      L_candidates,
-                     alpha_cutpoint,
                      rep(1, length(group_labels)),
                      n_min_obs_per_node,
                      n_ratio_per_node,
@@ -374,11 +360,8 @@ batts = function(data,
                      thin,
                      prob_moves,
                      lambda_0,
-                     lambda_prior_parameters[1],
-                     lambda_prior_parameters[2],
                      omega_prior_parameters[1],
                      omega_prior_parameters[2],
-                     update_lambda,
                      tree_priors[1],
                      tree_priors[2],
                      output_BART_ensembles,
@@ -420,6 +403,11 @@ batts = function(data,
 eval_balance_weight = function(list_result, eval_points, is_Bayes = FALSE){
 
   data_info = list_result$data_info
+  if(!is.matrix(eval_points) || !is.numeric(eval_points) ||
+     ncol(eval_points) != data_info$d || nrow(eval_points) < 1L ||
+     any(!is.finite(eval_points))){
+    stop("eval_points must be a nonempty finite numeric matrix with the training column count")
+  }
 
   if(length(list_result$tree_list) == 0){
 

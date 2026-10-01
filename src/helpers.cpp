@@ -128,6 +128,12 @@ int random_number(int size){
   return num;
 }
 
+// Known numerical limitation (independent review U16, 2026-10-01): the
+// subtractive formula below can lose precision for extreme mu/lambda values,
+// producing zero or non-finite samples. The formula is retained by an explicit
+// author decision for this revision; this is not a claim of numerical safety.
+// Impact on the study's parameter range has not been established. Reassess a
+// stable algebraic implementation if impact within that range is demonstrated.
 // function to sample from the inverse Gaussian
 double rinversegauss_single(double mu, double lambda){
   

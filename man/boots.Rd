@@ -12,7 +12,6 @@ boots(
   max_resol = 4,
   learn_rate = 0.01,
   n_bins = 32,
-  alpha_cutpoint = 1,
   n_min_obs_per_node = 1,
   n_ratio_per_node = 1e-100,
   margin_scale = 0.1,
@@ -42,9 +41,6 @@ so that all initial trees are unsplit.}
 \item{n_bins}{Number of bins used to construct the boosting cut grid.
 For root-initialized \code{batts}, retained for interface compatibility.}
 
-\item{alpha_cutpoint}{Positive shape parameter for cut locations; one gives
-uniform candidate spacing for boosting and uniform Bayesian proposals.}
-
 \item{n_min_obs_per_node}{Minimum count from each group in a boosting child.}
 
 \item{n_ratio_per_node}{Reserved argument. Only the default \code{1e-100} is supported.}
@@ -69,7 +65,8 @@ Fit an additive tree estimate of the balancing weight w = sqrt(p/q).
 The full log-density ratio is obtained as \code{2 * log(w)}.
 }
 \details{
-Candidate cuts are relative to the current node. Splits requiring
+Boosting uses uniformly spaced candidate cuts; Bayesian cut proposals
+are uniform. Candidate cuts are relative to the current node. Splits requiring
 children with too few observations from either group are excluded. Under
 complete separation this restriction can prevent informative splits.
 Forward-stagewise fits include a multiplicative normalization constant.

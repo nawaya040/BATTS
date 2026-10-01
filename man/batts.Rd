@@ -11,7 +11,6 @@ batts(
   max_resol = 0,
   learn_rate = 0.01,
   n_bins = 100,
-  alpha_cutpoint = 1,
   n_min_obs_per_node = 1,
   n_ratio_per_node = 1e-100,
   margin_scale = 0.1,
@@ -21,9 +20,7 @@ batts(
   thin = 1,
   prob_moves = c(1/3, 1/3, 1/3),
   lambda_0 = 5,
-  lambda_prior_parameters = c(1, 1),
   omega_prior_parameters = c(1, 1),
-  update_lambda = FALSE,
   tree_priors = c(0.95, 2),
   output_BART_ensembles = FALSE,
   quiet = FALSE
@@ -45,9 +42,6 @@ so that all initial trees are unsplit.}
 
 \item{n_bins}{Number of bins used to construct the boosting cut grid.
 For root-initialized \code{batts}, retained for interface compatibility.}
-
-\item{alpha_cutpoint}{Positive shape parameter for cut locations; one gives
-uniform candidate spacing for boosting and uniform Bayesian proposals.}
 
 \item{n_min_obs_per_node}{Minimum count from each group in a boosting child.}
 
@@ -73,15 +67,10 @@ iteration, including burn-in iterations.}
 supply three positive values summing to one.}
 
 \item{lambda_0}{Positive leaf-prior scale per tree; ensemble scale is
-\code{num_trees * lambda_0} at initialization.}
-
-\item{lambda_prior_parameters}{Shape and rate for the optional Gamma
-hyperprior on the leaf-prior scale, as a positive length-two vector.}
+\code{num_trees * lambda_0} and remains fixed during sampling.}
 
 \item{omega_prior_parameters}{Shape and rate of the Gamma prior on the
 loss temperature, as a positive length-two vector.}
-
-\item{update_lambda}{Logical; update the leaf-prior scale when TRUE.}
 
 \item{tree_priors}{Two tree-depth prior parameters: split probability at
 depth d is \code{tree_priors[1] / (1 + d)^tree_priors[2]}.}
@@ -94,7 +83,7 @@ evaluation on new points. Training-point draws are returned in either case.}
 \value{
 A list containing \code{balance_weight_BART_data}, an observations-by-draws
 matrix; \code{forest_list}, saved forests when requested; \code{omega_store},
-temperature draws; and \code{lambda_store}, leaf-scale draws. Also includes
+temperature draws; and \code{lambda_store}, fixed leaf-scale values. Also includes
 \code{tree_list}, \code{c}, \code{data_info}, and \code{Omega} for initialization and evaluation.
 }
 \description{

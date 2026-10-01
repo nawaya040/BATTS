@@ -41,7 +41,6 @@ class_balancePM::class_balancePM(
   int max_resol,
   double learn_rate,
   vec L_candidates,
-  double alpha_cutpoint,
   ivec labels_train,
   double n_min_obs_per_node,
   double n_ratio_per_node,
@@ -51,11 +50,8 @@ class_balancePM::class_balancePM(
   int thin,
   vec prob_moves,
   double lambda_0,
-  double a_prior_lambda,
-  double b_prior_lambda,
   double a_prior_omega,
   double b_prior_omega,
-  bool update_lambda,
   double alpha_tree,
   double beta_tree,
   bool output_BART_ensembles,
@@ -67,7 +63,6 @@ class_balancePM::class_balancePM(
   max_resol(max_resol),
   learn_rate(learn_rate),
   L_candidates(L_candidates),
-  alpha_cutpoint(alpha_cutpoint),
   labels_train(labels_train),
   n_min_obs_per_node(n_min_obs_per_node),
   n_ratio_per_node(n_ratio_per_node),
@@ -77,11 +72,8 @@ class_balancePM::class_balancePM(
   thin(thin),
   prob_moves(prob_moves),
   lambda_0(lambda_0),
-  a_prior_lambda(a_prior_lambda),
-  b_prior_lambda(b_prior_lambda),
   a_prior_omega(a_prior_omega),
   b_prior_omega(b_prior_omega),
-  update_lambda(update_lambda),
   alpha_tree(alpha_tree),
   beta_tree(beta_tree),
   output_BART_ensembles(output_BART_ensembles),
@@ -1070,31 +1062,6 @@ void class_balancePM::backfitting(){
       // update omega
       update_omega();
 
-      // update lambda
-      if(update_lambda){
-        double a_post_lambda = a_prior_lambda;
-        double b_post_lambda = b_prior_lambda;
-
-        for(index_tree=0; index_tree < num_trees_generated; index_tree++){
-
-          even_or_odd = index_tree % 2;
-
-          Node* root = root_nodes[index_tree];
-
-          // collect leaf nodes
-          std::vector<Node*> leaf_nodes;
-          root->collect_leaf_nodes(leaf_nodes);
-
-          a_post_lambda += (double) leaf_nodes.size();
-
-          for(size_t i=0; i<leaf_nodes.size(); i++){
-            b_post_lambda += compute_post_b_lambda(leaf_nodes[i]);
-          }
-        }
-
-        lambda_prior = R::rgamma(a_post_lambda/2.0, 2.0/b_post_lambda);
-      }
-
       //store the result
       if(index_back > -1 && index_thin == thin - 1){
         balance_store.col(index_back) = balance_current;
@@ -1506,20 +1473,6 @@ double class_balancePM::compute_log_ML(Node* node){
   return out;
 }
 
-double class_balancePM::compute_post_b_lambda(Node* node){
-
-  double beta_sqrt_current;
-  if(even_or_odd == 0){
-    beta_sqrt_current = pow(node->beta, 0.5);
-  }else{
-    beta_sqrt_current = pow(node->beta, -0.5);
-  }
-
-  double out = pow(beta_sqrt_current-mu_prior, 2.0) / (pow(mu_prior, 2.0) * beta_sqrt_current);
-
-  return out;
-}
-
 bool class_balancePM::root_or_has_nieces(Node* node){
   if(node->parent == nullptr){
     return true;
@@ -1574,7 +1527,7 @@ void class_balancePM::clear_indices(Node* node){
 
 int class_balancePM::find_cell_x_is_in(double x, double a, double b){
   double z = (x - a) / (b - a);
-  double y = pow(z, alpha_cutpoint) / (pow(z, alpha_cutpoint) + pow(1.0-z, alpha_cutpoint));
+  double y = pow(z, 1.0) / (pow(z, 1.0) + pow(1.0-z, 1.0));
   int out = y * (double) n_cells;
 
   // sometimes out can be n_cells if it is too close to 1

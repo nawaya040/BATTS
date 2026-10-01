@@ -14,7 +14,6 @@ List run_adaboost(mat X,
               int max_resol,
               double learn_rate,
               vec L_candidates,
-              double alpha_cutpoint,
               ivec labels_train,
               double n_min_obs_per_node,
               double n_ratio_per_node,
@@ -24,16 +23,17 @@ List run_adaboost(mat X,
               int thin,
               vec prob_moves,
               double lambda_0,
-              double a_prior_lambda,
-              double b_prior_lambda,
               double a_prior_omega,
               double b_prior_omega,
-              bool update_lambda,
               double alpha_tree,
               double beta_tree,
               bool output_BART_ensembles,
               bool quiet
 ){
+
+  if(thin < 1){
+    Rcpp::stop("thin must be a positive integer");
+  }
 
   // BART starts from unsplit trees; split boosting trees can carry an
   // external normalization factor into the posterior updates.
@@ -48,7 +48,6 @@ List run_adaboost(mat X,
       max_resol,
       learn_rate,
       L_candidates,
-      alpha_cutpoint,
       labels_train,
       n_min_obs_per_node,
       n_ratio_per_node,
@@ -58,11 +57,8 @@ List run_adaboost(mat X,
       thin,
       prob_moves,
       lambda_0,
-      a_prior_lambda,
-      b_prior_lambda,
       a_prior_omega,
       b_prior_omega,
-      update_lambda,
       alpha_tree,
       beta_tree,
       output_BART_ensembles,

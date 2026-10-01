@@ -24,8 +24,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // run_adaboost
-List run_adaboost(mat X, ivec group_labels, int num_trees, int max_resol, double learn_rate, vec L_candidates, double alpha_cutpoint, ivec labels_train, double n_min_obs_per_node, double n_ratio_per_node, bool use_gradient, int size_burnin, int size_backfitting, int thin, vec prob_moves, double lambda_0, double a_prior_lambda, double b_prior_lambda, double a_prior_omega, double b_prior_omega, bool update_lambda, double alpha_tree, double beta_tree, bool output_BART_ensembles, bool quiet);
-RcppExport SEXP _BATTS_run_adaboost(SEXP XSEXP, SEXP group_labelsSEXP, SEXP num_treesSEXP, SEXP max_resolSEXP, SEXP learn_rateSEXP, SEXP L_candidatesSEXP, SEXP alpha_cutpointSEXP, SEXP labels_trainSEXP, SEXP n_min_obs_per_nodeSEXP, SEXP n_ratio_per_nodeSEXP, SEXP use_gradientSEXP, SEXP size_burninSEXP, SEXP size_backfittingSEXP, SEXP thinSEXP, SEXP prob_movesSEXP, SEXP lambda_0SEXP, SEXP a_prior_lambdaSEXP, SEXP b_prior_lambdaSEXP, SEXP a_prior_omegaSEXP, SEXP b_prior_omegaSEXP, SEXP update_lambdaSEXP, SEXP alpha_treeSEXP, SEXP beta_treeSEXP, SEXP output_BART_ensemblesSEXP, SEXP quietSEXP) {
+List run_adaboost(mat X, ivec group_labels, int num_trees, int max_resol, double learn_rate, vec L_candidates, ivec labels_train, double n_min_obs_per_node, double n_ratio_per_node, bool use_gradient, int size_burnin, int size_backfitting, int thin, vec prob_moves, double lambda_0, double a_prior_omega, double b_prior_omega, double alpha_tree, double beta_tree, bool output_BART_ensembles, bool quiet);
+RcppExport SEXP _BATTS_run_adaboost(SEXP XSEXP, SEXP group_labelsSEXP, SEXP num_treesSEXP, SEXP max_resolSEXP, SEXP learn_rateSEXP, SEXP L_candidatesSEXP, SEXP labels_trainSEXP, SEXP n_min_obs_per_nodeSEXP, SEXP n_ratio_per_nodeSEXP, SEXP use_gradientSEXP, SEXP size_burninSEXP, SEXP size_backfittingSEXP, SEXP thinSEXP, SEXP prob_movesSEXP, SEXP lambda_0SEXP, SEXP a_prior_omegaSEXP, SEXP b_prior_omegaSEXP, SEXP alpha_treeSEXP, SEXP beta_treeSEXP, SEXP output_BART_ensemblesSEXP, SEXP quietSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -35,7 +35,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type max_resol(max_resolSEXP);
     Rcpp::traits::input_parameter< double >::type learn_rate(learn_rateSEXP);
     Rcpp::traits::input_parameter< vec >::type L_candidates(L_candidatesSEXP);
-    Rcpp::traits::input_parameter< double >::type alpha_cutpoint(alpha_cutpointSEXP);
     Rcpp::traits::input_parameter< ivec >::type labels_train(labels_trainSEXP);
     Rcpp::traits::input_parameter< double >::type n_min_obs_per_node(n_min_obs_per_nodeSEXP);
     Rcpp::traits::input_parameter< double >::type n_ratio_per_node(n_ratio_per_nodeSEXP);
@@ -45,16 +44,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type thin(thinSEXP);
     Rcpp::traits::input_parameter< vec >::type prob_moves(prob_movesSEXP);
     Rcpp::traits::input_parameter< double >::type lambda_0(lambda_0SEXP);
-    Rcpp::traits::input_parameter< double >::type a_prior_lambda(a_prior_lambdaSEXP);
-    Rcpp::traits::input_parameter< double >::type b_prior_lambda(b_prior_lambdaSEXP);
     Rcpp::traits::input_parameter< double >::type a_prior_omega(a_prior_omegaSEXP);
     Rcpp::traits::input_parameter< double >::type b_prior_omega(b_prior_omegaSEXP);
-    Rcpp::traits::input_parameter< bool >::type update_lambda(update_lambdaSEXP);
     Rcpp::traits::input_parameter< double >::type alpha_tree(alpha_treeSEXP);
     Rcpp::traits::input_parameter< double >::type beta_tree(beta_treeSEXP);
     Rcpp::traits::input_parameter< bool >::type output_BART_ensembles(output_BART_ensemblesSEXP);
     Rcpp::traits::input_parameter< bool >::type quiet(quietSEXP);
-    rcpp_result_gen = Rcpp::wrap(run_adaboost(X, group_labels, num_trees, max_resol, learn_rate, L_candidates, alpha_cutpoint, labels_train, n_min_obs_per_node, n_ratio_per_node, use_gradient, size_burnin, size_backfitting, thin, prob_moves, lambda_0, a_prior_lambda, b_prior_lambda, a_prior_omega, b_prior_omega, update_lambda, alpha_tree, beta_tree, output_BART_ensembles, quiet));
+    rcpp_result_gen = Rcpp::wrap(run_adaboost(X, group_labels, num_trees, max_resol, learn_rate, L_candidates, labels_train, n_min_obs_per_node, n_ratio_per_node, use_gradient, size_burnin, size_backfitting, thin, prob_moves, lambda_0, a_prior_omega, b_prior_omega, alpha_tree, beta_tree, output_BART_ensembles, quiet));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -85,7 +81,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_BATTS_rotation_matrix", (DL_FUNC) &_BATTS_rotation_matrix, 1},
-    {"_BATTS_run_adaboost", (DL_FUNC) &_BATTS_run_adaboost, 25},
+    {"_BATTS_run_adaboost", (DL_FUNC) &_BATTS_run_adaboost, 21},
     {"_BATTS_evaluate_balance_weight_boosting", (DL_FUNC) &_BATTS_evaluate_balance_weight_boosting, 2},
     {"_BATTS_evaluate_balance_weight_BART", (DL_FUNC) &_BATTS_evaluate_balance_weight_BART, 2},
     {NULL, NULL, 0}

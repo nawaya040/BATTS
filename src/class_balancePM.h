@@ -71,7 +71,6 @@ public:
     int max_resol,
     double learn_rate,
     vec L_candidates,
-    double alpha_cutpoint,
     ivec labels_train,
     double n_min_obs_per_node,
     double n_ratio_per_node,
@@ -81,11 +80,8 @@ public:
     int thin,
     vec prob_moves,
     double lambda_0,
-    double a_prior_lambda,
-    double b_prior_lambda,
     double a_prior_omega,
     double b_prior_omega,
-    bool update_lambda,
     double alpha_tree,
     double beta_tree,
     bool output_BART_ensembles,
@@ -100,7 +96,6 @@ public:
   double learn_rate;
   double split_prob;
   vec L_candidates;
-  double alpha_cutpoint;
   ivec labels_train;
   double n_min_obs_per_node;
   double n_ratio_per_node;
@@ -115,13 +110,10 @@ public:
 
   double lambda_0;
 
-  double a_prior_lambda;
-  double b_prior_lambda;
 
   double a_prior_omega;
   double b_prior_omega;
 
-  bool update_lambda;
 
   double alpha_tree;
   double beta_tree;
@@ -269,7 +261,6 @@ public:
   bool root_or_has_nieces(Node* node);
 
   void update_omega();
-  double compute_post_b_lambda(Node* node);
 
   //miscellaneous functions
   void clear_indices(Node* node);

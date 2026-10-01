@@ -1,3 +1,15 @@
+# BATTS 0.2.0
+
+- Require a positive integer `thin` and validate prediction matrix dimensions
+  and finite values before passing data to C++ (U14, U17).
+- Breaking API change: remove `update_lambda`, `lambda_prior_parameters`, and
+  `alpha_cutpoint`. Leaf scale stays fixed at `num_trees * lambda_0`; cut
+  spacing/proposals use the previous default. Remove these named arguments
+  from existing calls. Nondefault cut grids and scale updating are no longer
+  supported. The C++ interface is regenerated with the reduced argument list.
+- Document inverse-Gaussian cancellation under extreme parameters as known
+  limitation U16; its numerical formula is unchanged by author decision.
+
 # BATTS 0.1.0
 
 Official distribution: https://github.com/nawaya040/BATTS.

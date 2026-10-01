@@ -1,3 +1,27 @@
+# API review validation, 2026-10-01
+
+BATTS 0.2.0 removes update_lambda, its lambda_prior_parameters, and
+alpha_cutpoint. Removed names now fail as unused arguments. Calls using
+positional arguments must be updated to the documented 0.2.0 signature;
+named arguments are recommended. Nondefault cut spacing is no longer available.
+The fixed leaf scale remains num_trees * lambda_0; lambda_store is retained
+for output compatibility and contains fixed values.
+
+Validation against BATTS 0.1.0 (ceb5fb6): six fixed-seed 2D small fits,
+balanced 40/40 and unbalanced 60/20, each with GB, FS and BAT. Entire fit
+objects, predictions, and final RNG states were exactly identical. Both
+versions used R 4.5.2, GCC 14.3.0, Rcpp 1.1.1.1 and RcppArmadillo 14.4.1.1.
+Existing regression tests and tests/review-api.R passed, covering invalid
+thin values, valid thin=1/2, fixed scale, prediction shapes/nonfinite inputs,
+removed public arguments and native zero-thin rejection.
+
+U16 remains a known numerical limitation, with the original formula retained
+by author decision. It is documented in src/helpers.cpp, not marked fixed.
+These small tests do not establish MCMC convergence or full-study equivalence.
+Rollback is the 0.1.0 commit above, together with its matching simulation API.
+
+## Earlier validation record
+
 # BATTS 0.1.0 validation
 
 Validation date: 2026-10-01 (JST).
