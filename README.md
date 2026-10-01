@@ -17,20 +17,36 @@ install_github("nawaya040/BATTS")
 
 ## Releases and reproducibility
 
-The official distribution for this release is
-[nawaya040/BATTS](https://github.com/nawaya040/BATTS). The default `main`
-branch contains integrated package code. For a reproducible installation,
-pin the release instead of following a moving branch:
+The official distribution is
+[nawaya040/BATTS](https://github.com/nawaya040/BATTS). Version 0.2.1 adds
+input validation for burn-in counts and move probabilities. Valid-input
+calculations are preserved; invalid inputs are rejected before fitting.
 
-```r
-remotes::install_github("nawaya040/BATTS@v0.1.0", upgrade = "never")
+For paper reproduction, use the exact BATTS commit recorded in the chosen
+[simulation repository](https://github.com/nawaya040/BATTS_simulation_study)
+checkout. From that checkout's root, the supported environment bootstrap is:
+
+```text
+Rscript scripts/prepare_environment.R --install=true --r-lib=.Rlib
 ```
 
+For a package-only installation using the same pin, run from that simulation
+checkout's root in a fresh R session:
+
+```r
+source("config/study.R")
+batts_sha <- study_config("smoke")$batts_sha
+stopifnot(grepl("^[0-9a-f]{40}$", batts_sha))
+remotes::install_github(paste0("nawaya040/BATTS@", batts_sha), upgrade = "never")
+```
+
+The smoke and paper profiles use the same dependency commit. Record the
+simulation commit as well; selecting a moving branch does not freeze it.
 Building from source requires a C++17 toolchain (Rtools on Windows).
-Version 0.1.0 incorporates the fixes in development commit `909ea357`;
-it can give different numerical results and RNG streams from the former
-`main` at `6f625ba`. See [NEWS.md](NEWS.md) for details. Package version,
-commit, dependency versions, settings and seeds should accompany each run.
+Version 0.2.0 removed `update_lambda`, `lambda_prior_parameters`, and
+`alpha_cutpoint`; remove these named arguments from older calls. See
+[NEWS.md](NEWS.md) for numerical changes in earlier versions. Package commit,
+dependency versions, settings and seeds should accompany each run.
 
 This repository contains the estimator package, documentation, small examples
 and regression tests. Paper-scale simulations, comparator configurations,
