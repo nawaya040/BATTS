@@ -32,7 +32,7 @@ List evaluate_balance_weight_boosting(List tree_list, mat eval_points){
   for(int index_tree = 0; index_tree<num_trees; index_tree++){
 
     //reconstruct a tree
-    Node* root = get_root_node();
+    PredictionNode* root = get_root_node();
 
     construct_tree(root, tree_list[index_tree]);
 
@@ -85,7 +85,7 @@ List evaluate_balance_weight_BART(List forest_list, mat eval_points){
     for(int index_tree = 0; index_tree<num_trees; index_tree++){
 
       //reconstruct a tree
-      Node* root = get_root_node();
+      PredictionNode* root = get_root_node();
       construct_tree(root, tree_list[index_tree]);
 
       //evaluate densities
@@ -122,9 +122,9 @@ List evaluate_balance_weight_BART(List forest_list, mat eval_points){
 // Tree functions
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Node* get_root_node(){
+PredictionNode* get_root_node(){
 
-  Node* new_node = new Node;
+  PredictionNode* new_node = new PredictionNode;
 
   new_node->depth = 0;
 
@@ -147,7 +147,7 @@ Node* get_root_node(){
 }
 
 
-Node* get_new_node(Node* parent, bool this_is_left, int dim_selected, double location){
+PredictionNode* get_new_node(PredictionNode* parent, bool this_is_left, int dim_selected, double location){
   //To the parent node, input the information on how this node is split
   //(Note: this step is redundant since we basically do the same thing twice.
   //       But the computation cost to create a new node can be ignored, so the problem does not need to be fixed immediately)
@@ -163,7 +163,7 @@ Node* get_new_node(Node* parent, bool this_is_left, int dim_selected, double loc
   parent->partition_point = left + location * (right - left);
 
   //Make a new child node
-  Node* new_node = new Node;
+  PredictionNode* new_node = new PredictionNode;
   new_node->depth = parent->depth+1;
 
   new_node->left_points = parent->left_points;
@@ -192,17 +192,17 @@ Node* get_new_node(Node* parent, bool this_is_left, int dim_selected, double loc
 
 
 
-void construct_tree(Node* node, List tree_current){
+void construct_tree(PredictionNode* node, List tree_current){
 
   ivec d_store = tree_current["d"];
   vec l_store = tree_current["l"];
   vec beta_store = tree_current["beta"];
 
   //Make a stack for nodes
-  std::stack<Node*> stack_tree;
+  std::stack<PredictionNode*> stack_tree;
 
   //current node
-  Node* curr = node;
+  PredictionNode* curr = node;
   int index_node = 0;
 
   while(curr != nullptr || stack_tree.empty() == false){
@@ -243,10 +243,10 @@ void construct_tree(Node* node, List tree_current){
 
 }
 
-double evaluate_density(Node* root, vec& x){
+double evaluate_density(PredictionNode* root, vec& x){
 
   //finde a terminal node that x belongs to
-  Node* curr = find_terminal_node(root, x);
+  PredictionNode* curr = find_terminal_node(root, x);
 
   double dens_curr = curr->beta;
 
@@ -255,9 +255,9 @@ double evaluate_density(Node* root, vec& x){
 }
 
 
-Node* find_terminal_node(Node* root, vec& x){
+PredictionNode* find_terminal_node(PredictionNode* root, vec& x){
 
-  Node* curr = root;
+  PredictionNode* curr = root;
 
   while(curr->left != nullptr){
     int dim_selected = curr->dim_selected;
@@ -279,13 +279,13 @@ Node* find_terminal_node(Node* root, vec& x){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-void clear_node(Node* root){
+void clear_node(PredictionNode* root){
 
   //Make a stack for nodes
-  std::stack<Node*> stack_tree;
+  std::stack<PredictionNode*> stack_tree;
 
   //current node
-  Node* curr = root;
+  PredictionNode* curr = root;
 
   while(curr != nullptr || stack_tree.empty() == false){
 
@@ -298,8 +298,8 @@ void clear_node(Node* root){
     curr = stack_tree.top();
     stack_tree.pop();
 
-    Node* curr_old = curr;
-    Node* curr_new = curr->right;
+    PredictionNode* curr_old = curr;
+    PredictionNode* curr_new = curr->right;
 
     delete curr_old;
 
@@ -310,7 +310,7 @@ void clear_node(Node* root){
 }
  */
 
-void clear_node(Node* root){
+void clear_node(PredictionNode* root){
 
   if(root == nullptr){
     return;

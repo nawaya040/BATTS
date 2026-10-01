@@ -8,7 +8,7 @@ using namespace Rcpp;
 using namespace arma;
 using namespace std;
 
-struct Node
+struct PredictionNode
 {
   unsigned int node_id; //1(=root),2,3,...
   //maybe not necessary?
@@ -27,10 +27,10 @@ struct Node
   double beta; // beta (necessary only for the terminal nodes)
 
   //pointers of the parent and children nodes
-  Node* left;
-  Node* right;
+  PredictionNode* left;
+  PredictionNode* right;
 
-  ~Node() {
+  ~PredictionNode() {
     // just in case 1
     left_points.reset();
     right_points.reset();
@@ -46,20 +46,20 @@ struct Node
 List evaluate_log_density(List tree_list, mat eval_points);
 
 mat simulation(List tree_list, int size_simulation, mat support);
-vec update_vec(Node* node, vec& x);
+vec update_vec(PredictionNode* node, vec& x);
 //List evaluate_utility(List tree_list, mat eval_points, mat support);
 
 //Tree functions
-Node* get_root_node();
-Node* get_new_node(Node* parent, bool this_is_left, int dim_selected, double location);
+PredictionNode* get_root_node();
+PredictionNode* get_new_node(PredictionNode* parent, bool this_is_left, int dim_selected, double location);
 
-void construct_tree(Node* node, List tree_current);
+void construct_tree(PredictionNode* node, List tree_current);
 
-double evaluate_density(Node* root, vec& x);
+double evaluate_density(PredictionNode* root, vec& x);
 
-Node* find_terminal_node(Node* root, vec& x);
+PredictionNode* find_terminal_node(PredictionNode* root, vec& x);
 
 //for clearning
-void clear_node(Node* root);
+void clear_node(PredictionNode* root);
 
 #endif
