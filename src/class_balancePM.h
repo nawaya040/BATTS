@@ -85,7 +85,8 @@ public:
     double alpha_tree,
     double beta_tree,
     bool output_BART_ensembles,
-    bool quiet
+    bool quiet,
+    imat subsample_indices
   );
 
   //Input information
@@ -187,6 +188,17 @@ public:
   uvec indices_not_used;
 
   int size_subsample;
+
+  // optional per-tree subsamples of the training set (0-based, one column
+  // per tree); an empty matrix means every tree uses the whole training set
+  imat subsample_indices;
+  bool use_subsample;
+
+  // observations used to construct the current tree
+  uvec indices_tree;
+  int size_tree;
+  int n0_tree;
+  int n1_tree;
 
   double mu_prior;
   double lambda_prior;

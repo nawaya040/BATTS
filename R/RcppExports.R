@@ -5,8 +5,8 @@ rotation_matrix <- function(n) {
     .Call(`_BATTS_rotation_matrix`, n)
 }
 
-run_adaboost <- function(X, group_labels, num_trees, max_resol, learn_rate, L_candidates, labels_train, n_min_obs_per_node, n_ratio_per_node, use_gradient, size_burnin, size_backfitting, thin, prob_moves, lambda_0, a_prior_omega, b_prior_omega, alpha_tree, beta_tree, output_BART_ensembles, quiet) {
-    .Call(`_BATTS_run_adaboost`, X, group_labels, num_trees, max_resol, learn_rate, L_candidates, labels_train, n_min_obs_per_node, n_ratio_per_node, use_gradient, size_burnin, size_backfitting, thin, prob_moves, lambda_0, a_prior_omega, b_prior_omega, alpha_tree, beta_tree, output_BART_ensembles, quiet)
+run_adaboost <- function(X, group_labels, num_trees, max_resol, learn_rate, L_candidates, labels_train, n_min_obs_per_node, n_ratio_per_node, use_gradient, size_burnin, size_backfitting, thin, prob_moves, lambda_0, a_prior_omega, b_prior_omega, alpha_tree, beta_tree, output_BART_ensembles, quiet, subsample_indices) {
+    .Call(`_BATTS_run_adaboost`, X, group_labels, num_trees, max_resol, learn_rate, L_candidates, labels_train, n_min_obs_per_node, n_ratio_per_node, use_gradient, size_burnin, size_backfitting, thin, prob_moves, lambda_0, a_prior_omega, b_prior_omega, alpha_tree, beta_tree, output_BART_ensembles, quiet, subsample_indices)
 }
 
 evaluate_balance_weight_boosting <- function(tree_list, eval_points) {

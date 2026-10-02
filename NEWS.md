@@ -1,3 +1,15 @@
+# BATTS 0.2.2
+
+- Add `subsample_fraction` to `boots()` (default `1`, unchanged behavior and
+  RNG use). A value below one builds each tree from a random subsample of
+  `ceiling(subsample_fraction * m)` training observations, drawn as in `ada`
+  with `bag.frac`: one observation per group, the rest uniformly without
+  replacement regardless of group. Splits, gradients and leaf values use the
+  subsample; all weights are updated, and the forward-stagewise normalization
+  and CV losses use the whole training set and held-out folds, respectively.
+- The internal `run_adaboost()` entry point takes the per-tree subsample
+  indices as an additional argument; `batts()` does not subsample.
+
 # BATTS 0.2.1
 
 - Reject invalid burn-in and retained-draw counts before fitting (U22).

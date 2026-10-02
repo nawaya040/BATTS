@@ -55,7 +55,8 @@ class_balancePM::class_balancePM(
   double alpha_tree,
   double beta_tree,
   bool output_BART_ensembles,
-  bool quiet
+  bool quiet,
+  imat subsample_indices
 ):
   X(X),
   group_labels(group_labels),
@@ -77,7 +78,8 @@ class_balancePM::class_balancePM(
   alpha_tree(alpha_tree),
   beta_tree(beta_tree),
   output_BART_ensembles(output_BART_ensembles),
-  quiet(quiet)
+  quiet(quiet),
+  subsample_indices(subsample_indices)
 {
   init();
 }
@@ -138,7 +140,7 @@ void class_balancePM::init(){ //Initialization
   // vector to store the current gradients (necessary if we use the gradient boosting)
   gradient_current = zeros(n);
 
-  // subsample the data every iteration
+  // number of observations in the training set
   size_subsample = sum(labels_train);
 
   // check which observations are in the training or test (validation) set
@@ -164,6 +166,36 @@ void class_balancePM::init(){ //Initialization
         n1_validation += 1;
       }else{
         n1_learn += 1;
+      }
+    }
+  }
+
+  // check the optional per-tree subsamples of the training set
+  use_subsample = subsample_indices.n_elem > 0;
+  if(use_subsample){
+    if((int) subsample_indices.n_cols != num_trees){
+      Rcpp::stop("subsample_indices must have one column per tree");
+    }
+    for(uword m=0; m<subsample_indices.n_cols; m++){
+      ivec column_m = sort(subsample_indices.col(m));
+      bool has_0 = false;
+      bool has_1 = false;
+      for(uword i=0; i<column_m.n_elem; i++){
+        int index = column_m(i);
+        if(index < 0 || index >= n || labels_train(index) != 1){
+          Rcpp::stop("subsample_indices must index training observations");
+        }
+        if(i > 0 && column_m(i - 1) == index){
+          Rcpp::stop("subsample_indices must not repeat an observation within a tree");
+        }
+        if(group_labels(index) == 0){
+          has_0 = true;
+        }else{
+          has_1 = true;
+        }
+      }
+      if(!has_0 || !has_1){
+        Rcpp::stop("each subsample must contain both groups");
       }
     }
   }
@@ -204,8 +236,8 @@ Node* class_balancePM::get_root_node(){
 
   new_node->loss = 0.0; //Not registered
 
-  for(int i=0; i<size_subsample; i++){
-    new_node->indices.push_back(indices_used(i));
+  for(int i=0; i<size_tree; i++){
+    new_node->indices.push_back(indices_tree(i));
   }
 
   return new_node;
@@ -309,14 +341,35 @@ void class_balancePM::do_boosting(){
 
   for(index_tree=0; index_tree < num_trees; index_tree++){
 
+    //choose the observations used in constructing the tree:
+    //the whole training set, or this tree's subsample of it
+    if(use_subsample){
+      indices_tree = sort(arma::conv_to<uvec>::from(subsample_indices.col(index_tree)));
+      size_tree = indices_tree.n_elem;
+      n0_tree = 0;
+      n1_tree = 0;
+      for(int i=0; i<size_tree; i++){
+        if(group_labels(indices_tree(i)) == 0){
+          n0_tree += 1;
+        }else{
+          n1_tree += 1;
+        }
+      }
+    }else{
+      indices_tree = indices_used;
+      size_tree = size_subsample;
+      n0_tree = n0_learn;
+      n1_tree = n1_learn;
+    }
+
     //compute the sum of the balancing weights for the two groups
     //they are necessary to obtain the beta
     //note: need to focus on the observations used in constructing the tree
     sum_balance_inv_0 = 0.0;
     sum_balance_1 = 0.0;
 
-    for(int i=0; i<size_subsample; i++){
-      uword index = indices_used(i);
+    for(int i=0; i<size_tree; i++){
+      uword index = indices_tree(i);
 
       if(group_labels(index) == 0){
         sum_balance_inv_0 += balance_inv_current(index);
@@ -331,14 +384,14 @@ void class_balancePM::do_boosting(){
 
     gradient_current.fill(0.0);
 
-      for(int i=0; i<size_subsample; i++){
-        uword index = indices_used(i);
+      for(int i=0; i<size_tree; i++){
+        uword index = indices_tree(i);
 
         // multiply n to control the scale (we don't in this version)
         if(group_labels(index) == 0){;
-          gradient_current(index) = - balance_inv_current(index) / (double) n0_learn ;
+          gradient_current(index) = - balance_inv_current(index) / (double) n0_tree ;
         }else{
-          gradient_current(index) = balance_current(index) / (double) n1_learn;
+          gradient_current(index) = balance_current(index) / (double) n1_tree;
         }
       }
     }
@@ -351,8 +404,8 @@ void class_balancePM::do_boosting(){
     if(!use_gradient){
       root->loss = 1.0;
     }else{
-      root->loss = sum(gradient_current % gradient_current) / (double) size_subsample
-                        - pow(sum(gradient_current) / (double) size_subsample, 2.0);
+      root->loss = sum(gradient_current % gradient_current) / (double) size_tree
+                        - pow(sum(gradient_current) / (double) size_tree, 2.0);
     }
 
 
@@ -369,6 +422,7 @@ void class_balancePM::do_boosting(){
 
     // normalize the balancing weights
     // to this end, we need to calculate the sum of the balancing weights again
+    // (over the whole training set, also when the tree uses a subsample)
 
     // Gradient boosting intentionally omits multiplicative normalization;
     // only the Hellinger-based method applies it.
@@ -807,7 +861,7 @@ void class_balancePM::compute_beta(Node* node){
   if(sum_inv_A_0 == 0 || sum_A_1 == 0){
     beta = 1.0;
   }else{
-    double beta_opt = (sum_inv_A_0 / (double) n0_learn) / (sum_A_1  / (double) n1_learn);
+    double beta_opt = (sum_inv_A_0 / (double) n0_tree) / (sum_A_1  / (double) n1_tree);
 
     beta = pow(beta_opt, learn_rate);
   }

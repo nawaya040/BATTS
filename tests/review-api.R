@@ -35,6 +35,6 @@ for (thin in c(1L,2L)) {
 }
 # The internal native entry point also rejects zero thinning before fitting.
 expect_error(BATTS:::run_adaboost(x,g,3L,0L,0.01,c(.25,.5,.75),rep(1L,24),
-  1,1e-100,FALSE,2L,4L,0L,c(1/3,1/3,1/3),5,1,1,.95,2,FALSE,TRUE),
+  1,1e-100,FALSE,2L,4L,0L,c(1/3,1/3,1/3),5,1,1,.95,2,FALSE,TRUE,matrix(0L,0,0)),
   'thin must be a positive integer')
 cat('U14/U17 input checks and removed API tests passed.\n')

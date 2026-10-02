@@ -16,7 +16,8 @@ boots(
   n_ratio_per_node = 1e-100,
   margin_scale = 0.1,
   use_gradient = FALSE,
-  quiet = FALSE
+  quiet = FALSE,
+  subsample_fraction = 1
 )
 }
 \arguments{
@@ -53,6 +54,13 @@ requires that the supplied data already lie in that box.}
 forward-stagewise boosting when FALSE. Initialization in \code{batts} is unsplit.}
 
 \item{quiet}{Logical; suppress progress messages.}
+
+\item{subsample_fraction}{Fraction of the training observations used to
+construct each tree, in (0, 1]. The default \code{1} uses all of them. With a
+smaller value, each tree uses \code{ceiling(subsample_fraction * m)} of the \code{m}
+training observations (the CV training folds, or all data for the final
+fit), drawn as in \code{ada} with \code{bag.frac}: one observation from each group,
+and the rest uniformly without replacement regardless of group.}
 }
 \value{
 A list containing \code{balance_weight_boosting_data} (training weights),
@@ -70,6 +78,11 @@ are uniform. Candidate cuts are relative to the current node. Splits requiring
 children with too few observations from either group are excluded. Under
 complete separation this restriction can prevent informative splits.
 Forward-stagewise fits include a multiplicative normalization constant.
+With subsampling, splits, gradients, and leaf values use the tree's
+subsample, while the balancing weights of all observations are updated and
+the forward-stagewise normalization uses the whole training set. CV losses
+are evaluated on the held-out folds. Subsampling uses the R random number
+generator; the default \code{subsample_fraction = 1} does not.
 }
 \examples{
 set.seed(1)

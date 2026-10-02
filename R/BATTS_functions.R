@@ -9,6 +9,41 @@
   }
 }
 
+.validate_subsample_fraction = function(subsample_fraction){
+  if(!is.numeric(subsample_fraction) || length(subsample_fraction) != 1L ||
+     !is.null(dim(subsample_fraction)) || !is.finite(subsample_fraction) ||
+     subsample_fraction <= 0 || subsample_fraction > 1){
+    stop("subsample_fraction must be a single number in (0, 1]")
+  }
+}
+
+# Draw the per-tree subsamples of the training set as in ada (bag.frac):
+# one observation from each group, and the rest uniformly without replacement
+# from the remaining training observations, regardless of group.
+# Returns 0-based indices with one column per tree, or an empty matrix when
+# subsample_fraction is one (no subsampling and no RNG use).
+.draw_subsamples = function(group_labels, labels_train, num_trees, subsample_fraction){
+  if(subsample_fraction == 1){
+    return(matrix(0L, nrow = 0, ncol = 0))
+  }
+  train = which(labels_train == 1)
+  train_0 = train[group_labels[train] == 0]
+  train_1 = train[group_labels[train] == 1]
+  size = ceiling(subsample_fraction * length(train) - sqrt(.Machine$double.eps))
+  if(size < 2){
+    stop("subsample_fraction leaves fewer than two training observations per tree")
+  }
+  out = vapply(seq_len(num_trees), function(m){
+    forced = c(train_0[sample.int(length(train_0), 1L)],
+               train_1[sample.int(length(train_1), 1L)])
+    rest = train[!train %in% forced]
+    sort(c(rest[sample.int(length(rest), size - 2L)], forced))
+  }, integer(size))
+  out = matrix(out, nrow = size, ncol = num_trees)
+  storage.mode(out) = "integer"
+  out - 1L
+}
+
 #' Boosting for a two-sample density ratio
 #'
 #' Fit an additive tree estimate of the balancing weight w = sqrt(p/q).
@@ -31,6 +66,12 @@
 #' @param use_gradient Logical; use gradient boosting when TRUE and
 #'   forward-stagewise boosting when FALSE. Initialization in `batts` is unsplit.
 #' @param quiet Logical; suppress progress messages.
+#' @param subsample_fraction Fraction of the training observations used to
+#'   construct each tree, in (0, 1]. The default `1` uses all of them. With a
+#'   smaller value, each tree uses `ceiling(subsample_fraction * m)` of the `m`
+#'   training observations (the CV training folds, or all data for the final
+#'   fit), drawn as in `ada` with `bag.frac`: one observation from each group,
+#'   and the rest uniformly without replacement regardless of group.
 #' @param num_trees_max Maximum number of boosting trees.
 #' @param K_CV Number of group-stratified cross-validation folds, or zero to
 #'   fit `num_trees_max` trees without cross-validation. A positive value must
@@ -41,6 +82,11 @@
 #'   children with too few observations from either group are excluded. Under
 #'   complete separation this restriction can prevent informative splits.
 #'   Forward-stagewise fits include a multiplicative normalization constant.
+#'   With subsampling, splits, gradients, and leaf values use the tree's
+#'   subsample, while the balancing weights of all observations are updated and
+#'   the forward-stagewise normalization uses the whole training set. CV losses
+#'   are evaluated on the held-out folds. Subsampling uses the R random number
+#'   generator; the default `subsample_fraction = 1` does not.
 #' @return A list containing `balance_weight_boosting_data` (training weights),
 #'   `tree_list` (fitted trees), `c` (normalization), `data_info` (training
 #'   domain and group sizes), and `Omega` (domain bounds). With CV, also
@@ -65,9 +111,11 @@ boots = function(data,
                      n_ratio_per_node = 1e-100,
                      margin_scale = 0.1,
                      use_gradient = FALSE,
-                     quiet = FALSE
+                     quiet = FALSE,
+                     subsample_fraction = 1
                      ){
 
+  .validate_subsample_fraction(subsample_fraction)
   if(!is.numeric(n_ratio_per_node) || length(n_ratio_per_node) != 1L ||
      !is.finite(n_ratio_per_node) || n_ratio_per_node != 1e-100){
     stop("n_ratio_per_node is not implemented; use its default value")
@@ -150,6 +198,9 @@ boots = function(data,
       labels_train = numeric(length(group_labels))
       labels_train[which(labels_CV != k)] = 1
 
+      subsample_indices = .draw_subsamples(group_labels, labels_train,
+                                           num_trees_max, subsample_fraction)
+
       # boosting
       out_CV = run_adaboost(data,
                          group_labels,
@@ -171,7 +222,8 @@ boots = function(data,
                          tree_priors[1],
                          tree_priors[2],
                          FALSE,
-                         TRUE
+                         TRUE,
+                         subsample_indices
       )
 
       loss_CV_store[k,] = out_CV$loss_curve
@@ -180,6 +232,9 @@ boots = function(data,
     num_trees_opt = which.min(colMeans(loss_CV_store))
 
   }
+
+  subsample_indices = .draw_subsamples(group_labels, rep(1, length(group_labels)),
+                                       num_trees_opt, subsample_fraction)
 
   #Run boosting
   out = run_adaboost(data,
@@ -202,7 +257,8 @@ boots = function(data,
                  tree_priors[1],
                  tree_priors[2],
                  output_BART_ensembles,
-                 quiet
+                 quiet,
+                 subsample_indices
   )
 
   out$data_info = data_info
@@ -378,7 +434,8 @@ batts = function(data,
                      tree_priors[1],
                      tree_priors[2],
                      output_BART_ensembles,
-                     quiet
+                     quiet,
+                     matrix(0L, nrow = 0, ncol = 0)
   )
 
   out$data_info = data_info

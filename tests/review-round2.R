@@ -16,7 +16,7 @@ for (bad in bad_moves)
   expect_reject(batts(x,g,size_backfitting=4,prob_moves=bad), 'prob_moves must')
 native <- function(burn=0L, moves=c(1/3,1/3,1/3), draws=4L)
   BATTS:::run_adaboost(x,g,2L,0L,.01,c(.25,.5,.75),rep(1L,24),1,1e-100,FALSE,
-    burn,draws,1L,moves,5,1,1,.95,2,FALSE,TRUE)
+    burn,draws,1L,moves,5,1,1,.95,2,FALSE,TRUE,matrix(0L,0,0))
 expect_reject(native(burn=-1L),'size_burnin must')
 expect_reject(native(burn=NA_integer_),'size_burnin must')
 expect_reject(native(draws=-1L),'size_backfitting must')

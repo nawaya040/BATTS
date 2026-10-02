@@ -28,7 +28,8 @@ List run_adaboost(mat X,
               double alpha_tree,
               double beta_tree,
               bool output_BART_ensembles,
-              bool quiet
+              bool quiet,
+              imat subsample_indices
 ){
 
   if(thin < 1){
@@ -75,7 +76,8 @@ List run_adaboost(mat X,
       alpha_tree,
       beta_tree,
       output_BART_ensembles,
-      quiet
+      quiet,
+      subsample_indices
   );
 
   my_boosting.do_boosting();
