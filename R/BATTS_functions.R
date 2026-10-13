@@ -67,17 +67,23 @@
 #'   forward-stagewise boosting when FALSE. Initialization in `batts` is unsplit.
 #' @param quiet Logical; suppress progress messages.
 #' @param subsample_fraction Fraction of the training observations used to
-#'   construct each tree, in (0, 1]. The default `1` uses all of them. With a
-#'   smaller value, each tree uses `ceiling(subsample_fraction * m)` of the `m`
-#'   training observations (the CV training folds, or all data for the final
-#'   fit), drawn as in `ada` with `bag.frac`: one observation from each group,
-#'   and the rest uniformly without replacement regardless of group.
+#'   construct each tree, in (0, 1]. With the default `0.5`, each tree uses
+#'   `ceiling(subsample_fraction * m)` of the `m` training observations (the CV
+#'   training folds, or all data for the final fit), drawn as in `ada` with
+#'   `bag.frac`: one observation from each group, and the rest uniformly
+#'   without replacement regardless of group. `1` uses all of them.
 #' @param num_trees_max Maximum number of boosting trees.
 #' @param K_CV Number of group-stratified cross-validation folds, or zero to
 #'   fit `num_trees_max` trees without cross-validation. A positive value must
 #'   be an integer between two and the smaller group size. CV selects the
 #'   minimum mean held-out balancing loss.
-#' @details Boosting uses uniformly spaced candidate cuts; Bayesian cut proposals
+#' @details The defaults (gradient boosting with at most 1000 trees selected by
+#'   5-fold CV, depth 4, learning rate 0.01, 32 bins, margin 0.1 and per-tree
+#'   subsampling of one half) are the settings of the paper's simulations.
+#'   Set the seed before fitting; CV folds and subsamples use the R random
+#'   number generator.
+#'
+#'   Boosting uses uniformly spaced candidate cuts; Bayesian cut proposals
 #'   are uniform. Candidate cuts are relative to the current node. Splits requiring
 #'   children with too few observations from either group are excluded. Under
 #'   complete separation this restriction can prevent informative splits.
@@ -86,7 +92,7 @@
 #'   subsample, while the balancing weights of all observations are updated and
 #'   the forward-stagewise normalization uses the whole training set. CV losses
 #'   are evaluated on the held-out folds. Subsampling uses the R random number
-#'   generator; the default `subsample_fraction = 1` does not.
+#'   generator; `subsample_fraction = 1` does not.
 #' @return A list containing `balance_weight_boosting_data` (training weights),
 #'   `tree_list` (fitted trees), `c` (normalization), `data_info` (training
 #'   domain and group sizes), and `Omega` (domain bounds). With CV, also
@@ -102,17 +108,17 @@
 #' @export
 boots = function(data,
                      group_labels,
-                     num_trees_max = 100,
-                     K_CV = 0 ,
+                     num_trees_max = 1000,
+                     K_CV = 5,
                      max_resol = 4,
                      learn_rate = 0.01,
                      n_bins = 32,
                      n_min_obs_per_node = 1,
                      n_ratio_per_node = 1e-100,
                      margin_scale = 0.1,
-                     use_gradient = FALSE,
+                     use_gradient = TRUE,
                      quiet = FALSE,
-                     subsample_fraction = 1
+                     subsample_fraction = 0.5
                      ){
 
   .validate_subsample_fraction(subsample_fraction)
@@ -278,10 +284,9 @@ boots = function(data,
 #'
 #' @inheritParams boots
 #' @param num_trees Number of trees in the Bayesian ensemble.
-#' @param size_burnin Number of discarded backfitting iterations. Defaults to
-#'   `floor(size_backfitting / 2)`; supply a nonnegative integer.
-#' @param size_backfitting Required positive integer giving the number of saved
-#'   draws. This must be specified explicitly.
+#' @param size_burnin Nonnegative integer number of discarded backfitting
+#'   iterations (default 2000). `NULL` uses `floor(size_backfitting / 2)`.
+#' @param size_backfitting Positive integer number of saved draws (default 1000).
 #' @param thin Positive integer giving the number of backfitting sweeps per
 #'   iteration, including burn-in iterations.
 #' @param prob_moves Probabilities of GROW, PRUNE, and CHANGE, in that order;
@@ -294,7 +299,10 @@ boots = function(data,
 #'   depth d is `tree_priors[1] / (1 + d)^tree_priors[2]`.
 #' @param output_BART_ensembles Logical; save posterior forests for subsequent
 #'   evaluation on new points. Training-point draws are returned in either case.
-#' @details Each fit starts with unsplit trees (`max_resol = 0`). Use multiple
+#' @details The defaults (200 trees, 2000 burn-in iterations, 1000 saved draws,
+#'   `lambda_0 = 5` and margin 0.1) are the settings of the paper's simulations.
+#'
+#'   Each fit starts with unsplit trees (`max_resol = 0`). Use multiple
 #'   chains and convergence diagnostics for substantive applications. A short
 #'   successful run does not establish convergence or frequentist coverage.
 #'   Sparse overlap and complete separation can produce prior-sensitive
@@ -317,7 +325,7 @@ boots = function(data,
 #' @export
 batts = function(data,
                                      group_labels,
-                                     num_trees = 100,
+                                     num_trees = 200,
                                      max_resol = 0,
                                      learn_rate = 0.01,
                                      n_bins = 100, # this parameter is to be removed
@@ -325,8 +333,8 @@ batts = function(data,
                                      n_ratio_per_node = 1e-100,
                                      margin_scale = 0.1,
                                      use_gradient = FALSE,
-                                     size_burnin = NULL,
-                                     size_backfitting = NULL,
+                                     size_burnin = 2000,
+                                     size_backfitting = 1000,
                                      thin = 1,
                                      prob_moves = c(1/3,1/3,1/3),
                                      lambda_0 = 5,

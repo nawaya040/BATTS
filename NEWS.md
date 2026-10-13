@@ -1,3 +1,20 @@
+# BATTS 0.3.0
+
+- The defaults of `boots()` and `batts()` are now the settings of the paper's
+  simulations. `boots()`: gradient boosting (`use_gradient = TRUE`), at most
+  1000 trees (`num_trees_max`) selected by 5-fold CV (`K_CV = 5`) and per-tree
+  subsampling of one half (`subsample_fraction = 0.5`); depth 4, learning rate
+  0.01, 32 bins and margin 0.1 are unchanged. `batts()`: 200 trees
+  (`num_trees`), 2000 burn-in iterations (`size_burnin`) and 1000 saved draws
+  (`size_backfitting`, previously required); the other defaults are unchanged.
+- Calls that relied on the previous defaults now give different results and
+  use the random number generator for CV folds and subsamples. Supply the
+  previous values explicitly to keep earlier behaviour. Estimation code is
+  unchanged; fits with the same explicit settings are identical to 0.2.2.
+- The paper's simulations used 0.2.2 (tag `v0.2.2`) with explicit settings.
+- The README example and `example.R` use the new defaults, with a shorter
+  MCMC run (500 burn-in iterations and 500 draws) for a quick demonstration.
+
 # BATTS 0.2.2
 
 - Add `subsample_fraction` to `boots()` (default `1`, unchanged behavior and

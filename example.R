@@ -45,17 +45,20 @@ group_labels = c(rep(0,n0), rep(1,n1))
 #               in each dimension
 # use_gradient: TRUE = gradient boosting
 #               FALSE = Hellinger-based optimization
+# subsample_fraction: fraction of observations used to build each tree
 # quiet       : FALSE = print the progress
+# The values below are the defaults (the settings of the paper's simulations).
 
 result_boosting = boots(data = data,
                          group_labels = group_labels,
-                         num_trees_max = 500,
+                         num_trees_max = 1000,
                          K_CV = 5,
                          max_resol = 4,
                          learn_rate = 0.01,
                          n_bins = 32,
                          margin_scale = 0.1,
                          use_gradient = TRUE,
+                         subsample_fraction = 0.5,
                          quiet = FALSE
 )
 
@@ -78,11 +81,14 @@ log_ratio_boosting = balance_to_log_ratio(result_boosting$balance_weight_boostin
 #                        used to evaluate ratios for test sets
 # quiet       : FALSE = print the progress
 
+# The defaults are 2000 burn-in iterations and 1000 saved draws (the settings of
+# the paper's simulations); this demonstration uses a shorter run.
+
 result_BAT = batts(data = data,
             group_labels = group_labels,
             num_trees = 200,
             lambda_0 = 5,
-            margin_scale = 0.25,
+            margin_scale = 0.1,
             size_burnin = 500,
             size_backfitting = 500,
             output_BART_ensembles = TRUE,

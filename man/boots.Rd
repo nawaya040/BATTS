@@ -7,17 +7,17 @@
 boots(
   data,
   group_labels,
-  num_trees_max = 100,
-  K_CV = 0,
+  num_trees_max = 1000,
+  K_CV = 5,
   max_resol = 4,
   learn_rate = 0.01,
   n_bins = 32,
   n_min_obs_per_node = 1,
   n_ratio_per_node = 1e-100,
   margin_scale = 0.1,
-  use_gradient = FALSE,
+  use_gradient = TRUE,
   quiet = FALSE,
-  subsample_fraction = 1
+  subsample_fraction = 0.5
 )
 }
 \arguments{
@@ -56,11 +56,11 @@ forward-stagewise boosting when FALSE. Initialization in \code{batts} is unsplit
 \item{quiet}{Logical; suppress progress messages.}
 
 \item{subsample_fraction}{Fraction of the training observations used to
-construct each tree, in (0, 1]. The default \code{1} uses all of them. With a
-smaller value, each tree uses \code{ceiling(subsample_fraction * m)} of the \code{m}
-training observations (the CV training folds, or all data for the final
-fit), drawn as in \code{ada} with \code{bag.frac}: one observation from each group,
-and the rest uniformly without replacement regardless of group.}
+construct each tree, in (0, 1]. With the default \code{0.5}, each tree uses
+\code{ceiling(subsample_fraction * m)} of the \code{m} training observations (the CV
+training folds, or all data for the final fit), drawn as in \code{ada} with
+\code{bag.frac}: one observation from each group, and the rest uniformly
+without replacement regardless of group. \code{1} uses all of them.}
 }
 \value{
 A list containing \code{balance_weight_boosting_data} (training weights),
@@ -73,6 +73,12 @@ Fit an additive tree estimate of the balancing weight w = sqrt(p/q).
 The full log-density ratio is obtained as \code{2 * log(w)}.
 }
 \details{
+The defaults (gradient boosting with at most 1000 trees selected by
+5-fold CV, depth 4, learning rate 0.01, 32 bins, margin 0.1 and per-tree
+subsampling of one half) are the settings of the paper's simulations.
+Set the seed before fitting; CV folds and subsamples use the R random
+number generator.
+
 Boosting uses uniformly spaced candidate cuts; Bayesian cut proposals
 are uniform. Candidate cuts are relative to the current node. Splits requiring
 children with too few observations from either group are excluded. Under
@@ -82,7 +88,7 @@ With subsampling, splits, gradients, and leaf values use the tree's
 subsample, while the balancing weights of all observations are updated and
 the forward-stagewise normalization uses the whole training set. CV losses
 are evaluated on the held-out folds. Subsampling uses the R random number
-generator; the default \code{subsample_fraction = 1} does not.
+generator; \code{subsample_fraction = 1} does not.
 }
 \examples{
 set.seed(1)

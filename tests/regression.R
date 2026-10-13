@@ -14,7 +14,8 @@ g <- c(rep(0, 32), rep(1, 24))
 for (gradient in c(FALSE, TRUE)) {
   fit_one <- function() boots(x, g, num_trees_max = 12, K_CV = 4,
                              max_resol = 2, n_bins = 8,
-                             use_gradient = gradient, quiet = TRUE)
+                             use_gradient = gradient, quiet = TRUE,
+                             subsample_fraction = 1)
   set.seed(701)
   fit <- fit_one()
   fit_rng <- .Random.seed
@@ -32,7 +33,8 @@ ix <- as.vector(rbind(1:24, 33:56))
 ix <- c(ix, 25:32)
 set.seed(702)
 u <- boots(x[ix, ], g[ix], num_trees_max = 5, K_CV = 4,
-           n_bins = 8, max_resol = 2, use_gradient = TRUE, quiet = TRUE)
+           n_bins = 8, max_resol = 2, use_gradient = TRUE, quiet = TRUE,
+           subsample_fraction = 1)
 stopifnot(all(is.finite(u$loss_CV_store)))
 # Check the prediction boundary independently with a hand-specified tree.
 manual <- list(tree_list = list(list(d = c(0L, -1L, -1L),
@@ -48,8 +50,9 @@ expect_error(eval_balance_weight(manual, matrix(1.01, 1)), "outside")
 tied_x <- matrix(rep(seq(0, 1, by = 0.125), each = 4), ncol = 1)
 tied_g <- rep(c(0, 0, 1, 1), 9)
 for (gradient in c(FALSE, TRUE)) {
-  tfit <- boots(tied_x, tied_g, num_trees_max = 4, margin_scale = -1,
-                n_bins = 8, use_gradient = gradient, quiet = TRUE)
+  tfit <- boots(tied_x, tied_g, num_trees_max = 4, K_CV = 0, margin_scale = -1,
+                n_bins = 8, use_gradient = gradient, quiet = TRUE,
+                subsample_fraction = 1)
   assert_close(eval_balance_weight(tfit, tied_x)$balancing_weight_boosting,
                tfit$balance_weight_boosting_data)
 }
@@ -76,7 +79,7 @@ b_no <- fit_bayes(FALSE)
 assert_close(b_no$balance_weight_BART_data, b$balance_weight_BART_data, 0)
 stopifnot(identical(brng, .Random.seed))
 expect_error(eval_balance_weight(b_no, x, is_Bayes = TRUE), "Posterior forests were not saved")
-expect_error(batts(x, g), "size_backfitting must be supplied")
+expect_error(batts(x, g, size_backfitting = NULL), "size_backfitting must be supplied")
 expect_error(batts(x, g, size_backfitting = 2, max_resol = 1), "max_resol = 0")
 expect_error(boots(x, g + 1), "group_labels")
 expect_error(boots(x, rep(0, nrow(x))), "group_labels")

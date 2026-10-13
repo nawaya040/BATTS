@@ -7,7 +7,7 @@
 batts(
   data,
   group_labels,
-  num_trees = 100,
+  num_trees = 200,
   max_resol = 0,
   learn_rate = 0.01,
   n_bins = 100,
@@ -15,8 +15,8 @@ batts(
   n_ratio_per_node = 1e-100,
   margin_scale = 0.1,
   use_gradient = FALSE,
-  size_burnin = NULL,
-  size_backfitting = NULL,
+  size_burnin = 2000,
+  size_backfitting = 1000,
   thin = 1,
   prob_moves = c(1/3, 1/3, 1/3),
   lambda_0 = 5,
@@ -54,11 +54,10 @@ requires that the supplied data already lie in that box.}
 \item{use_gradient}{Logical; use gradient boosting when TRUE and
 forward-stagewise boosting when FALSE. Initialization in \code{batts} is unsplit.}
 
-\item{size_burnin}{Number of discarded backfitting iterations. Defaults to
-\code{floor(size_backfitting / 2)}; supply a nonnegative integer.}
+\item{size_burnin}{Nonnegative integer number of discarded backfitting
+iterations (default 2000). \code{NULL} uses \code{floor(size_backfitting / 2)}.}
 
-\item{size_backfitting}{Required positive integer giving the number of saved
-draws. This must be specified explicitly.}
+\item{size_backfitting}{Positive integer number of saved draws (default 1000).}
 
 \item{thin}{Positive integer giving the number of backfitting sweeps per
 iteration, including burn-in iterations.}
@@ -90,6 +89,9 @@ temperature draws; and \code{lambda_store}, fixed leaf-scale values. Also includ
 Draw generalized Bayesian balancing weights w = sqrt(p/q) by backfitting.
 }
 \details{
+The defaults (200 trees, 2000 burn-in iterations, 1000 saved draws,
+\code{lambda_0 = 5} and margin 0.1) are the settings of the paper's simulations.
+
 Each fit starts with unsplit trees (\code{max_resol = 0}). Use multiple
 chains and convergence diagnostics for substantive applications. A short
 successful run does not establish convergence or frequentist coverage.

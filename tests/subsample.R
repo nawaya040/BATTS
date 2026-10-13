@@ -39,7 +39,7 @@ set.seed(31)
 xr <- cbind(runif(115), runif(115)); gr <- rep(0:1, c(45, 70))
 for (gradient in c(FALSE, TRUE)) {
   set.seed(500)
-  fit <- boots(xr, gr, num_trees_max = 15, max_resol = 0, learn_rate = 0.1,
+  fit <- boots(xr, gr, num_trees_max = 15, K_CV = 0, max_resol = 0, learn_rate = 0.1,
                margin_scale = -1, use_gradient = gradient, quiet = TRUE,
                subsample_fraction = 0.5)
   set.seed(500)

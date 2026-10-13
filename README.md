@@ -12,28 +12,35 @@ ratios](https://arxiv.org/abs/2508.03059)
 
 ``` r
 library(devtools)
-install_github("nawaya040/BATTS")
+install_github("nawaya040/BATTS@v0.3.0")
 ```
 
 ## Releases and reproducibility
 
 The official distribution is
-[nawaya040/BATTS](https://github.com/nawaya040/BATTS). Version 0.2.1 adds
-input validation for burn-in counts and move probabilities. Valid-input
-calculations are preserved; invalid inputs are rejected before fitting.
+[nawaya040/BATTS](https://github.com/nawaya040/BATTS). From version
+0.3.0, the defaults of `boots()` and `batts()` are the settings used in
+the paper’s simulations: gradient boosting with at most 1000 trees
+selected by 5-fold CV, depth 4, learning rate 0.01 and per-tree
+subsampling of one half; and 200 Bayesian trees with 2000 burn-in
+iterations and 1000 saved draws. Calls that relied on earlier defaults
+give different results; see [NEWS.md](NEWS.md). The paper’s simulations
+used version 0.2.2 (tag `v0.2.2`) with all settings supplied explicitly.
 
-For paper reproduction, use the exact BATTS commit recorded in the chosen
-[simulation repository](https://github.com/nawaya040/BATTS_simulation_study)
-checkout. From that checkout's root, the supported environment bootstrap is:
+For paper reproduction, use the exact BATTS commit recorded in the
+chosen [simulation
+repository](https://github.com/nawaya040/BATTS_simulation_study)
+checkout. From that checkout’s root, the supported environment bootstrap
+is:
 
-```text
+``` text
 Rscript scripts/prepare_environment.R --install=true --r-lib=.Rlib
 ```
 
-For a package-only installation using the same pin, run from that simulation
-checkout's root in a fresh R session:
+For a package-only installation using the same pin, run from that
+simulation checkout’s root in a fresh R session:
 
-```r
+``` r
 source("config/study.R")
 batts_sha <- study_config("smoke")$batts_sha
 stopifnot(grepl("^[0-9a-f]{40}$", batts_sha))
@@ -45,22 +52,26 @@ simulation commit as well; selecting a moving branch does not freeze it.
 Building from source requires a C++17 toolchain (Rtools on Windows).
 Version 0.2.0 removed `update_lambda`, `lambda_prior_parameters`, and
 `alpha_cutpoint`; remove these named arguments from older calls. See
-[NEWS.md](NEWS.md) for numerical changes in earlier versions. Package commit,
-dependency versions, settings and seeds should accompany each run.
+[NEWS.md](NEWS.md) for numerical changes in earlier versions. Package
+commit, dependency versions, settings and seeds should accompany each
+run.
 
-This repository contains the estimator package, documentation, small examples
-and regression tests. Paper-scale simulations, comparator configurations,
-case-study data and reproduction workflows are maintained separately.
-The worked example below is an API demonstration with its own settings.
-It does not reproduce a specific paper table or establish MCMC convergence.
+This repository contains the estimator package, documentation, small
+examples and regression tests. Paper-scale simulations, comparator
+configurations, case-study data and reproduction workflows are
+maintained separately. The worked example below is an API demonstration
+with its own settings. It does not reproduce a specific paper table or
+establish MCMC convergence.
 
-`batts()` requires an explicit positive `size_backfitting`. Use
-`output_BART_ensembles = TRUE` when posterior prediction at new points is
-needed. Prediction outside the fitted domain is rejected. All returned
-weights are `sqrt(p/q)`; use `2 * log(w)` for the full log-density ratio.
-Check mixing across chains and sensitivity to limited overlap before
-interpreting posterior intervals. Nominal pointwise intervals do not provide
-a guarantee of frequentist coverage or simultaneous inference.
+The example uses a shorter MCMC run than the defaults (2000 burn-in
+iterations and 1000 draws) to finish quickly. Use
+`output_BART_ensembles = TRUE` when posterior prediction at new points
+is needed. Prediction outside the fitted domain is rejected. All
+returned weights are `sqrt(p/q)`; use `2 * log(w)` for the full
+log-density ratio. Check mixing across chains and sensitivity to limited
+overlap before interpreting posterior intervals. Nominal pointwise
+intervals do not provide a guarantee of frequentist coverage or
+simultaneous inference.
 
 ## Main functions
 
@@ -70,11 +81,6 @@ BATTS exposes three main user-facing functions:
 - `batts()` fits the Bayesian additive tree model and can return
   posterior samples for uncertainty quantification.
 - `eval_balance_weight()` evaluates fitted models on new points.
-
-`batts()` requires an explicit positive `size_backfitting` to produce posterior
-draws; its default burn-in is half that count, rounded down. Both fitting
-functions reject constant input columns when rescaling is enabled.
-`n_ratio_per_node` is not implemented; non-default values are rejected.
 
 The functions return the square root of the density ratio, so the
 example below converts outputs to log-density ratios for plotting and
@@ -120,13 +126,14 @@ group_labels = c(rep(0, n0), rep(1, n1))
 result_boosting = boots(
   data = data,
   group_labels = group_labels,
-  num_trees_max = 500,
+  num_trees_max = 1000,
   K_CV = 5,
   max_resol = 4,
   learn_rate = 0.01,
   n_bins = 32,
   margin_scale = 0.1,
   use_gradient = TRUE,
+  subsample_fraction = 0.5,
   quiet = TRUE
 )
 
@@ -142,9 +149,9 @@ result_BAT = batts(
   group_labels = group_labels,
   num_trees = 200,
   lambda_0 = 5,
-  margin_scale = 0.25,
-  size_burnin = 500,
-  size_backfitting = 500,
+  margin_scale = 0.1,
+  size_burnin = 500,     # default 2000; shortened for the demonstration
+  size_backfitting = 500,  # default 1000
   output_BART_ensembles = TRUE,
   quiet = TRUE
 )
