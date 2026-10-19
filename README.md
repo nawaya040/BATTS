@@ -26,6 +26,9 @@ subsampling of one half; and 200 Bayesian trees with 2000 burn-in
 iterations and 1000 saved draws. Calls that relied on earlier defaults
 give different results; see [NEWS.md](NEWS.md). The paper’s simulations
 used version 0.2.2 (tag `v0.2.2`) with all settings supplied explicitly.
+Versions 0.2.2 and 0.3.0 implement the same algorithms: 0.3.0 changes
+only default argument values, and a fit with the same explicit arguments
+and seed gives identical results in both versions.
 
 For paper reproduction, use the exact BATTS commit recorded in the
 chosen [simulation
