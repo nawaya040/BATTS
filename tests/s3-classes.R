@@ -27,6 +27,7 @@ out <- capture.output({
 })
 stopifnot(any(grepl("BATTS boosting fit", out, fixed = TRUE)),
           any(grepl("BATTS Bayesian additive trees fit", out, fixed = TRUE)))
+stopifnot(sum(grepl("w = sqrt(p/q), group 0 in the numerator", out, fixed = TRUE)) == 2L)
 
 sb <- summary(fb); ss <- summary(fs)
 stopifnot(inherits(sb, "summary.batts_fit"), inherits(ss, "summary.batts_fit"),
@@ -41,7 +42,7 @@ out2 <- capture.output({
   stopifnot(identical(withVisible(print(sb))$visible, FALSE),
             identical(withVisible(print(ss))$visible, FALSE))
 })
-stopifnot(any(grepl("fitted density ratio range", out2, fixed = TRUE)))
+stopifnot(any(grepl("fitted weight w = sqrt(p/q) range", out2, fixed = TRUE)))
 
 stopifnot(nobs(fb) == 60, nobs(fs) == 60, identical(nobs(fb), nobs(fs)))
 

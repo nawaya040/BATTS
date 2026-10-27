@@ -28,7 +28,8 @@ print.batts_boost = function(x, ...){
     cat("  CV:           ", nrow(x$loss_CV_store), " folds, ",
         ncol(x$loss_CV_store), " candidate tree counts\n", sep = "")
   }
-  cat("  estimand:     density ratio of group 1 over group 0\n")
+  cat("  estimand:     balancing weight w = sqrt(p/q), group 0 in the numerator\n")
+  cat("                2 * log(w) is the log-density ratio\n")
   invisible(x)
 }
 
@@ -44,7 +45,8 @@ print.batts_bart = function(x, ...){
   cat("  forests kept: ", if(length(x$forest_list) > 0) "yes" else "no",
       "\n", sep = "")
   cat("  boosting init trees: ", length(x$tree_list), "\n", sep = "")
-  cat("  estimand:     density ratio of group 1 over group 0\n")
+  cat("  estimand:     balancing weight w = sqrt(p/q), group 0 in the numerator\n")
+  cat("                2 * log(w) is the log-density ratio\n")
   invisible(x)
 }
 
@@ -88,7 +90,7 @@ print.summary.batts_fit = function(x, ...){
   }
   cat("  training domain (min, max) per variable:\n")
   print(x$domain)
-  cat("  fitted density ratio range: [",
+  cat("  fitted weight w = sqrt(p/q) range: [",
       format(x$weight_range[1], digits = 6), ", ",
       format(x$weight_range[2], digits = 6), "]\n", sep = "")
   invisible(x)
