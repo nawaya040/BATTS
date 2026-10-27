@@ -475,7 +475,7 @@ batts = function(data,
 #' @details Prediction does not draw random numbers. With `is_Bayes = TRUE`,
 #'   the boosting component describes the initialization; the posterior draws
 #'   are in `balancing_weight_BART`. Missing posterior forests cause an error.
-#' @seealso [boots()], [batts()]
+#' @seealso [boots()], [batts()], [batts-predict], [density_ratio()]
 #' @examples
 #' set.seed(3)
 #' x <- matrix(c(rnorm(20), rnorm(20, 0.5)), ncol = 1)

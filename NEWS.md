@@ -9,6 +9,21 @@
   `str(fit)` for the previous output.
 - No change to estimation. Fits, predictions and random number use are
   identical to 0.3.0.
+- Added `predict()` and `fitted()` methods and a `density_ratio()` extractor.
+  `predict(fit, newdata)` replaces `eval_balance_weight(fit, newdata)` and
+  `eval_balance_weight(fit, newdata, is_Bayes = TRUE)`; the method is chosen by
+  the fit's class, so there is no `is_Bayes` argument.
+- `type` selects what is returned: `"log_ratio"` (the default) gives the
+  log-density ratio `2 * log(w) = log(p/q)`, `"ratio"` gives `w ^ 2 = p/q`, and
+  `"weight"` gives the balancing weight `w = sqrt(p/q)` that
+  `eval_balance_weight()` returns. Group 0 is in the numerator throughout.
+  Note that `predict()` and `eval_balance_weight()` therefore differ in what
+  they return by default; pass `type = "weight"` to match the older function.
+- For a `batts_bart` fit, `summary` and `interval` collapse the posterior
+  draws. Each draw is transformed as `type` asks before being summarized, so
+  the result summarizes the posterior of the transformed quantity.
+- `eval_balance_weight()` still works and is unchanged. It is now documented as
+  superseded by `predict()`.
 
 # BATTS 0.3.0
 

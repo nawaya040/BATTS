@@ -38,5 +38,5 @@ pred <- eval_balance_weight(fit, x[1:3, , drop = FALSE])
 pred$balancing_weight_boosting
 }
 \seealso{
-\code{\link[=boots]{boots()}}, \code{\link[=batts]{batts()}}
+\code{\link[=boots]{boots()}}, \code{\link[=batts]{batts()}}, \link{batts-predict}, \code{\link[=density_ratio]{density_ratio()}}
 }
