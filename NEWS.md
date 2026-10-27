@@ -24,6 +24,16 @@
   the result summarizes the posterior of the transformed quantity.
 - `eval_balance_weight()` still works and is unchanged. It is now documented as
   superseded by `predict()`.
+- New fitting functions `batts_boost()` and `batts_bart()` with settings collected
+  in `boost_control()` and `bart_control()`. They call `boots()` and `batts()` and
+  give identical results for the same settings; the fitted object also records
+  the call and the control settings. `boots()` and `batts()` are unchanged.
+- `bart_control()` omits the boosting-only arguments of `batts()` (`n_bins`,
+  `learn_rate`, `use_gradient`, `n_min_obs_per_node`), which have no effect on
+  BART fits. `keep_draws` (saving the posterior forests) stays `FALSE` by default
+  because the forests can take over 100 MB with the default settings.
+- `predict()` on a BART fit without saved forests now explains how to refit
+  with `keep_draws = TRUE`.
 
 # BATTS 0.3.0
 

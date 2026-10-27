@@ -179,6 +179,12 @@ predict.batts_bart = function(object, newdata,
   if(!is.logical(interval) || length(interval) != 1L || is.na(interval)){
     stop("interval must be TRUE or FALSE")
   }
+  if(!missing(newdata) && length(object$forest_list) == 0){
+    stop("Posterior forests were not saved, so the fit cannot be evaluated at new points.\n",
+         "Refit with bart_control(keep_draws = TRUE) ",
+         "(or output_BART_ensembles = TRUE in batts()).\n",
+         "fitted() and predict() without newdata still work.", call. = FALSE)
+  }
   w = if(missing(newdata)){
     object$balance_weight_BART_data
   }else{
