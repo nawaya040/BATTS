@@ -1,3 +1,15 @@
+# BATTS 0.3.0.9000 (development)
+
+- `boots()` and `batts()` now return objects of class `batts_boost` and
+  `batts_bart`, both inheriting `batts_fit`. The contents of the returned list
+  are unchanged, so existing code that reads fields such as `tree_list` keeps
+  working.
+- Added `print()`, `summary()` and `nobs()` methods. Printing a fit now shows a
+  short description instead of dumping the whole list; use `unclass(fit)` or
+  `str(fit)` for the previous output.
+- No change to estimation. Fits, predictions and random number use are
+  identical to 0.3.0.
+
 # BATTS 0.3.0
 
 - The defaults of `boots()` and `batts()` are now the settings of the paper's

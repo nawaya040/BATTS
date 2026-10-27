@@ -93,11 +93,12 @@
 #'   the forward-stagewise normalization uses the whole training set. CV losses
 #'   are evaluated on the held-out folds. Subsampling uses the R random number
 #'   generator; `subsample_fraction = 1` does not.
-#' @return A list containing `balance_weight_boosting_data` (training weights),
+#' @return An object of class `batts_boost`, inheriting `batts_fit`. It is a
+#'   list containing `balance_weight_boosting_data` (training weights),
 #'   `tree_list` (fitted trees), `c` (normalization), `data_info` (training
 #'   domain and group sizes), and `Omega` (domain bounds). With CV, also
 #'   returns `loss_CV_store` (folds by candidate tree count).
-#' @seealso [batts()], [eval_balance_weight()]
+#' @seealso [batts()], [eval_balance_weight()], [batts-methods]
 #' @examples
 #' set.seed(1)
 #' x <- matrix(c(rnorm(30), rnorm(30, 0.5)), ncol = 1)
@@ -275,6 +276,8 @@ boots = function(data,
 
   out$Omega = min_max_values
 
+  class(out) = c("batts_boost", "batts_fit")
+
   return(out)
 }
 
@@ -308,11 +311,12 @@ boots = function(data,
 #'   Sparse overlap and complete separation can produce prior-sensitive
 #'   estimates and slow mixing. The returned intervals are pointwise;
 #'   zero inclusion does not establish equality of distributions.
-#' @return A list containing `balance_weight_BART_data`, an observations-by-draws
+#' @return An object of class `batts_bart`, inheriting `batts_fit`. It is a
+#'   list containing `balance_weight_BART_data`, an observations-by-draws
 #'   matrix; `forest_list`, saved forests when requested; `omega_store`,
 #'   temperature draws; and `lambda_store`, fixed leaf-scale values. Also includes
 #'   `tree_list`, `c`, `data_info`, and `Omega` for initialization and evaluation.
-#' @seealso [boots()], [eval_balance_weight()]
+#' @seealso [boots()], [eval_balance_weight()], [batts-methods]
 #' @examples
 #' set.seed(2)
 #' x <- matrix(c(rnorm(20), rnorm(20, 0.5)), ncol = 1)
@@ -448,6 +452,8 @@ batts = function(data,
 
   out$data_info = data_info
   out$Omega = min_max_values
+
+  class(out) = c("batts_bart", "batts_fit")
 
   return(out)
 }

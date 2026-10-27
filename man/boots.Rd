@@ -63,7 +63,8 @@ training folds, or all data for the final fit), drawn as in \code{ada} with
 without replacement regardless of group. \code{1} uses all of them.}
 }
 \value{
-A list containing \code{balance_weight_boosting_data} (training weights),
+An object of class \code{batts_boost}, inheriting \code{batts_fit}. It is a
+list containing \code{balance_weight_boosting_data} (training weights),
 \code{tree_list} (fitted trees), \code{c} (normalization), \code{data_info} (training
 domain and group sizes), and \code{Omega} (domain bounds). With CV, also
 returns \code{loss_CV_store} (folds by candidate tree count).
@@ -98,5 +99,5 @@ fit <- boots(x, g, num_trees_max = 5, quiet = TRUE)
 head(2 * log(fit$balance_weight_boosting_data))
 }
 \seealso{
-\code{\link[=batts]{batts()}}, \code{\link[=eval_balance_weight]{eval_balance_weight()}}
+\code{\link[=batts]{batts()}}, \code{\link[=eval_balance_weight]{eval_balance_weight()}}, \link{batts-methods}
 }

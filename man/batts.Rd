@@ -80,7 +80,8 @@ evaluation on new points. Training-point draws are returned in either case.}
 \item{quiet}{Logical; suppress progress messages.}
 }
 \value{
-A list containing \code{balance_weight_BART_data}, an observations-by-draws
+An object of class \code{batts_bart}, inheriting \code{batts_fit}. It is a
+list containing \code{balance_weight_BART_data}, an observations-by-draws
 matrix; \code{forest_list}, saved forests when requested; \code{omega_store},
 temperature draws; and \code{lambda_store}, fixed leaf-scale values. Also includes
 \code{tree_list}, \code{c}, \code{data_info}, and \code{Omega} for initialization and evaluation.
@@ -109,5 +110,5 @@ fit <- batts(x, g, num_trees = 4, size_burnin = 5,
 dim(fit$balance_weight_BART_data)
 }
 \seealso{
-\code{\link[=boots]{boots()}}, \code{\link[=eval_balance_weight]{eval_balance_weight()}}
+\code{\link[=boots]{boots()}}, \code{\link[=eval_balance_weight]{eval_balance_weight()}}, \link{batts-methods}
 }
