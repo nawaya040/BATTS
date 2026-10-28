@@ -1,7 +1,7 @@
 #' Methods for BATTS fits
 #'
-#' Display and summary methods for the objects returned by [boots()] and
-#' [batts()].
+#' Display and summary methods for fits from [batts_boost()] and [batts_bart()]
+#' (and from the deprecated [boots()] and [batts()]).
 #'
 #' @param x,object A `batts_boost` or `batts_bart` fit, or a
 #'   `summary.batts_fit` object.

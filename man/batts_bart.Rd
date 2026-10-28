@@ -34,8 +34,8 @@ returned by \code{\link[=batts]{batts()}}, with the call, the settings, the grou
 \description{
 Draw the balancing weight \code{w = sqrt(p/q)} from its generalized posterior,
 where \code{p} is the density of the first group and \code{q} the density of the
-second. This calls \code{\link[=batts]{batts()}} with the settings in \code{control} and gives the
-identical result.
+second. It gives the same result as the deprecated \code{\link[=batts]{batts()}} with the
+corresponding settings.
 }
 \details{
 Supply exactly one of \code{group} and \code{y}. Set the seed before

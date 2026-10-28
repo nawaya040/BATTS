@@ -165,7 +165,7 @@
 .eval_new = function(object, newdata, outside, bayes){
   newdata = .handle_outside(.as_newdata(newdata, object), object, outside)
   evaluate = function(points){
-    res = eval_balance_weight(object, points, is_Bayes = bayes)
+    res = .eval_weights(object, points, is_Bayes = bayes)
     if(bayes) res$balancing_weight_BART
     else as.numeric(res$balancing_weight_boosting)
   }

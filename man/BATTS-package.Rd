@@ -6,9 +6,20 @@
 \alias{BATTS-package}
 \title{Boosting and Bayesian Additive Trees for Two-Sample Comparison}
 \description{
-Estimate the square root of a density ratio using boosting or generalized
-Bayesian additive trees. See \code{\link[=boots]{boots()}}, \code{\link[=batts]{batts()}}, and
-\code{\link[=eval_balance_weight]{eval_balance_weight()}} for the public interface.
+Estimate the density ratio of two samples using boosting or generalized
+Bayesian additive trees.
+}
+\details{
+\itemize{
+\item \code{\link[=batts_boost]{batts_boost()}} fits by boosting, with settings in \code{\link[=boost_control]{boost_control()}}.
+\item \code{\link[=batts_bart]{batts_bart()}} draws from the generalized posterior, with settings in
+\code{\link[=bart_control]{bart_control()}}.
+\item \code{\link[=predict]{predict()}}, \code{\link[=fitted]{fitted()}} and \code{\link[=density_ratio]{density_ratio()}} evaluate a fit; see
+\link{batts-predict}. \code{\link[=print]{print()}} and \code{\link[=summary]{summary()}} describe it.
+}
+
+The earlier interface, \code{\link[=boots]{boots()}}, \code{\link[=batts]{batts()}} and \code{\link[=eval_balance_weight]{eval_balance_weight()}},
+is deprecated but still works; see \link{BATTS-deprecated}.
 }
 \references{
 Awaya, N., Xu, Y., and Ma, L. (2025). Two-sample comparison

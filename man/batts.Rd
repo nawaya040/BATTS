@@ -2,7 +2,7 @@
 % Please edit documentation in R/BATTS_functions.R
 \name{batts}
 \alias{batts}
-\title{Bayesian additive trees for a two-sample density ratio}
+\title{Bayesian additive trees for a two-sample density ratio (deprecated)}
 \usage{
 batts(
   data,
@@ -87,9 +87,13 @@ temperature draws; and \code{lambda_store}, fixed leaf-scale values. Also includ
 \code{tree_list}, \code{c}, \code{data_info}, and \code{Omega} for initialization and evaluation.
 }
 \description{
-Draw generalized Bayesian balancing weights w = sqrt(p/q) by backfitting.
+\strong{Deprecated:} use \code{\link[=batts_bart]{batts_bart()}} with \code{\link[=bart_control]{bart_control()}}; see
+\link{BATTS-deprecated} for the argument names. \code{batts()} still works and returns
+the same result for the same settings, but warns once per session.
 }
 \details{
+Draw generalized Bayesian balancing weights w = sqrt(p/q) by backfitting.
+
 The defaults (200 trees, 2000 burn-in iterations, 1000 saved draws,
 \code{lambda_0 = 5} and margin 0.1) are the settings of the paper's simulations.
 

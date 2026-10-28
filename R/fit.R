@@ -122,8 +122,8 @@ bart_control = function(num_trees = 200, burnin = 2000, draws = 1000, thin = 1,
 #' Fit a two-sample density ratio by boosting
 #'
 #' Fit the balancing weight `w = sqrt(p/q)` by tree boosting, where `p` is the
-#' density of the first group and `q` the density of the second. This calls
-#' [boots()] with the settings in `control` and gives the identical result.
+#' density of the first group and `q` the density of the second. It gives
+#' the same result as the deprecated [boots()] with the corresponding settings.
 #'
 #' @param x Observations in rows and variables in columns: a numeric matrix, a
 #'   data frame with numeric columns, or a numeric vector for one variable.
@@ -172,7 +172,7 @@ batts_boost = function(x, group = NULL, y = NULL, control = boost_control(),
   .check_flag(quiet, "quiet")
   input = .fit_input(x, group, y)
   .check_constant_columns(input$x, control$margin_scale)
-  out = boots(input$x, input$group,
+  out = .fit_boost(input$x, input$group,
               num_trees_max = control$num_trees_max,
               K_CV = control$K_CV,
               max_resol = control$depth,
@@ -194,8 +194,8 @@ batts_boost = function(x, group = NULL, y = NULL, control = boost_control(),
 #'
 #' Draw the balancing weight `w = sqrt(p/q)` from its generalized posterior,
 #' where `p` is the density of the first group and `q` the density of the
-#' second. This calls [batts()] with the settings in `control` and gives the
-#' identical result.
+#' second. It gives the same result as the deprecated [batts()] with the
+#' corresponding settings.
 #'
 #' @inheritParams batts_boost
 #' @param control Settings created by [bart_control()].
@@ -228,7 +228,7 @@ batts_bart = function(x, group = NULL, y = NULL, control = bart_control(),
   .check_flag(quiet, "quiet")
   input = .fit_input(x, group, y)
   .check_constant_columns(input$x, control$margin_scale)
-  out = batts(input$x, input$group,
+  out = .fit_bart(input$x, input$group,
               num_trees = control$num_trees,
               margin_scale = control$margin_scale,
               size_burnin = control$burnin,

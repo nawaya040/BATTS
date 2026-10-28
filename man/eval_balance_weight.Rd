@@ -2,7 +2,7 @@
 % Please edit documentation in R/BATTS_functions.R
 \name{eval_balance_weight}
 \alias{eval_balance_weight}
-\title{Evaluate fitted balancing weights}
+\title{Evaluate fitted balancing weights (deprecated)}
 \usage{
 eval_balance_weight(list_result, eval_points, is_Bayes = FALSE)
 }
@@ -22,10 +22,14 @@ and, when
 matrix. Both include the fitted normalization constant.
 }
 \description{
-Evaluate stored trees at points inside the fitted domain. Weights have scale
-w = sqrt(p/q), with group 0 in the numerator; use \code{2 * log(w)} for log ratios.
+\strong{Deprecated:} use \code{\link[=predict]{predict()}} (with \code{type = "weight"} for the same scale)
+or \code{\link[=density_ratio]{density_ratio()}}. \code{eval_balance_weight()} still works and returns the
+same result, but warns once per session.
 }
 \details{
+Evaluate stored trees at points inside the fitted domain. Weights have scale
+w = sqrt(p/q), with group 0 in the numerator; use \code{2 * log(w)} for log ratios.
+
 Prediction does not draw random numbers. With \code{is_Bayes = TRUE},
 the boosting component describes the initialization; the posterior draws
 are in \code{balancing_weight_BART}. Missing posterior forests cause an error.

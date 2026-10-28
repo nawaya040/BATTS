@@ -38,8 +38,8 @@ returned by \code{\link[=boots]{boots()}}, with the call, the settings, the grou
 }
 \description{
 Fit the balancing weight \code{w = sqrt(p/q)} by tree boosting, where \code{p} is the
-density of the first group and \code{q} the density of the second. This calls
-\code{\link[=boots]{boots()}} with the settings in \code{control} and gives the identical result.
+density of the first group and \code{q} the density of the second. It gives
+the same result as the deprecated \code{\link[=boots]{boots()}} with the corresponding settings.
 }
 \details{
 Supply exactly one of \code{group} and \code{y}. Set the seed before

@@ -44,7 +44,11 @@
   out - 1L
 }
 
-#' Boosting for a two-sample density ratio
+#' Boosting for a two-sample density ratio (deprecated)
+#'
+#' **Deprecated:** use [batts_boost()] with [boost_control()]; see
+#' [BATTS-deprecated] for the argument names. `boots()` still works and returns
+#' the same result for the same settings, but warns once per session.
 #'
 #' Fit an additive tree estimate of the balancing weight w = sqrt(p/q).
 #' The full log-density ratio is obtained as `2 * log(w)`.
@@ -107,7 +111,22 @@
 #' head(2 * log(fit$balance_weight_boosting_data))
 #' @md
 #' @export
-boots = function(data,
+boots = function(data, group_labels, num_trees_max = 1000, K_CV = 5,
+                 max_resol = 4, learn_rate = 0.01, n_bins = 32,
+                 n_min_obs_per_node = 1, n_ratio_per_node = 1e-100,
+                 margin_scale = 0.1, use_gradient = TRUE, quiet = FALSE,
+                 subsample_fraction = 0.5){
+  .batts_deprecated("boots", "batts_boost")
+  .fit_boost(data, group_labels, num_trees_max = num_trees_max, K_CV = K_CV,
+             max_resol = max_resol, learn_rate = learn_rate, n_bins = n_bins,
+             n_min_obs_per_node = n_min_obs_per_node,
+             n_ratio_per_node = n_ratio_per_node, margin_scale = margin_scale,
+             use_gradient = use_gradient, quiet = quiet,
+             subsample_fraction = subsample_fraction)
+}
+
+# The boosting fit behind boots() and batts_boost().
+.fit_boost = function(data,
                      group_labels,
                      num_trees_max = 1000,
                      K_CV = 5,
@@ -281,7 +300,11 @@ boots = function(data,
   return(out)
 }
 
-#' Bayesian additive trees for a two-sample density ratio
+#' Bayesian additive trees for a two-sample density ratio (deprecated)
+#'
+#' **Deprecated:** use [batts_bart()] with [bart_control()]; see
+#' [BATTS-deprecated] for the argument names. `batts()` still works and returns
+#' the same result for the same settings, but warns once per session.
 #'
 #' Draw generalized Bayesian balancing weights w = sqrt(p/q) by backfitting.
 #'
@@ -327,7 +350,29 @@ boots = function(data,
 #' dim(fit$balance_weight_BART_data)
 #' @md
 #' @export
-batts = function(data,
+batts = function(data, group_labels, num_trees = 200, max_resol = 0,
+                 learn_rate = 0.01, n_bins = 100, n_min_obs_per_node = 1,
+                 n_ratio_per_node = 1e-100, margin_scale = 0.1,
+                 use_gradient = FALSE, size_burnin = 2000,
+                 size_backfitting = 1000, thin = 1,
+                 prob_moves = c(1/3,1/3,1/3), lambda_0 = 5,
+                 omega_prior_parameters = c(1,1), tree_priors = c(0.95,2.0),
+                 output_BART_ensembles = FALSE, quiet = FALSE){
+  .batts_deprecated("batts", "batts_bart")
+  .fit_bart(data, group_labels, num_trees = num_trees, max_resol = max_resol,
+            learn_rate = learn_rate, n_bins = n_bins,
+            n_min_obs_per_node = n_min_obs_per_node,
+            n_ratio_per_node = n_ratio_per_node, margin_scale = margin_scale,
+            use_gradient = use_gradient, size_burnin = size_burnin,
+            size_backfitting = size_backfitting, thin = thin,
+            prob_moves = prob_moves, lambda_0 = lambda_0,
+            omega_prior_parameters = omega_prior_parameters,
+            tree_priors = tree_priors,
+            output_BART_ensembles = output_BART_ensembles, quiet = quiet)
+}
+
+# The BART fit behind batts() and batts_bart().
+.fit_bart = function(data,
                                      group_labels,
                                      num_trees = 200,
                                      max_resol = 0,
@@ -458,7 +503,11 @@ batts = function(data,
   return(out)
 }
 
-#' Evaluate fitted balancing weights
+#' Evaluate fitted balancing weights (deprecated)
+#'
+#' **Deprecated:** use [predict()] (with `type = "weight"` for the same scale)
+#' or [density_ratio()]. `eval_balance_weight()` still works and returns the
+#' same result, but warns once per session.
 #'
 #' Evaluate stored trees at points inside the fitted domain. Weights have scale
 #' w = sqrt(p/q), with group 0 in the numerator; use `2 * log(w)` for log ratios.
@@ -485,6 +534,12 @@ batts = function(data,
 #' @md
 #' @export
 eval_balance_weight = function(list_result, eval_points, is_Bayes = FALSE){
+  .batts_deprecated("eval_balance_weight", "predict")
+  .eval_weights(list_result, eval_points, is_Bayes = is_Bayes)
+}
+
+# The evaluation behind eval_balance_weight() and the predict() methods.
+.eval_weights = function(list_result, eval_points, is_Bayes = FALSE){
 
   data_info = list_result$data_info
   if(!is.matrix(eval_points) || !is.numeric(eval_points) ||

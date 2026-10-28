@@ -48,6 +48,11 @@
   offending values.
 - A numeric matrix with 0/1 labels is passed to the fitting code unchanged, so
   these additions do not change any fit.
+- `boots()`, `batts()` and `eval_balance_weight()` are deprecated in favour of
+  `batts_boost()`, `batts_bart()` and `predict()`. They still work, keep their
+  arguments and defaults, and return the same results, but warn once per
+  session. `?"BATTS-deprecated"` maps the old arguments to the new settings.
+  The 0.2.2 and 0.3.0 calls used for the paper therefore run unchanged.
 
 # BATTS 0.3.0
 

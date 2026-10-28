@@ -2,7 +2,7 @@
 % Please edit documentation in R/BATTS_functions.R
 \name{boots}
 \alias{boots}
-\title{Boosting for a two-sample density ratio}
+\title{Boosting for a two-sample density ratio (deprecated)}
 \usage{
 boots(
   data,
@@ -70,10 +70,14 @@ domain and group sizes), and \code{Omega} (domain bounds). With CV, also
 returns \code{loss_CV_store} (folds by candidate tree count).
 }
 \description{
-Fit an additive tree estimate of the balancing weight w = sqrt(p/q).
-The full log-density ratio is obtained as \code{2 * log(w)}.
+\strong{Deprecated:} use \code{\link[=batts_boost]{batts_boost()}} with \code{\link[=boost_control]{boost_control()}}; see
+\link{BATTS-deprecated} for the argument names. \code{boots()} still works and returns
+the same result for the same settings, but warns once per session.
 }
 \details{
+Fit an additive tree estimate of the balancing weight w = sqrt(p/q).
+The full log-density ratio is obtained as \code{2 * log(w)}.
+
 The defaults (gradient boosting with at most 1000 trees selected by
 5-fold CV, depth 4, learning rate 0.01, 32 bins, margin 0.1 and per-tree
 subsampling of one half) are the settings of the paper's simulations.
