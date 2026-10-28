@@ -258,14 +258,16 @@ predict(loc_bart, c(-1, 0, 1), type = "weight")
 
 ## Two-dimensional examples
 
-The two-dimensional examples are Scenarios 1 and 2 of Awaya, Xu, and Ma
-(2025), with 1000 observations per sample. The samples are matrices with one
-column per variable, and are fitted in the same way as above.
+The two-dimensional examples are based on Scenarios 1 and 2 of Awaya, Xu,
+and Ma (2025), with 1000 observations per sample. The samples are matrices
+with one column per variable, and are fitted in the same way as above.
 
 ### Global shift
 
-Two correlated normal distributions differ by a shift of one unit in the
-first coordinate. The true log-density ratio is linear.
+Two correlated normal distributions differ by a shift of 0.75 in both
+coordinates, along the direction of their correlation. The true log-density
+ratio is linear and changes along the 45-degree diagonal: the first sample is
+denser towards the lower left and the second towards the upper right.
 
 ```{r data-global}
 log_dnorm2 <- function(x, mean, sigma) {
@@ -276,12 +278,13 @@ rnorm2 <- function(n, mean, sigma) {
   sweep(matrix(rnorm(2 * n), n, 2) %*% chol(sigma), 2, mean, "+")
 }
 
-sigma_g <- matrix(c(2, 0.4, 0.4, 1), 2, 2)
+sigma_g <- matrix(c(1, 0.5, 0.5, 1), 2, 2)
+shift_g <- c(0.75, 0.75)
 set.seed(56789)
 n2 <- 1000L
-glb <- list(x = rnorm2(n2, c(0, 0), sigma_g), y = rnorm2(n2, c(1, 0), sigma_g))
+glb <- list(x = rnorm2(n2, c(0, 0), sigma_g), y = rnorm2(n2, shift_g, sigma_g))
 glb_truth <- function(x) {
-  log_dnorm2(x, c(0, 0), sigma_g) - log_dnorm2(x, c(1, 0), sigma_g)
+  log_dnorm2(x, c(0, 0), sigma_g) - log_dnorm2(x, shift_g, sigma_g)
 }
 ```
 
@@ -370,7 +373,7 @@ draw_scenario <- function(sample, boost, bart, truth) {
 ```
 
 For the global shift, both estimates reproduce the linear trend along the
-first coordinate.
+diagonal, although each tree splits on one coordinate at a time.
 
 ```{r ratio-global, fig.height = 6.4}
 draw_scenario(glb, glb_boost, glb_bart, glb_truth)

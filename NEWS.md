@@ -70,7 +70,7 @@ code are those of 0.3.0.
 
 - New vignette "Introduction to BATTS" (`vignette("BATTS-introduction")`):
   one-dimensional location and scale examples with credible bands, and the
-  global and local shift scenarios of the paper in two dimensions.
+  two-dimensional global and local shift examples based on the paper.
 
 ## Package metadata
 
