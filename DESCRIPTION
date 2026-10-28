@@ -17,6 +17,7 @@ LinkingTo:
     Rcpp,
     RcppArmadillo
 Imports: 
+    graphics,
     Rcpp,
     RcppArmadillo,
     stats

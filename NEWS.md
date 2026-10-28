@@ -53,6 +53,12 @@
   arguments and defaults, and return the same results, but warn once per
   session. `?"BATTS-deprecated"` maps the old arguments to the new settings.
   The 0.2.2 and 0.3.0 calls used for the paper therefore run unchanged.
+- Added `plot()` methods, drawn with base graphics. A boosting fit shows the
+  cross-validation loss with the selected number of trees, or the fitted
+  log-density ratio for one variable; a Bayesian additive trees fit shows the
+  trace of the loss temperature, or the posterior mean of the log-density
+  ratio with a pointwise credible band for one variable. `graphics` is now
+  imported.
 
 # BATTS 0.3.0
 
