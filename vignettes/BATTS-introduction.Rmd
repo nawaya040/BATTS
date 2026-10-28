@@ -23,17 +23,21 @@ and `fitted()` methods transform it, and by default return the log-density
 ratio `log(p/q) = 2 * log(w)`. A positive value means that the first sample is
 denser than the second at that point.
 
+This vignette works through simulated examples, first in one dimension and
+then in two. For each example we keep the true log-density ratio so that the
+estimates can be compared with it.
+
 ```{r library}
 library(BATTS)
 ```
 
-## Simulated two-sample data
+## One-dimensional examples
 
-This vignette considers four pairs of distributions, two in one dimension
-and two in two dimensions. For each pair we keep the true log-density ratio
-so that the estimates can be compared with it.
+We start with two pairs of one-dimensional distributions, each with 250
+observations per sample. One dimension is where the estimates and their
+uncertainty are easiest to see.
 
-### Location shift in one dimension
+### Location shift
 
 The first sample comes from `N(0, 1)` and the second from `N(0.5, 1)`. The
 true log-density ratio is a straight line.
@@ -45,7 +49,36 @@ loc <- list(x = rnorm(n1), y = rnorm(n1, mean = 0.5))
 loc_truth <- function(t) dnorm(t, log = TRUE) - dnorm(t, mean = 0.5, log = TRUE)
 ```
 
-### Scale difference in one dimension
+The helper below plots the two samples with different colours and symbols.
+The points are drawn in random order, so that neither sample hides the other.
+In one dimension, the vertical position is a random jitter added for
+visibility only.
+
+```{r draw-samples}
+col_x <- adjustcolor("firebrick", alpha.f = 0.6)
+col_y <- adjustcolor("steelblue", alpha.f = 0.6)
+draw_samples <- function(sample, main) {
+  x <- rbind(as.matrix(sample$x), as.matrix(sample$y))
+  first <- rep(c(TRUE, FALSE), c(NROW(sample$x), NROW(sample$y)))
+  one_d <- ncol(x) == 1L
+  if (one_d) x <- cbind(x, runif(nrow(x)))
+  ord <- sample.int(nrow(x))
+  plot(x[ord, ], col = ifelse(first[ord], col_x, col_y),
+       pch = ifelse(first[ord], 16, 17), cex = 0.7,
+       xlab = if (one_d) "x" else "x1", ylab = if (one_d) "" else "x2",
+       yaxt = if (one_d) "n" else "s", asp = if (one_d) NA else 1,
+       main = main)
+  legend("bottom", c("first sample (p)", "second sample (q)"),
+         col = c(col_x, col_y), pch = c(16, 17), horiz = TRUE, bty = "n",
+         inset = c(0, 1), xpd = TRUE, cex = 0.8)
+}
+```
+
+```{r plot-location, fig.height = 2.6}
+draw_samples(loc, "Location shift")
+```
+
+### Scale difference
 
 Both samples are centred at zero, with standard deviations 1 and 1.5. The
 true log-density ratio is a downward parabola: the first sample is denser in
@@ -57,58 +90,11 @@ scl <- list(x = rnorm(n1), y = rnorm(n1, sd = 1.5))
 scl_truth <- function(t) dnorm(t, log = TRUE) - dnorm(t, sd = 1.5, log = TRUE)
 ```
 
-### Global shift in two dimensions
-
-This is Scenario 1 of Awaya, Xu, and Ma (2025): two correlated normal
-distributions that differ by a shift of one unit in the first coordinate.
-The true log-density ratio is linear.
-
-```{r data-global}
-log_dnorm2 <- function(x, mean, sigma) {
-  z <- sweep(x, 2, mean) %*% solve(chol(sigma))
-  -0.5 * rowSums(z^2) - log(2 * pi) - 0.5 * log(det(sigma))
-}
-rnorm2 <- function(n, mean, sigma) {
-  sweep(matrix(rnorm(2 * n), n, 2) %*% chol(sigma), 2, mean, "+")
-}
-
-sigma_g <- matrix(c(2, 0.4, 0.4, 1), 2, 2)
-set.seed(34567)
-n2 <- 1000L
-glb <- list(x = rnorm2(n2, c(0, 0), sigma_g), y = rnorm2(n2, c(1, 0), sigma_g))
-glb_truth <- function(x) {
-  log_dnorm2(x, c(0, 0), sigma_g) - log_dnorm2(x, c(1, 0), sigma_g)
-}
+```{r plot-scale, fig.height = 2.6}
+draw_samples(scl, "Scale difference")
 ```
 
-### Local shift in two dimensions
-
-This is Scenario 2 of the paper. Both samples are equal mixtures of three
-normal components with standard deviation 0.3. In the second sample, only the
-third component is shifted, by one standard deviation in the first
-coordinate. The two densities therefore agree except near that component.
-
-```{r data-local}
-centres <- rbind(c(-2.5, 1), c(1, -2), c(2, 2.5))
-rmix <- function(n, centres) {
-  k <- sample.int(3L, n, replace = TRUE)
-  centres[k, ] + matrix(rnorm(2 * n, sd = 0.3), n, 2)
-}
-dmix <- function(x, centres) {
-  dens <- sapply(1:3, function(k) {
-    dnorm(x[, 1], centres[k, 1], 0.3) * dnorm(x[, 2], centres[k, 2], 0.3)
-  })
-  rowMeans(dens)
-}
-
-shifted <- centres
-shifted[3, ] <- centres[3, ] + c(-0.3, 0)
-set.seed(45678)
-lcl <- list(x = rmix(n2, centres), y = rmix(n2, shifted))
-lcl_truth <- function(x) log(dmix(x, centres)) - log(dmix(x, shifted))
-```
-
-## Fit the models
+### Fit the models
 
 The settings of each method are collected by `boost_control()` and
 `bart_control()`. Their defaults are the settings used in the simulations of
@@ -129,14 +115,14 @@ numerator `p`. Setting `keep_draws = TRUE` saves the posterior forests, so
 that the Bayesian fit can later be evaluated at new points.
 
 ```{r fit-1d}
-set.seed(56789)
+set.seed(34567)
 loc_boost <- batts_boost(loc$x, y = loc$y, control = boost_ctl, quiet = TRUE)
 loc_bart <- batts_bart(loc$x, y = loc$y, control = bart_ctl, quiet = TRUE)
 scl_boost <- batts_boost(scl$x, y = scl$y, control = boost_ctl, quiet = TRUE)
 scl_bart <- batts_bart(scl$x, y = scl$y, control = bart_ctl, quiet = TRUE)
 ```
 
-## Inspect fitted objects
+### Inspect fitted objects
 
 Printing a fit summarizes the data, the ensemble and the direction of the
 ratio.
@@ -153,19 +139,57 @@ evaluated, and the range of the fitted weights.
 summary(loc_boost)
 ```
 
-`plot()` gives a quick diagnostic. For a boosting fit it shows the
-cross-validation loss against the number of trees, with the selected number
-marked. For a Bayesian fit it shows the trace of the loss temperature across
-the saved draws.
+### Convergence
 
-```{r diagnostics}
+For boosting, the number of trees is chosen by cross-validation. `plot()`
+shows the held-out loss, averaged over the folds, against the number of
+trees, and marks the selected number. The loss first falls and then rises as
+the ensemble starts to overfit. If the selected number were at
+`num_trees_max`, the maximum should be raised.
+
+For the Bayesian fit, `plot()` shows the trace of the loss temperature
+across the saved draws.
+
+```{r convergence-plot}
 old_par <- par(mfrow = c(1, 2), mar = c(4, 4, 2.5, 1))
 plot(loc_boost)
 plot(loc_bart)
 par(old_par)
 ```
 
-## Evaluate the fitted density ratios
+A more direct check of the Markov chain looks at the quantity of interest
+and compares independent chains. We run a second chain from another seed and
+compare the draws of `log(p/q)` at `x = 0`, and the posterior means along a
+grid.
+
+```{r second-chain}
+set.seed(45678)
+loc_bart2 <- batts_bart(loc$x, y = loc$y, control = bart_ctl, quiet = TRUE)
+chains_at_0 <- cbind(chain1 = predict(loc_bart, 0, summary = "none")[1, ],
+                     chain2 = predict(loc_bart2, 0, summary = "none")[1, ])
+check_grid <- seq(-2, 2, length.out = 101)
+chain_means <- cbind(chain1 = predict(loc_bart, check_grid),
+                     chain2 = predict(loc_bart2, check_grid))
+```
+
+```{r second-chain-plot}
+old_par <- par(mfrow = c(1, 2), mar = c(4, 4, 2.5, 1))
+matplot(chains_at_0, type = "l", lty = 1, col = c("black", "orange"),
+        xlab = "saved draw", ylab = "log(p/q) at x = 0",
+        main = "Draws from two chains")
+matplot(check_grid, chain_means, type = "l", lty = 1, lwd = 2,
+        col = c("black", "orange"), xlab = "x", ylab = "log(p/q)",
+        main = "Posterior means")
+legend("topright", c("chain 1", "chain 2"), col = c("black", "orange"),
+       lty = 1, lwd = 2, bty = "n", cex = 0.8)
+par(old_par)
+```
+
+The two chains move over the same range and give similar posterior means.
+Agreement between chains is consistent with, but does not establish,
+convergence; for applied work, run longer chains and more of them.
+
+### Estimated density ratios
 
 We evaluate both fits on a grid covering the central 95% of the pooled data.
 For the Bayesian fit, `interval = TRUE` returns the posterior mean together
@@ -224,18 +248,85 @@ predict(loc_bart, c(-1, 0, 1), type = "weight")
 
 ## Two-dimensional examples
 
-The two-dimensional samples are matrices with one column per variable, and
-are fitted in the same way. Since we only evaluate these fits at the observed
-points, we do not keep the posterior forests.
+The two-dimensional examples are Scenarios 1 and 2 of Awaya, Xu, and Ma
+(2025), with 1000 observations per sample. The samples are matrices with one
+column per variable, and are fitted in the same way as above.
+
+### Global shift
+
+Two correlated normal distributions differ by a shift of one unit in the
+first coordinate. The true log-density ratio is linear.
+
+```{r data-global}
+log_dnorm2 <- function(x, mean, sigma) {
+  z <- sweep(x, 2, mean) %*% solve(chol(sigma))
+  -0.5 * rowSums(z^2) - log(2 * pi) - 0.5 * log(det(sigma))
+}
+rnorm2 <- function(n, mean, sigma) {
+  sweep(matrix(rnorm(2 * n), n, 2) %*% chol(sigma), 2, mean, "+")
+}
+
+sigma_g <- matrix(c(2, 0.4, 0.4, 1), 2, 2)
+set.seed(56789)
+n2 <- 1000L
+glb <- list(x = rnorm2(n2, c(0, 0), sigma_g), y = rnorm2(n2, c(1, 0), sigma_g))
+glb_truth <- function(x) {
+  log_dnorm2(x, c(0, 0), sigma_g) - log_dnorm2(x, c(1, 0), sigma_g)
+}
+```
+
+```{r plot-global, fig.height = 4.4}
+draw_samples(glb, "Global shift")
+```
+
+### Local shift
+
+Both samples are equal mixtures of three normal components with standard
+deviation 0.3. In the second sample, only the third component (top right) is
+shifted, by one standard deviation to the left. The two densities therefore
+agree except near that component.
+
+```{r data-local}
+centres <- rbind(c(-2.5, 1), c(1, -2), c(2, 2.5))
+rmix <- function(n, centres) {
+  k <- sample.int(3L, n, replace = TRUE)
+  centres[k, ] + matrix(rnorm(2 * n, sd = 0.3), n, 2)
+}
+dmix <- function(x, centres) {
+  dens <- sapply(1:3, function(k) {
+    dnorm(x[, 1], centres[k, 1], 0.3) * dnorm(x[, 2], centres[k, 2], 0.3)
+  })
+  rowMeans(dens)
+}
+
+shifted <- centres
+shifted[3, ] <- centres[3, ] + c(-0.3, 0)
+set.seed(67890)
+lcl <- list(x = rmix(n2, centres), y = rmix(n2, shifted))
+lcl_truth <- function(x) log(dmix(x, centres)) - log(dmix(x, shifted))
+```
+
+```{r plot-local, fig.height = 4.4}
+draw_samples(lcl, "Local shift")
+```
+
+### Fit the models
+
+We use the same settings as in one dimension. Since we only evaluate these
+fits at the observed points, we do not keep the posterior forests. The
+diagnostics of the previous section apply in the same way and are omitted
+here.
 
 ```{r fit-2d}
 bart_ctl_2d <- bart_control(num_trees = 100, burnin = 300, draws = 301)
-set.seed(67890)
+set.seed(78901)
 glb_boost <- batts_boost(glb$x, y = glb$y, control = boost_ctl, quiet = TRUE)
 glb_bart <- batts_bart(glb$x, y = glb$y, control = bart_ctl_2d, quiet = TRUE)
 lcl_boost <- batts_boost(lcl$x, y = lcl$y, control = boost_ctl, quiet = TRUE)
 lcl_bart <- batts_bart(lcl$x, y = lcl$y, control = bart_ctl_2d, quiet = TRUE)
 ```
+
+### Estimated density ratios
 
 As in the paper, we colour the observations by the value of the log-density
 ratio, using a common scale for the truth and both estimates. Red points mark
@@ -271,7 +362,7 @@ draw_scenario <- function(sample, boost, bart, truth) {
 For the global shift, both estimates reproduce the linear trend along the
 first coordinate.
 
-```{r plot-global, fig.height = 6.4}
+```{r ratio-global, fig.height = 6.4}
 draw_scenario(glb, glb_boost, glb_bart, glb_truth)
 ```
 
@@ -281,7 +372,7 @@ Both estimates locate this blue and red pair, and show only faint colour on the
 unchanged components. The posterior standard deviation is largest around the
 shifted component.
 
-```{r plot-local, fig.height = 6.4}
+```{r ratio-local, fig.height = 6.4}
 draw_scenario(lcl, lcl_boost, lcl_bart, lcl_truth)
 ```
 
