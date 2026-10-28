@@ -31,6 +31,6 @@ of class \code{summary.batts_fit}. \code{nobs} returns the number of training
 observations.
 }
 \description{
-Display and summary methods for fits from \code{\link[=batts_boost]{batts_boost()}} and \code{\link[=batts_bart]{batts_bart()}}
-(and from the deprecated \code{\link[=boots]{boots()}} and \code{\link[=batts]{batts()}}).
+Display and summary methods for fits from \code{\link[=batts_boost]{batts_boost()}} and
+\code{\link[=batts_bart]{batts_bart()}}.
 }

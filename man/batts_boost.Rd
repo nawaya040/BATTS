@@ -30,21 +30,26 @@ Then \code{x} has density \code{p} and \code{y} has density \code{q}.}
 \item{quiet}{Logical; suppress progress messages.}
 }
 \value{
-An object of class \code{batts_boost}, inheriting \code{batts_fit}, as
-returned by \code{\link[=boots]{boots()}}, with the call, the settings, the group labels
+An object of class \code{batts_boost}, inheriting \code{batts_fit}. Besides
+the fitted trees, it records the call, the settings, the group labels
 (\code{group_levels}, numerator first) and the column names
-(\code{variable_names}) added. Use \code{\link[=predict]{predict()}}, \code{\link[=fitted]{fitted()}} and
-\code{\link[=density_ratio]{density_ratio()}} to evaluate it.
+(\code{variable_names}). Use \code{\link[=predict]{predict()}}, \code{\link[=fitted]{fitted()}} and \code{\link[=density_ratio]{density_ratio()}} to
+evaluate it, and \code{\link[=print]{print()}}, \code{\link[=summary]{summary()}} and \link[=batts-plot]{plot()} to
+describe it.
 }
 \description{
 Fit the balancing weight \code{w = sqrt(p/q)} by tree boosting, where \code{p} is the
-density of the first group and \code{q} the density of the second. It gives
-the same result as the deprecated \code{\link[=boots]{boots()}} with the corresponding settings.
+density of the first group and \code{q} the density of the second. The
+log-density ratio is \code{2 * log(w)}.
 }
 \details{
 Supply exactly one of \code{group} and \code{y}. Set the seed before
 fitting; cross-validation folds and subsamples use the R random number
 generator.
+
+With subsampling, the splits, gradients and leaf values of each tree use
+its subsample, while the balancing weights of all observations are
+updated. Cross-validation losses are evaluated on the held-out folds.
 }
 \examples{
 set.seed(1)

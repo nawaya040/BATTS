@@ -116,3 +116,4 @@ dim(fit$balance_weight_BART_data)
 \seealso{
 \code{\link[=boots]{boots()}}, \code{\link[=eval_balance_weight]{eval_balance_weight()}}, \link{batts-methods}
 }
+\keyword{internal}

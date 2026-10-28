@@ -24,23 +24,29 @@ Then \code{x} has density \code{p} and \code{y} has density \code{q}.}
 \item{quiet}{Logical; suppress progress messages.}
 }
 \value{
-An object of class \code{batts_bart}, inheriting \code{batts_fit}, as
-returned by \code{\link[=batts]{batts()}}, with the call, the settings, the group labels
-(\code{group_levels}, numerator first) and the column names
-(\code{variable_names}) added. Use \code{\link[=predict]{predict()}}, \code{\link[=fitted]{fitted()}} and
+An object of class \code{batts_bart}, inheriting \code{batts_fit}. Besides
+the posterior draws at the training points, it records the call, the
+settings, the group labels (\code{group_levels}, numerator first) and the
+column names (\code{variable_names}). Use \code{\link[=predict]{predict()}}, \code{\link[=fitted]{fitted()}} and
 \code{\link[=density_ratio]{density_ratio()}} to evaluate it; evaluating it at new points requires
-\code{bart_control(keep_draws = TRUE)}.
+\code{bart_control(keep_draws = TRUE)}. Use \code{\link[=print]{print()}}, \code{\link[=summary]{summary()}} and
+\link[=batts-plot]{plot()} to describe it.
 }
 \description{
 Draw the balancing weight \code{w = sqrt(p/q)} from its generalized posterior,
 where \code{p} is the density of the first group and \code{q} the density of the
-second. It gives the same result as the deprecated \code{\link[=batts]{batts()}} with the
-corresponding settings.
+second. The log-density ratio is \code{2 * log(w)}.
 }
 \details{
 Supply exactly one of \code{group} and \code{y}. Set the seed before
-fitting. A short run does not establish convergence; the returned
-intervals are pointwise.
+fitting.
+
+Use several chains and convergence diagnostics for substantive
+applications; a short successful run does not establish convergence or
+frequentist coverage. Sparse overlap and complete separation can produce
+prior-sensitive estimates and slow mixing. The intervals are pointwise;
+that an interval contains zero does not establish equality of the
+distributions.
 }
 \examples{
 set.seed(2)

@@ -48,8 +48,8 @@ observations are used.}
 
 \item{type}{\code{"log_ratio"}, the default, returns the log-density ratio
 \code{2 * log(w) = log(p/q)}. \code{"ratio"} returns \code{w^2 = p/q}. \code{"weight"} returns
-the balancing weight \code{w = sqrt(p/q)} itself, exactly as
-\code{\link[=eval_balance_weight]{eval_balance_weight()}} does. Group 0 is in the numerator throughout.}
+the balancing weight \code{w = sqrt(p/q)} itself. The first group is in the
+numerator throughout.}
 
 \item{outside}{What to do with points outside the fitted domain (the
 training range widened by \code{margin_scale}): \code{"error"} (the default) stops

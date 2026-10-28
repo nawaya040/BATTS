@@ -38,3 +38,4 @@ replacement in \code{\link[=bart_control]{bart_control()}}.
 \code{w = sqrt(p/q)}; \code{predict(fit, points)} returns the log-density ratio
 \code{2 * log(w)} by default.
 }
+\keyword{internal}

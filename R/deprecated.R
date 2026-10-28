@@ -31,6 +31,7 @@
 #' `w = sqrt(p/q)`; `predict(fit, points)` returns the log-density ratio
 #' `2 * log(w)` by default.
 #' @name BATTS-deprecated
+#' @keywords internal
 #' @md
 NULL
 

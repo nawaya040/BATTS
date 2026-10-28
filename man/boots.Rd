@@ -105,3 +105,4 @@ head(2 * log(fit$balance_weight_boosting_data))
 \seealso{
 \code{\link[=batts]{batts()}}, \code{\link[=eval_balance_weight]{eval_balance_weight()}}, \link{batts-methods}
 }
+\keyword{internal}

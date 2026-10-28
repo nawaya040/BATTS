@@ -10,9 +10,6 @@
 #'   [batts-predict]. [print()], [summary()] and [plot()][batts-plot] describe
 #'   it.
 #'
-#' The earlier interface, [boots()], [batts()] and [eval_balance_weight()],
-#' is deprecated but still works; see [BATTS-deprecated].
-#'
 #' @references Awaya, N., Xu, Y., and Ma, L. (2025). Two-sample comparison
 #'   through additive tree models for density ratios. arXiv:2508.03059.
 #'   \doi{10.48550/arXiv.2508.03059}.

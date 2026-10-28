@@ -44,3 +44,4 @@ pred$balancing_weight_boosting
 \seealso{
 \code{\link[=boots]{boots()}}, \code{\link[=batts]{batts()}}, \link{batts-predict}, \code{\link[=density_ratio]{density_ratio()}}
 }
+\keyword{internal}

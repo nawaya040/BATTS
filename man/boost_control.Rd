@@ -21,22 +21,31 @@ boost_control(
 
 \item{K_CV}{Number of group-stratified cross-validation folds used to select
 the number of trees, or zero to fit \code{num_trees_max} trees without
-cross-validation.}
+cross-validation. A positive value must be an integer between two and the
+smaller group size; the number of trees with the smallest mean held-out
+loss is selected.}
 
 \item{depth}{Maximum depth of each tree.}
 
 \item{learn_rate}{Shrinkage factor of each boosting step.}
 
-\item{n_bins}{Number of bins used to construct the candidate cut points.}
+\item{n_bins}{Number of bins used to construct the uniformly spaced
+candidate cut points, relative to the current node.}
 
 \item{margin_scale}{Fraction of each training range added at both ends of
 the fitted domain. A negative value uses the unit box and requires the
 data to lie in it.}
 
 \item{subsample_fraction}{Fraction of the training observations used to
-construct each tree, in (0, 1].}
+construct each tree, in (0, 1]. Each tree uses
+\code{ceiling(subsample_fraction * m)} of the \code{m} training observations (the
+cross-validation training folds, or all data for the final fit): one from
+each group and the rest uniformly without replacement. \code{1} uses all of
+them and draws no random numbers.}
 
-\item{min_obs_per_node}{Minimum count from each group in a child node.}
+\item{min_obs_per_node}{Minimum count from each group in a child node.
+Splits that would leave fewer are excluded; under complete separation this
+can prevent informative splits.}
 
 \item{use_gradient}{Logical; gradient boosting when \code{TRUE}, forward-stagewise
 boosting when \code{FALSE}.}
@@ -45,12 +54,14 @@ boosting when \code{FALSE}.}
 An object of class \code{boost_control}.
 }
 \description{
-Collect the settings of \code{\link[=batts_boost]{batts_boost()}}. The defaults are the settings of
-the paper's simulations and equal the defaults of \code{\link[=boots]{boots()}}.
+Collect the settings of \code{\link[=batts_boost]{batts_boost()}}. The defaults are the settings used
+in the simulations of Awaya, Xu, and Ma (2025): gradient boosting with at
+most 1000 trees selected by 5-fold cross-validation, depth 4, learning rate
+0.01, 32 bins, margin 0.1 and per-tree subsampling of one half.
 }
 \examples{
 boost_control(depth = 2)
 }
 \seealso{
-\code{\link[=batts_boost]{batts_boost()}}, \code{\link[=boots]{boots()}} for the meaning of each setting.
+\code{\link[=batts_boost]{batts_boost()}}
 }

@@ -25,11 +25,14 @@ bart_control(
 
 \item{draws}{Number of saved posterior draws.}
 
-\item{thin}{Number of backfitting sweeps per iteration.}
+\item{thin}{Number of backfitting sweeps per iteration, including burn-in
+iterations.}
 
-\item{prob_moves}{Probabilities of the GROW, PRUNE and CHANGE moves.}
+\item{prob_moves}{Probabilities of the GROW, PRUNE and CHANGE moves: three
+positive values summing to one.}
 
-\item{lambda_0}{Leaf-prior scale per tree.}
+\item{lambda_0}{Leaf-prior scale per tree; the ensemble scale
+\code{num_trees * lambda_0} stays fixed during sampling.}
 
 \item{omega_prior}{Shape and rate of the Gamma prior on the loss
 temperature.}
@@ -49,15 +52,14 @@ draws or the use of random numbers, but can make the fitted object large
 An object of class \code{bart_control}.
 }
 \description{
-Collect the settings of \code{\link[=batts_bart]{batts_bart()}}. The defaults are the settings of
-the paper's simulations and equal the defaults of \code{\link[=batts]{batts()}}. The
-boosting-only arguments of \code{\link[=batts]{batts()}} (\code{n_bins}, \code{learn_rate},
-\code{use_gradient} and \code{n_min_obs_per_node}) are omitted because they do not
-affect a BART fit.
+Collect the settings of \code{\link[=batts_bart]{batts_bart()}}. The defaults are the settings used
+in the simulations of Awaya, Xu, and Ma (2025): 200 trees, 2000 burn-in
+iterations, 1000 saved draws, \code{lambda_0 = 5} and margin 0.1. Each fit starts
+from unsplit trees.
 }
 \examples{
 bart_control(num_trees = 100, burnin = 300, draws = 301, keep_draws = TRUE)
 }
 \seealso{
-\code{\link[=batts_bart]{batts_bart()}}, \code{\link[=batts]{batts()}} for the meaning of each setting.
+\code{\link[=batts_bart]{batts_bart()}}
 }

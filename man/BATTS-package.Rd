@@ -18,9 +18,6 @@ Bayesian additive trees.
 \link{batts-predict}. \code{\link[=print]{print()}}, \code{\link[=summary]{summary()}} and \link[=batts-plot]{plot()} describe
 it.
 }
-
-The earlier interface, \code{\link[=boots]{boots()}}, \code{\link[=batts]{batts()}} and \code{\link[=eval_balance_weight]{eval_balance_weight()}},
-is deprecated but still works; see \link{BATTS-deprecated}.
 }
 \references{
 Awaya, N., Xu, Y., and Ma, L. (2025). Two-sample comparison

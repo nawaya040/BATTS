@@ -109,6 +109,7 @@
 #' g <- rep(0:1, each = 30)
 #' fit <- boots(x, g, num_trees_max = 5, quiet = TRUE)
 #' head(2 * log(fit$balance_weight_boosting_data))
+#' @keywords internal
 #' @md
 #' @export
 boots = function(data, group_labels, num_trees_max = 1000, K_CV = 5,
@@ -348,6 +349,7 @@ boots = function(data, group_labels, num_trees_max = 1000, K_CV = 5,
 #' fit <- batts(x, g, num_trees = 4, size_burnin = 5,
 #'              size_backfitting = 10, output_BART_ensembles = TRUE, quiet = TRUE)
 #' dim(fit$balance_weight_BART_data)
+#' @keywords internal
 #' @md
 #' @export
 batts = function(data, group_labels, num_trees = 200, max_resol = 0,
@@ -531,6 +533,7 @@ batts = function(data, group_labels, num_trees = 200, max_resol = 0,
 #' fit <- boots(x, rep(0:1, each = 20), num_trees_max = 5, quiet = TRUE)
 #' pred <- eval_balance_weight(fit, x[1:3, , drop = FALSE])
 #' pred$balancing_weight_boosting
+#' @keywords internal
 #' @md
 #' @export
 eval_balance_weight = function(list_result, eval_points, is_Bayes = FALSE){

@@ -1,7 +1,7 @@
 #' Methods for BATTS fits
 #'
-#' Display and summary methods for fits from [batts_boost()] and [batts_bart()]
-#' (and from the deprecated [boots()] and [batts()]).
+#' Display and summary methods for fits from [batts_boost()] and
+#' [batts_bart()].
 #'
 #' @param x,object A `batts_boost` or `batts_bart` fit, or a
 #'   `summary.batts_fit` object.
@@ -116,8 +116,8 @@ nobs.batts_fit = function(object, ...){
 #'   before evaluating.
 #' @param type `"log_ratio"`, the default, returns the log-density ratio
 #'   `2 * log(w) = log(p/q)`. `"ratio"` returns `w^2 = p/q`. `"weight"` returns
-#'   the balancing weight `w = sqrt(p/q)` itself, exactly as
-#'   [eval_balance_weight()] does. Group 0 is in the numerator throughout.
+#'   the balancing weight `w = sqrt(p/q)` itself. The first group is in the
+#'   numerator throughout.
 #' @param summary For a `batts_bart` fit: `"mean"` or `"median"` collapses the
 #'   posterior draws and `"none"` returns the points-by-draws matrix. The
 #'   transformation implied by `type` is applied to each draw before

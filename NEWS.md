@@ -65,6 +65,9 @@ code are those of 0.3.0.
   Note that `predict()` returns the log-density ratio by default, whereas
   `eval_balance_weight()` returns the balancing weight; pass
   `type = "weight"` for the older scale.
+- The help pages of the deprecated functions are kept, so `?boots` still
+  works, but they are marked internal and left out of the reference manual
+  and the help index.
 
 ## Documentation
 
