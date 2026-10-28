@@ -1,0 +1,317 @@
+---
+title: "Introduction to BATTS"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to BATTS}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7,
+                      fig.height = 3.6, fig.align = "center", dpi = 96)
+```
+
+BATTS compares two samples by estimating the ratio `p/q` of their densities.
+It implements the two additive tree methods of Awaya, Xu, and Ma (2025):
+a boosting estimator, which gives a point estimate, and a generalized
+Bayesian model with additive trees, which also gives posterior draws and
+hence credible bands for the ratio.
+
+Both methods estimate the balancing weight `w = sqrt(p/q)`. The `predict()`
+and `fitted()` methods transform it, and by default return the log-density
+ratio `log(p/q) = 2 * log(w)`. A positive value means that the first sample is
+denser than the second at that point.
+
+```{r library}
+library(BATTS)
+```
+
+## Simulated two-sample data
+
+This vignette considers four pairs of distributions, two in one dimension
+and two in two dimensions. For each pair we keep the true log-density ratio
+so that the estimates can be compared with it.
+
+### Location shift in one dimension
+
+The first sample comes from `N(0, 1)` and the second from `N(0.5, 1)`. The
+true log-density ratio is a straight line.
+
+```{r data-location}
+set.seed(12345)
+n1 <- 250L
+loc <- list(x = rnorm(n1), y = rnorm(n1, mean = 0.5))
+loc_truth <- function(t) dnorm(t, log = TRUE) - dnorm(t, mean = 0.5, log = TRUE)
+```
+
+### Scale difference in one dimension
+
+Both samples are centred at zero, with standard deviations 1 and 1.5. The
+true log-density ratio is a downward parabola: the first sample is denser in
+the middle and the second in the tails.
+
+```{r data-scale}
+set.seed(23456)
+scl <- list(x = rnorm(n1), y = rnorm(n1, sd = 1.5))
+scl_truth <- function(t) dnorm(t, log = TRUE) - dnorm(t, sd = 1.5, log = TRUE)
+```
+
+### Global shift in two dimensions
+
+This is Scenario 1 of Awaya, Xu, and Ma (2025): two correlated normal
+distributions that differ by a shift of one unit in the first coordinate.
+The true log-density ratio is linear.
+
+```{r data-global}
+log_dnorm2 <- function(x, mean, sigma) {
+  z <- sweep(x, 2, mean) %*% solve(chol(sigma))
+  -0.5 * rowSums(z^2) - log(2 * pi) - 0.5 * log(det(sigma))
+}
+rnorm2 <- function(n, mean, sigma) {
+  sweep(matrix(rnorm(2 * n), n, 2) %*% chol(sigma), 2, mean, "+")
+}
+
+sigma_g <- matrix(c(2, 0.4, 0.4, 1), 2, 2)
+set.seed(34567)
+n2 <- 1000L
+glb <- list(x = rnorm2(n2, c(0, 0), sigma_g), y = rnorm2(n2, c(1, 0), sigma_g))
+glb_truth <- function(x) {
+  log_dnorm2(x, c(0, 0), sigma_g) - log_dnorm2(x, c(1, 0), sigma_g)
+}
+```
+
+### Local shift in two dimensions
+
+This is Scenario 2 of the paper. Both samples are equal mixtures of three
+normal components with standard deviation 0.3. In the second sample, only the
+third component is shifted, by one standard deviation in the first
+coordinate. The two densities therefore agree except near that component.
+
+```{r data-local}
+centres <- rbind(c(-2.5, 1), c(1, -2), c(2, 2.5))
+rmix <- function(n, centres) {
+  k <- sample.int(3L, n, replace = TRUE)
+  centres[k, ] + matrix(rnorm(2 * n, sd = 0.3), n, 2)
+}
+dmix <- function(x, centres) {
+  dens <- sapply(1:3, function(k) {
+    dnorm(x[, 1], centres[k, 1], 0.3) * dnorm(x[, 2], centres[k, 2], 0.3)
+  })
+  rowMeans(dens)
+}
+
+shifted <- centres
+shifted[3, ] <- centres[3, ] + c(-0.3, 0)
+set.seed(45678)
+lcl <- list(x = rmix(n2, centres), y = rmix(n2, shifted))
+lcl_truth <- function(x) log(dmix(x, centres)) - log(dmix(x, shifted))
+```
+
+## Fit the models
+
+The settings of each method are collected by `boost_control()` and
+`bart_control()`. Their defaults are the settings used in the simulations of
+the paper. Here we use boosting trees of depth 2, which give a smoother
+estimate than the default depth 4 in these small examples, and a shorter
+Markov chain (100 trees, 300 burn-in iterations and 301 saved draws) so that
+the vignette builds quickly. These shorter chains are for illustration and
+are not a recommendation for applied work.
+
+```{r controls}
+boost_ctl <- boost_control(depth = 2)
+bart_ctl <- bart_control(num_trees = 100, burnin = 300, draws = 301,
+                         keep_draws = TRUE)
+```
+
+The two samples can be passed directly as `x` and `y`; `x` is then the
+numerator `p`. Setting `keep_draws = TRUE` saves the posterior forests, so
+that the Bayesian fit can later be evaluated at new points.
+
+```{r fit-1d}
+set.seed(56789)
+loc_boost <- batts_boost(loc$x, y = loc$y, control = boost_ctl, quiet = TRUE)
+loc_bart <- batts_bart(loc$x, y = loc$y, control = bart_ctl, quiet = TRUE)
+scl_boost <- batts_boost(scl$x, y = scl$y, control = boost_ctl, quiet = TRUE)
+scl_bart <- batts_bart(scl$x, y = scl$y, control = bart_ctl, quiet = TRUE)
+```
+
+## Inspect fitted objects
+
+Printing a fit summarizes the data, the ensemble and the direction of the
+ratio.
+
+```{r print}
+loc_boost
+loc_bart
+```
+
+`summary()` adds the fitted domain, outside of which the fit cannot be
+evaluated, and the range of the fitted weights.
+
+```{r summary}
+summary(loc_boost)
+```
+
+`plot()` gives a quick diagnostic. For a boosting fit it shows the
+cross-validation loss against the number of trees, with the selected number
+marked. For a Bayesian fit it shows the trace of the loss temperature across
+the saved draws.
+
+```{r diagnostics}
+old_par <- par(mfrow = c(1, 2), mar = c(4, 4, 2.5, 1))
+plot(loc_boost)
+plot(loc_bart)
+par(old_par)
+```
+
+## Evaluate the fitted density ratios
+
+We evaluate both fits on a grid covering the central 95% of the pooled data.
+For the Bayesian fit, `interval = TRUE` returns the posterior mean together
+with a pointwise credible band.
+
+```{r evaluate-1d}
+ratio_curves <- function(sample, boost, bart, truth) {
+  grid <- seq(quantile(c(sample$x, sample$y), 0.025),
+              quantile(c(sample$x, sample$y), 0.975), length.out = 200)
+  list(grid = grid, truth = truth(grid), boost = predict(boost, grid),
+       band = predict(bart, grid, interval = TRUE, level = 0.95))
+}
+loc_curves <- ratio_curves(loc, loc_boost, loc_bart, loc_truth)
+scl_curves <- ratio_curves(scl, scl_boost, scl_bart, scl_truth)
+head(loc_curves$band, 3)
+```
+
+The helper below draws the band in grey, the posterior mean as a solid line,
+the boosting estimate as a dotted line and the truth as a dashed line.
+
+```{r evaluate-1d-plot}
+draw_ratio <- function(curves, main) {
+  band <- curves$band
+  plot(curves$grid, band[, "fit"], type = "n",
+       ylim = range(band, curves$truth, curves$boost),
+       xlab = "x", ylab = "log(p/q)", main = main)
+  polygon(c(curves$grid, rev(curves$grid)),
+          c(band[, "lower"], rev(band[, "upper"])), col = "grey85", border = NA)
+  abline(h = 0, col = "grey60")
+  lines(curves$grid, curves$truth, col = "red", lwd = 2, lty = 2)
+  lines(curves$grid, curves$boost, col = "darkgreen", lwd = 2, lty = 3)
+  lines(curves$grid, band[, "fit"], lwd = 2)
+}
+
+old_par <- par(mfrow = c(1, 2), mar = c(4, 4, 2.5, 1))
+draw_ratio(loc_curves, "Location shift")
+legend("topright", c("truth", "boosting", "posterior mean", "95% band"),
+       col = c("red", "darkgreen", "black", "grey85"), lty = c(2, 3, 1, 1),
+       lwd = c(2, 2, 2, 8), bty = "n", cex = 0.8)
+draw_ratio(scl_curves, "Scale difference")
+par(old_par)
+```
+
+Both fits follow the line and the parabola over most of the range. The
+credible band is narrow where the data are dense and widens towards the tails,
+where few observations inform the ratio and the estimates are drawn towards
+zero.
+
+Other scales are available through `type`: `density_ratio()` returns `p/q`
+itself, and `type = "weight"` returns the balancing weight `w = sqrt(p/q)`.
+
+```{r scales}
+density_ratio(loc_boost, c(-1, 0, 1))
+predict(loc_bart, c(-1, 0, 1), type = "weight")
+```
+
+## Two-dimensional examples
+
+The two-dimensional samples are matrices with one column per variable, and
+are fitted in the same way. Since we only evaluate these fits at the observed
+points, we do not keep the posterior forests.
+
+```{r fit-2d}
+bart_ctl_2d <- bart_control(num_trees = 100, burnin = 300, draws = 301)
+set.seed(67890)
+glb_boost <- batts_boost(glb$x, y = glb$y, control = boost_ctl, quiet = TRUE)
+glb_bart <- batts_bart(glb$x, y = glb$y, control = bart_ctl_2d, quiet = TRUE)
+lcl_boost <- batts_boost(lcl$x, y = lcl$y, control = boost_ctl, quiet = TRUE)
+lcl_bart <- batts_bart(lcl$x, y = lcl$y, control = bart_ctl_2d, quiet = TRUE)
+```
+
+As in the paper, we colour the observations by the value of the log-density
+ratio, using a common scale for the truth and both estimates. Red points mark
+where the first sample is denser and blue points where the second is. The last
+panel shows the posterior standard deviation, the two-dimensional counterpart
+of the width of the credible band.
+
+```{r draw-2d}
+diverging <- hcl.colors(101, "Blue-Red 3")
+sequential <- hcl.colors(101, "YlOrRd", rev = TRUE)
+draw_points <- function(x, value, limits, palette, main) {
+  index <- round((pmin(pmax(value, limits[1]), limits[2]) - limits[1]) /
+                   diff(limits) * 100) + 1
+  ord <- order(abs(value - mean(limits)))
+  plot(x[ord, ], col = palette[index[ord]], pch = 16, cex = 0.5, asp = 1,
+       xlab = "x1", ylab = "x2", main = main)
+}
+draw_scenario <- function(sample, boost, bart, truth) {
+  x <- rbind(sample$x, sample$y)
+  true_value <- truth(x)
+  limits <- c(-1, 1) * max(abs(true_value))
+  draws <- fitted(bart, summary = "none")
+  old_par <- par(mfrow = c(2, 2), mar = c(4, 4, 2.5, 1))
+  on.exit(par(old_par))
+  draw_points(x, true_value, limits, diverging, "true log(p/q)")
+  draw_points(x, fitted(boost), limits, diverging, "boosting")
+  draw_points(x, rowMeans(draws), limits, diverging, "posterior mean")
+  sds <- apply(draws, 1, sd)
+  draw_points(x, sds, c(0, max(sds)), sequential, "posterior SD")
+}
+```
+
+For the global shift, both estimates reproduce the linear trend along the
+first coordinate.
+
+```{r plot-global, fig.height = 6.4}
+draw_scenario(glb, glb_boost, glb_bart, glb_truth)
+```
+
+For the local shift, the truth is zero on the first two components and
+changes sign across the third, where the second sample has moved to the left.
+Both estimates locate this blue and red pair, and show only faint colour on the
+unchanged components. The posterior standard deviation is largest around the
+shifted component.
+
+```{r plot-local, fig.height = 6.4}
+draw_scenario(lcl, lcl_boost, lcl_bart, lcl_truth)
+```
+
+## Practical notes
+
+- `x` and `y` may be numeric matrices, data frames with numeric columns, or,
+  for one variable, numeric vectors. Instead of `y`, a single sample can be
+  given with a `group` vector of two labels; the first level (or the smaller
+  value) is the numerator `p`. `print()` always states the direction.
+- A fit can only be evaluated inside its fitted domain, the range of the
+  training data widened by `margin_scale` (10% by default). `predict()` stops
+  for other points unless `outside = "na"` or `outside = "clamp"` is given.
+  Columns of `newdata` are matched by name when both sides have names.
+- Evaluating a Bayesian fit at new points requires
+  `bart_control(keep_draws = TRUE)`. With the default 200 trees and 1000
+  draws the saved forests can exceed 100 MB, so keep them only when needed.
+  `fitted()` and `predict()` without `newdata` work in either case.
+- Set the seed before fitting. Cross-validation folds, subsamples and the
+  Markov chain use the R random number generator; prediction does not.
+- The short chains used above illustrate the interface. For substantive
+  analyses, use longer chains, run several of them and check their agreement.
+  The bands are pointwise; that a band contains zero does not show that the
+  two distributions are equal.
+- `boots()`, `batts()` and `eval_balance_weight()`, the interface of
+  versions before 0.4.0, still work and give the same results, but are
+  deprecated. See `` ?`BATTS-deprecated` `` for the correspondence of the
+  arguments.
+
+## References
+
+Awaya, N., Xu, Y., and Ma, L. (2025). Two-sample comparison through additive
+tree models for density ratios. arXiv:2508.03059.
+<https://doi.org/10.48550/arXiv.2508.03059>

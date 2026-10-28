@@ -30,5 +30,6 @@ Suggests:
     rmarkdown,
     scales
 SystemRequirements: C++17
+VignetteBuilder: knitr
 URL: https://github.com/nawaya040/BATTS, https://arxiv.org/abs/2508.03059
 BugReports: https://github.com/nawaya040/BATTS/issues

@@ -14,3 +14,6 @@ README.html
 src/*.obj
 src/*.lib
 src/*.exp
+inst/doc
+/doc/
+/Meta/

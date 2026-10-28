@@ -66,6 +66,12 @@ code are those of 0.3.0.
   `eval_balance_weight()` returns the balancing weight; pass
   `type = "weight"` for the older scale.
 
+## Documentation
+
+- New vignette "Introduction to BATTS" (`vignette("BATTS-introduction")`):
+  one-dimensional location and scale examples with credible bands, and the
+  global and local shift scenarios of the paper in two dimensions.
+
 ## Package metadata
 
 - `Description` and `citation("BATTS")` cite the paper,
