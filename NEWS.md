@@ -34,6 +34,20 @@
   because the forests can take over 100 MB with the default settings.
 - `predict()` on a BART fit without saved forests now explains how to refit
   with `keep_draws = TRUE`.
+- `batts_boost()` and `batts_bart()` accept a data frame with numeric columns
+  or, for one variable, a numeric vector as `x`. Group labels may be numeric,
+  logical, character or a factor with two values; the first level (for
+  non-factors, the smaller value in sort order) is the numerator group `p`.
+  The labels are recorded in `fit$group_levels` and shown by `print()`.
+- Two samples can be passed directly: `batts_boost(x, y = y)` estimates the
+  ratio of the density of `x` to that of `y`.
+- `predict()` accepts a data frame or a vector as `newdata` and matches columns
+  by name when the training data had column names. Points outside the fitted
+  domain can now give `NA` (`outside = "na"`) or be moved to the boundary
+  (`outside = "clamp"`); the default (`"error"`) still stops, and now names the
+  offending values.
+- A numeric matrix with 0/1 labels is passed to the fitting code unchanged, so
+  these additions do not change any fit.
 
 # BATTS 0.3.0
 

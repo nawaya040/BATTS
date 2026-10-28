@@ -4,13 +4,26 @@
 \alias{batts_boost}
 \title{Fit a two-sample density ratio by boosting}
 \usage{
-batts_boost(x, group, control = boost_control(), quiet = FALSE)
+batts_boost(
+  x,
+  group = NULL,
+  y = NULL,
+  control = boost_control(),
+  quiet = FALSE
+)
 }
 \arguments{
-\item{x}{Numeric matrix with observations in rows and variables in columns.}
+\item{x}{Observations in rows and variables in columns: a numeric matrix, a
+data frame with numeric columns, or a numeric vector for one variable.
+Values must be finite.}
 
-\item{group}{Vector of zeros and ones, one per row of \code{x}, with both groups
-present.}
+\item{group}{Two-valued labels, one per row of \code{x}: numeric, logical,
+character or factor. The first group (the first factor level, otherwise the
+smaller value in sort order; 0 for 0/1 labels) has density \code{p}, the
+numerator.}
+
+\item{y}{Instead of \code{group}, a second sample with the same columns as \code{x}.
+Then \code{x} has density \code{p} and \code{y} has density \code{q}.}
 
 \item{control}{Settings created by \code{\link[=boost_control]{boost_control()}}.}
 
@@ -18,27 +31,38 @@ present.}
 }
 \value{
 An object of class \code{batts_boost}, inheriting \code{batts_fit}, as
-returned by \code{\link[=boots]{boots()}}, with the call and the settings added as \code{call} and
-\code{control}. Use \code{\link[=predict]{predict()}}, \code{\link[=fitted]{fitted()}} and \code{\link[=density_ratio]{density_ratio()}} to evaluate
-it.
+returned by \code{\link[=boots]{boots()}}, with the call, the settings, the group labels
+(\code{group_levels}, numerator first) and the column names
+(\code{variable_names}) added. Use \code{\link[=predict]{predict()}}, \code{\link[=fitted]{fitted()}} and
+\code{\link[=density_ratio]{density_ratio()}} to evaluate it.
 }
 \description{
-Fit the balancing weight \code{w = sqrt(p/q)} by tree boosting, where group 0 has
-density \code{p} and group 1 has density \code{q}. This calls \code{\link[=boots]{boots()}} with the
-settings in \code{control} and gives the identical result.
+Fit the balancing weight \code{w = sqrt(p/q)} by tree boosting, where \code{p} is the
+density of the first group and \code{q} the density of the second. This calls
+\code{\link[=boots]{boots()}} with the settings in \code{control} and gives the identical result.
 }
 \details{
-Set the seed before fitting; cross-validation folds and subsamples
-use the R random number generator.
+Supply exactly one of \code{group} and \code{y}. Set the seed before
+fitting; cross-validation folds and subsamples use the R random number
+generator.
 }
 \examples{
 set.seed(1)
-x <- matrix(c(rnorm(50), rnorm(50, 0.5)), ncol = 1)
-g <- rep(0:1, each = 50)
-fit <- batts_boost(x, g, control = boost_control(num_trees_max = 50, depth = 2),
+p_sample <- rnorm(50)
+q_sample <- rnorm(50, 0.5)
+fit <- batts_boost(p_sample, y = q_sample,
+                   control = boost_control(num_trees_max = 50, depth = 2),
                    quiet = TRUE)
 fit
-head(predict(fit, x))
+predict(fit, c(-1, 0, 1))
+
+# The same data as one sample with group labels; the first level is p
+x <- c(p_sample, q_sample)
+g <- factor(rep(c("p", "q"), each = 50))
+ctl <- boost_control(num_trees_max = 50, depth = 2)
+set.seed(2); a <- batts_boost(x, g, control = ctl, quiet = TRUE)
+set.seed(2); b <- batts_boost(p_sample, y = q_sample, control = ctl, quiet = TRUE)
+identical(predict(a, 0), predict(b, 0))
 }
 \seealso{
 \code{\link[=boost_control]{boost_control()}}, \code{\link[=batts_bart]{batts_bart()}}, \link{batts-predict}

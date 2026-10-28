@@ -3,7 +3,7 @@ library(BATTS)
 set.seed(41)
 x <- matrix(c(rnorm(40), rnorm(40, 0.6), rnorm(80)), ncol = 2); g <- rep(0:1, each = 40)
 nd <- x[1:4, , drop = FALSE]
-drop_new <- function(f) unclass(f)[setdiff(names(f), c("call", "control"))]
+drop_new <- function(f) unclass(f)[setdiff(names(f), c("call", "control", "group_levels", "variable_names"))]
 bad <- function(expr) tryCatch({expr; NA_character_}, error = conditionMessage)
 
 # 1. Control defaults equal the defaults of the old functions.

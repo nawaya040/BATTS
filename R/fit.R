@@ -121,38 +121,58 @@ bart_control = function(num_trees = 200, burnin = 2000, draws = 1000, thin = 1,
 
 #' Fit a two-sample density ratio by boosting
 #'
-#' Fit the balancing weight `w = sqrt(p/q)` by tree boosting, where group 0 has
-#' density `p` and group 1 has density `q`. This calls [boots()] with the
-#' settings in `control` and gives the identical result.
+#' Fit the balancing weight `w = sqrt(p/q)` by tree boosting, where `p` is the
+#' density of the first group and `q` the density of the second. This calls
+#' [boots()] with the settings in `control` and gives the identical result.
 #'
-#' @param x Numeric matrix with observations in rows and variables in columns.
-#' @param group Vector of zeros and ones, one per row of `x`, with both groups
-#'   present.
+#' @param x Observations in rows and variables in columns: a numeric matrix, a
+#'   data frame with numeric columns, or a numeric vector for one variable.
+#'   Values must be finite.
+#' @param group Two-valued labels, one per row of `x`: numeric, logical,
+#'   character or factor. The first group (the first factor level, otherwise the
+#'   smaller value in sort order; 0 for 0/1 labels) has density `p`, the
+#'   numerator.
+#' @param y Instead of `group`, a second sample with the same columns as `x`.
+#'   Then `x` has density `p` and `y` has density `q`.
 #' @param control Settings created by [boost_control()].
 #' @param quiet Logical; suppress progress messages.
 #' @return An object of class `batts_boost`, inheriting `batts_fit`, as
-#'   returned by [boots()], with the call and the settings added as `call` and
-#'   `control`. Use [predict()], [fitted()] and [density_ratio()] to evaluate
-#'   it.
-#' @details Set the seed before fitting; cross-validation folds and subsamples
-#'   use the R random number generator.
+#'   returned by [boots()], with the call, the settings, the group labels
+#'   (`group_levels`, numerator first) and the column names
+#'   (`variable_names`) added. Use [predict()], [fitted()] and
+#'   [density_ratio()] to evaluate it.
+#' @details Supply exactly one of `group` and `y`. Set the seed before
+#'   fitting; cross-validation folds and subsamples use the R random number
+#'   generator.
 #' @seealso [boost_control()], [batts_bart()], [batts-predict]
 #' @examples
 #' set.seed(1)
-#' x <- matrix(c(rnorm(50), rnorm(50, 0.5)), ncol = 1)
-#' g <- rep(0:1, each = 50)
-#' fit <- batts_boost(x, g, control = boost_control(num_trees_max = 50, depth = 2),
+#' p_sample <- rnorm(50)
+#' q_sample <- rnorm(50, 0.5)
+#' fit <- batts_boost(p_sample, y = q_sample,
+#'                    control = boost_control(num_trees_max = 50, depth = 2),
 #'                    quiet = TRUE)
 #' fit
-#' head(predict(fit, x))
+#' predict(fit, c(-1, 0, 1))
+#'
+#' # The same data as one sample with group labels; the first level is p
+#' x <- c(p_sample, q_sample)
+#' g <- factor(rep(c("p", "q"), each = 50))
+#' ctl <- boost_control(num_trees_max = 50, depth = 2)
+#' set.seed(2); a <- batts_boost(x, g, control = ctl, quiet = TRUE)
+#' set.seed(2); b <- batts_boost(p_sample, y = q_sample, control = ctl, quiet = TRUE)
+#' identical(predict(a, 0), predict(b, 0))
 #' @md
 #' @export
-batts_boost = function(x, group, control = boost_control(), quiet = FALSE){
+batts_boost = function(x, group = NULL, y = NULL, control = boost_control(),
+                       quiet = FALSE){
   if(!inherits(control, "boost_control")){
     stop("control must be created by boost_control()", call. = FALSE)
   }
   .check_flag(quiet, "quiet")
-  out = boots(x, group,
+  input = .fit_input(x, group, y)
+  .check_constant_columns(input$x, control$margin_scale)
+  out = boots(input$x, input$group,
               num_trees_max = control$num_trees_max,
               K_CV = control$K_CV,
               max_resol = control$depth,
@@ -165,42 +185,50 @@ batts_boost = function(x, group, control = boost_control(), quiet = FALSE){
               subsample_fraction = control$subsample_fraction)
   out$call = match.call()
   out$control = control
+  out$group_levels = input$levels
+  out$variable_names = input$variable_names
   out
 }
 
 #' Fit a two-sample density ratio by Bayesian additive trees
 #'
 #' Draw the balancing weight `w = sqrt(p/q)` from its generalized posterior,
-#' where group 0 has density `p` and group 1 has density `q`. This calls
-#' [batts()] with the settings in `control` and gives the identical result.
+#' where `p` is the density of the first group and `q` the density of the
+#' second. This calls [batts()] with the settings in `control` and gives the
+#' identical result.
 #'
 #' @inheritParams batts_boost
 #' @param control Settings created by [bart_control()].
 #' @return An object of class `batts_bart`, inheriting `batts_fit`, as
-#'   returned by [batts()], with the call and the settings added as `call` and
-#'   `control`. Use [predict()], [fitted()] and [density_ratio()] to evaluate
-#'   it; evaluating it at new points requires `bart_control(keep_draws = TRUE)`.
-#' @details Set the seed before fitting. A short run does not establish
-#'   convergence; the returned intervals are pointwise.
+#'   returned by [batts()], with the call, the settings, the group labels
+#'   (`group_levels`, numerator first) and the column names
+#'   (`variable_names`) added. Use [predict()], [fitted()] and
+#'   [density_ratio()] to evaluate it; evaluating it at new points requires
+#'   `bart_control(keep_draws = TRUE)`.
+#' @details Supply exactly one of `group` and `y`. Set the seed before
+#'   fitting. A short run does not establish convergence; the returned
+#'   intervals are pointwise.
 #' @seealso [bart_control()], [batts_boost()], [batts-predict]
 #' @examples
 #' set.seed(2)
-#' x <- matrix(c(rnorm(30), rnorm(30, 0.5)), ncol = 1)
-#' g <- rep(0:1, each = 30)
 #' # Small demonstration; these settings are not a convergence recommendation.
-#' fit <- batts_bart(x, g, control = bart_control(num_trees = 10, burnin = 20,
-#'                                                draws = 21, keep_draws = TRUE),
+#' fit <- batts_bart(rnorm(30), y = rnorm(30, 0.5),
+#'                   control = bart_control(num_trees = 10, burnin = 20,
+#'                                          draws = 21, keep_draws = TRUE),
 #'                   quiet = TRUE)
 #' fit
-#' predict(fit, x[1:3, , drop = FALSE], interval = TRUE)
+#' predict(fit, c(-1, 0, 1), interval = TRUE)
 #' @md
 #' @export
-batts_bart = function(x, group, control = bart_control(), quiet = FALSE){
+batts_bart = function(x, group = NULL, y = NULL, control = bart_control(),
+                      quiet = FALSE){
   if(!inherits(control, "bart_control")){
     stop("control must be created by bart_control()", call. = FALSE)
   }
   .check_flag(quiet, "quiet")
-  out = batts(x, group,
+  input = .fit_input(x, group, y)
+  .check_constant_columns(input$x, control$margin_scale)
+  out = batts(input$x, input$group,
               num_trees = control$num_trees,
               margin_scale = control$margin_scale,
               size_burnin = control$burnin,
@@ -214,5 +242,7 @@ batts_bart = function(x, group, control = bart_control(), quiet = FALSE){
               quiet = quiet)
   out$call = match.call()
   out$control = control
+  out$group_levels = input$levels
+  out$variable_names = input$variable_names
   out
 }

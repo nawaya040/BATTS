@@ -8,7 +8,13 @@
 \alias{fitted.batts_bart}
 \title{Predict balancing weights and density ratios}
 \usage{
-\method{predict}{batts_boost}(object, newdata, type = c("log_ratio", "ratio", "weight"), ...)
+\method{predict}{batts_boost}(
+  object,
+  newdata,
+  type = c("log_ratio", "ratio", "weight"),
+  outside = c("error", "na", "clamp"),
+  ...
+)
 
 \method{predict}{batts_bart}(
   object,
@@ -17,6 +23,7 @@
   summary = c("mean", "median", "none"),
   level = 0.95,
   interval = FALSE,
+  outside = c("error", "na", "clamp"),
   ...
 )
 
@@ -32,14 +39,23 @@
 \arguments{
 \item{object}{A \code{batts_boost} or \code{batts_bart} fit.}
 
-\item{newdata}{Finite numeric matrix with the same columns, in the same
-order, as the training matrix. All points must lie inside the fitted
-domain. If omitted, the training observations are used.}
+\item{newdata}{Points at which to evaluate the fit: a numeric matrix or data
+frame with the training variables, or a numeric vector (several points
+for a fit with one variable, otherwise one point). When the fit recorded
+column names and \code{newdata} has names, columns are matched by name;
+otherwise by position. Values must be finite. If omitted, the training
+observations are used.}
 
 \item{type}{\code{"log_ratio"}, the default, returns the log-density ratio
 \code{2 * log(w) = log(p/q)}. \code{"ratio"} returns \code{w^2 = p/q}. \code{"weight"} returns
 the balancing weight \code{w = sqrt(p/q)} itself, exactly as
 \code{\link[=eval_balance_weight]{eval_balance_weight()}} does. Group 0 is in the numerator throughout.}
+
+\item{outside}{What to do with points outside the fitted domain (the
+training range widened by \code{margin_scale}): \code{"error"} (the default) stops
+and names the offending values, \code{"na"} returns \code{NA} for those points, and
+\code{"clamp"} moves each coordinate to the nearest boundary of the domain
+before evaluating.}
 
 \item{...}{Not used. A \code{batts_boost} fit has no posterior draws, so passing
 \code{summary}, \code{level} or \code{interval} to it is an error rather than silently

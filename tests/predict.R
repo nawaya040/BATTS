@@ -61,7 +61,8 @@ bad <- function(expr) tryCatch({expr; NA_character_}, error = conditionMessage)
 stopifnot(grepl("should be one of", bad(predict(fb, nd, type = "nope"))),
           grepl("level must be", bad(predict(fs, nd, level = 1)), fixed = TRUE),
           grepl("interval must be", bad(predict(fs, nd, interval = NA)), fixed = TRUE),
-          grepl("outside of the sample space", bad(predict(fb, x + 1e6)), fixed = TRUE))
+          grepl("outside the fitted domain", bad(predict(fb, x + 1e6)), fixed = TRUE),
+          grepl("outside of the sample space", bad(eval_balance_weight(fb, x + 1e6)), fixed = TRUE))
 
 # 10. A boosting fit rejects posterior-only arguments instead of ignoring them.
 stopifnot(grepl("no posterior draws", bad(predict(fb, nd, summary = "none")), fixed = TRUE),

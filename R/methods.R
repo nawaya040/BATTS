@@ -18,8 +18,7 @@ NULL
 print.batts_boost = function(x, ...){
   info = x$data_info
   cat("<BATTS boosting fit>\n")
-  cat("  observations: ", info$n0 + info$n1,
-      " (group 0: ", info$n0, ", group 1: ", info$n1, ")\n", sep = "")
+  cat(.count_line(info$n0, info$n1, x$group_levels), "\n", sep = "")
   cat("  variables:    ", info$d, "\n", sep = "")
   cat("  trees:        ", length(x$tree_list), "\n", sep = "")
   if(is.null(x$loss_CV_store)){
@@ -28,8 +27,7 @@ print.batts_boost = function(x, ...){
     cat("  CV:           ", nrow(x$loss_CV_store), " folds, ",
         ncol(x$loss_CV_store), " candidate tree counts\n", sep = "")
   }
-  cat("  estimand:     balancing weight w = sqrt(p/q), group 0 in the numerator\n")
-  cat("                2 * log(w) is the log-density ratio\n")
+  cat(.orientation_lines(x$group_levels), sep = "\n")
   invisible(x)
 }
 
@@ -38,15 +36,13 @@ print.batts_boost = function(x, ...){
 print.batts_bart = function(x, ...){
   info = x$data_info
   cat("<BATTS Bayesian additive trees fit>\n")
-  cat("  observations: ", info$n0 + info$n1,
-      " (group 0: ", info$n0, ", group 1: ", info$n1, ")\n", sep = "")
+  cat(.count_line(info$n0, info$n1, x$group_levels), "\n", sep = "")
   cat("  variables:    ", info$d, "\n", sep = "")
   cat("  saved draws:  ", ncol(x$balance_weight_BART_data), "\n", sep = "")
   cat("  forests kept: ", if(length(x$forest_list) > 0) "yes" else "no",
       "\n", sep = "")
   cat("  boosting init trees: ", length(x$tree_list), "\n", sep = "")
-  cat("  estimand:     balancing weight w = sqrt(p/q), group 0 in the numerator\n")
-  cat("                2 * log(w) is the log-density ratio\n")
+  cat(.orientation_lines(x$group_levels), sep = "\n")
   invisible(x)
 }
 
@@ -56,7 +52,9 @@ summary.batts_fit = function(object, ...){
   info = object$data_info
   out = list(n0 = info$n0, n1 = info$n1, d = info$d,
              domain = info$min_max_values,
-             num_trees = length(object$tree_list))
+             num_trees = length(object$tree_list),
+             group_levels = object$group_levels)
+  if(!is.null(object$variable_names)) rownames(out$domain) = object$variable_names
   if(inherits(object, "batts_bart")){
     out$type = "bart"
     out$draws = ncol(object$balance_weight_BART_data)
@@ -77,8 +75,7 @@ summary.batts_fit = function(object, ...){
 print.summary.batts_fit = function(x, ...){
   cat(if(x$type == "bart") "<BATTS Bayesian additive trees fit>\n"
       else "<BATTS boosting fit>\n")
-  cat("  observations: ", x$n0 + x$n1,
-      " (group 0: ", x$n0, ", group 1: ", x$n1, ")\n", sep = "")
+  cat(.count_line(x$n0, x$n1, x$group_levels), "\n", sep = "")
   cat("  variables:    ", x$d, "\n", sep = "")
   cat("  trees:        ", x$num_trees, "\n", sep = "")
   if(x$type == "bart"){
@@ -106,9 +103,17 @@ nobs.batts_fit = function(object, ...){
 #' Predict balancing weights and density ratios
 #'
 #' @param object A `batts_boost` or `batts_bart` fit.
-#' @param newdata Finite numeric matrix with the same columns, in the same
-#'   order, as the training matrix. All points must lie inside the fitted
-#'   domain. If omitted, the training observations are used.
+#' @param newdata Points at which to evaluate the fit: a numeric matrix or data
+#'   frame with the training variables, or a numeric vector (several points
+#'   for a fit with one variable, otherwise one point). When the fit recorded
+#'   column names and `newdata` has names, columns are matched by name;
+#'   otherwise by position. Values must be finite. If omitted, the training
+#'   observations are used.
+#' @param outside What to do with points outside the fitted domain (the
+#'   training range widened by `margin_scale`): `"error"` (the default) stops
+#'   and names the offending values, `"na"` returns `NA` for those points, and
+#'   `"clamp"` moves each coordinate to the nearest boundary of the domain
+#'   before evaluating.
 #' @param type `"log_ratio"`, the default, returns the log-density ratio
 #'   `2 * log(w) = log(p/q)`. `"ratio"` returns `w^2 = p/q`. `"weight"` returns
 #'   the balancing weight `w = sqrt(p/q)` itself, exactly as
@@ -153,13 +158,14 @@ NULL
 #' @importFrom stats predict
 #' @export
 predict.batts_boost = function(object, newdata,
-                               type = c("log_ratio", "ratio", "weight"), ...){
-  type = match.arg(type)
+                               type = c("log_ratio", "ratio", "weight"),
+                               outside = c("error", "na", "clamp"), ...){
+  type = match.arg(type); outside = match.arg(outside)
   .batts_no_extra_args(...length(), list(...))
   w = if(missing(newdata)){
     as.numeric(object$balance_weight_boosting_data)
   }else{
-    as.numeric(eval_balance_weight(object, newdata)$balancing_weight_boosting)
+    .eval_new(object, newdata, outside, bayes = FALSE)
   }
   .batts_transform(w, type)
 }
@@ -170,8 +176,10 @@ predict.batts_boost = function(object, newdata,
 predict.batts_bart = function(object, newdata,
                               type = c("log_ratio", "ratio", "weight"),
                               summary = c("mean", "median", "none"),
-                              level = 0.95, interval = FALSE, ...){
+                              level = 0.95, interval = FALSE,
+                              outside = c("error", "na", "clamp"), ...){
   type = match.arg(type); summary = match.arg(summary)
+  outside = match.arg(outside)
   if(!is.numeric(level) || length(level) != 1L || !is.finite(level) ||
      level <= 0 || level >= 1){
     stop("level must be a single number strictly between zero and one")
@@ -188,7 +196,7 @@ predict.batts_bart = function(object, newdata,
   w = if(missing(newdata)){
     object$balance_weight_BART_data
   }else{
-    eval_balance_weight(object, newdata, is_Bayes = TRUE)$balancing_weight_BART
+    .eval_new(object, newdata, outside, bayes = TRUE)
   }
   draws = .batts_transform(w, type)
   if(interval){
@@ -196,8 +204,10 @@ predict.batts_bart = function(object, newdata,
     return(cbind(
       fit   = if(summary == "median") apply(draws, 1, stats::median)
               else rowMeans(draws),
-      lower = apply(draws, 1, stats::quantile, probs = a, names = FALSE),
-      upper = apply(draws, 1, stats::quantile, probs = 1 - a, names = FALSE)))
+      lower = apply(draws, 1, stats::quantile, probs = a, names = FALSE,
+                    na.rm = TRUE),
+      upper = apply(draws, 1, stats::quantile, probs = 1 - a, names = FALSE,
+                    na.rm = TRUE)))
   }
   switch(summary,
          none   = draws,
