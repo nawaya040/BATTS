@@ -30,7 +30,7 @@ through additive tree models for density ratios. arXiv:2508.03059.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/nawaya040/BATTS}
+  \item \url{https://github.com/nawaya040/BATTS/tree/cran/dev}
   \item \url{https://arxiv.org/abs/2508.03059}
   \item Report bugs at \url{https://github.com/nawaya040/BATTS/issues}
 }
