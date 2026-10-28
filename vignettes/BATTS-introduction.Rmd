@@ -49,32 +49,42 @@ loc <- list(x = rnorm(n1), y = rnorm(n1, mean = 0.5))
 loc_truth <- function(t) dnorm(t, log = TRUE) - dnorm(t, mean = 0.5, log = TRUE)
 ```
 
-The helper below plots the two samples with different colours and symbols.
-The points are drawn in random order, so that neither sample hides the other.
-In one dimension, the vertical position is a random jitter added for
-visibility only.
+The helper below plots the two samples in different colours. In one
+dimension it draws a kernel density estimate of each sample with `density()`
+and marks the observations along the axis, the first sample at the bottom and
+the second at the top. In two dimensions it draws a scatter plot with
+different symbols, in random order so that neither sample hides the other.
 
 ```{r draw-samples}
 col_x <- adjustcolor("firebrick", alpha.f = 0.6)
 col_y <- adjustcolor("steelblue", alpha.f = 0.6)
 draw_samples <- function(sample, main) {
-  x <- rbind(as.matrix(sample$x), as.matrix(sample$y))
-  first <- rep(c(TRUE, FALSE), c(NROW(sample$x), NROW(sample$y)))
-  one_d <- ncol(x) == 1L
-  if (one_d) x <- cbind(x, runif(nrow(x)))
-  ord <- sample.int(nrow(x))
-  plot(x[ord, ], col = ifelse(first[ord], col_x, col_y),
-       pch = ifelse(first[ord], 16, 17), cex = 0.7,
-       xlab = if (one_d) "x" else "x1", ylab = if (one_d) "" else "x2",
-       yaxt = if (one_d) "n" else "s", asp = if (one_d) NA else 1,
-       main = main)
-  legend("bottom", c("first sample (p)", "second sample (q)"),
-         col = c(col_x, col_y), pch = c(16, 17), horiz = TRUE, bty = "n",
-         inset = c(0, 1), xpd = TRUE, cex = 0.8)
+  if (NCOL(sample$x) == 1L) {
+    dens_x <- density(sample$x)
+    dens_y <- density(sample$y)
+    plot(dens_x, col = "firebrick", lwd = 2, main = main, xlab = "x",
+         xlim = range(dens_x$x, dens_y$x), ylim = c(0, max(dens_x$y, dens_y$y)))
+    lines(dens_y, col = "steelblue", lwd = 2, lty = 2)
+    rug(sample$x, side = 1, col = col_x)
+    rug(sample$y, side = 3, col = col_y)
+    legend("topright", c("first sample (p)", "second sample (q)"),
+           col = c("firebrick", "steelblue"), lty = c(1, 2), lwd = 2,
+           bty = "n", cex = 0.8)
+  } else {
+    x <- rbind(sample$x, sample$y)
+    first <- rep(c(TRUE, FALSE), c(nrow(sample$x), nrow(sample$y)))
+    ord <- sample.int(nrow(x))
+    plot(x[ord, ], col = ifelse(first[ord], col_x, col_y),
+         pch = ifelse(first[ord], 16, 17), cex = 0.7, asp = 1,
+         xlab = "x1", ylab = "x2", main = main)
+    legend("bottom", c("first sample (p)", "second sample (q)"),
+           col = c(col_x, col_y), pch = c(16, 17), horiz = TRUE, bty = "n",
+           inset = c(0, 1), xpd = TRUE, cex = 0.8)
+  }
 }
 ```
 
-```{r plot-location, fig.height = 2.6}
+```{r plot-location}
 draw_samples(loc, "Location shift")
 ```
 
@@ -90,7 +100,7 @@ scl <- list(x = rnorm(n1), y = rnorm(n1, sd = 1.5))
 scl_truth <- function(t) dnorm(t, log = TRUE) - dnorm(t, sd = 1.5, log = TRUE)
 ```
 
-```{r plot-scale, fig.height = 2.6}
+```{r plot-scale}
 draw_samples(scl, "Scale difference")
 ```
 
