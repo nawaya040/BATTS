@@ -5,18 +5,22 @@ This is the first submission of BATTS to CRAN.
 ## Test environments
 
 * Local: Windows 11, R 4.5.0 (ucrt), Rtools45 (GCC 14.2.0)
-* win-builder: R-devel and R-release (to be run before submission)
-* macOS builder: R-release (to be run before submission)
+* win-builder: R-release 4.6.1 (ucrt) and R-oldrelease 4.5.3 (ucrt)
+* win-builder: R-devel (result pending)
+* R-hub: Linux, Windows, macOS, sanitizers and valgrind (to be run)
 
 ## R CMD check results
 
-Local `R CMD check --as-cran`: 0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 1 note
 
 * checking CRAN incoming feasibility ... NOTE
   Maintainer: 'Naoki Awaya <nawaya@waseda.jp>'
   New submission
+  Possibly misspelled words in DESCRIPTION: Awaya (10:5), Xu (10:12)
 
-  This is a new submission.
+  This is a new submission. The flagged words are the surnames of the
+  authors of the cited paper, Awaya, Xu, and Ma (2025), and are spelled
+  correctly.
 
 ## Notes for the CRAN team
 

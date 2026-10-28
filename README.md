@@ -99,7 +99,7 @@ for plotting and interpretation.
 
 ## Worked example
 
-The full example script is included in [`example.R`](example.R). The
+The full example script is included in [`example.R`](https://github.com/nawaya040/BATTS/blob/cran/dev/example.R). The
 code below reproduces the main workflow.
 
 ``` r
