@@ -34,3 +34,12 @@ observations.
 Display and summary methods for fits from \code{\link[=batts_boost]{batts_boost()}} and
 \code{\link[=batts_bart]{batts_bart()}}.
 }
+\examples{
+set.seed(1)
+fit <- batts_boost(rnorm(50), y = rnorm(50, 0.5),
+                   control = boost_control(num_trees_max = 50, depth = 2),
+                   quiet = TRUE)
+fit
+summary(fit)
+nobs(fit)
+}

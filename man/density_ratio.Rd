@@ -26,6 +26,13 @@ The density ratio \code{p/q} with group 0 in the numerator, that is \code{w^2} f
 fitted balancing weight \code{w}. Equivalent to
 \code{predict(object, newdata, type = "ratio")}.
 }
+\examples{
+set.seed(1)
+fit <- batts_boost(rnorm(50), y = rnorm(50, 0.5),
+                   control = boost_control(num_trees_max = 50, depth = 2),
+                   quiet = TRUE)
+density_ratio(fit, c(-1, 0, 1))
+}
 \seealso{
 \link{batts-predict}
 }

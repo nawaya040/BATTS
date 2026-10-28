@@ -9,6 +9,14 @@
 #' @return `print` returns its argument invisibly. `summary` returns an object
 #'   of class `summary.batts_fit`. `nobs` returns the number of training
 #'   observations.
+#' @examples
+#' set.seed(1)
+#' fit <- batts_boost(rnorm(50), y = rnorm(50, 0.5),
+#'                    control = boost_control(num_trees_max = 50, depth = 2),
+#'                    quiet = TRUE)
+#' fit
+#' summary(fit)
+#' nobs(fit)
 #' @name batts-methods
 #' @md
 NULL
@@ -132,6 +140,25 @@ nobs.batts_fit = function(object, ...){
 #' @return A numeric vector, or a matrix when `summary = "none"` or
 #'   `interval = TRUE`.
 #' @details Prediction draws no random numbers.
+#' @examples
+#' set.seed(1)
+#' x <- rnorm(50)
+#' y <- rnorm(50, 0.5)
+#' fit_boost <- batts_boost(x, y = y,
+#'                          control = boost_control(num_trees_max = 50, depth = 2),
+#'                          quiet = TRUE)
+#' predict(fit_boost, c(-1, 0, 1))
+#' predict(fit_boost, c(-1, 0, 1), type = "ratio")
+#' head(fitted(fit_boost))
+#' predict(fit_boost, c(-10, 0), outside = "na")
+#'
+#' # Small demonstration; these settings are not a convergence recommendation.
+#' fit_bart <- batts_bart(x, y = y,
+#'                        control = bart_control(num_trees = 10, burnin = 20,
+#'                                               draws = 21, keep_draws = TRUE),
+#'                        quiet = TRUE)
+#' predict(fit_bart, c(-1, 0, 1), interval = TRUE)
+#' dim(predict(fit_bart, c(-1, 0, 1), summary = "none"))
 #' @name batts-predict
 #' @md
 NULL
@@ -250,6 +277,12 @@ fitted.batts_bart = function(object, type = c("log_ratio", "ratio", "weight"),
 #' @return A numeric vector, or a matrix for a `batts_bart` fit with
 #'   `summary = "none"` or `interval = TRUE`.
 #' @seealso [batts-predict]
+#' @examples
+#' set.seed(1)
+#' fit <- batts_boost(rnorm(50), y = rnorm(50, 0.5),
+#'                    control = boost_control(num_trees_max = 50, depth = 2),
+#'                    quiet = TRUE)
+#' density_ratio(fit, c(-1, 0, 1))
 #' @md
 #' @export
 density_ratio = function(object, newdata, ...) UseMethod("density_ratio")

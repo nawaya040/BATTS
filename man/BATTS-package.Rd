@@ -34,12 +34,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Naoki Awaya \email{nawaya@waseda.jp}
+\strong{Maintainer}: Naoki Awaya \email{nawaya@waseda.jp} [copyright holder]
 
 Authors:
 \itemize{
-  \item Yuliang Xu
-  \item Li Ma
+  \item Yuliang Xu [copyright holder]
+  \item Li Ma [copyright holder]
 }
 
 }

@@ -2,9 +2,9 @@ Package: BATTS
 Title: Boosting and Bayesian Additive Trees for Two-Sample Comparison
 Version: 0.4.0
 Authors@R: 
-    c(person("Naoki", "Awaya", email = "nawaya@waseda.jp", role = c("aut", "cre")),
-      person("Yuliang", "Xu", role = "aut"),
-      person("Li", "Ma", role = "aut"))
+    c(person("Naoki", "Awaya", email = "nawaya@waseda.jp", role = c("aut", "cre", "cph")),
+      person("Yuliang", "Xu", role = c("aut", "cph")),
+      person("Li", "Ma", role = c("aut", "cph")))
 Description: Implements boosting and Bayesian additive tree methods for
     two-sample comparison through density ratio estimation, following
     Awaya, Xu, and Ma (2025) <doi:10.48550/arXiv.2508.03059>. The package

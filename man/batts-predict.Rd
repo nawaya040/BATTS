@@ -82,3 +82,23 @@ Predict balancing weights and density ratios
 \details{
 Prediction draws no random numbers.
 }
+\examples{
+set.seed(1)
+x <- rnorm(50)
+y <- rnorm(50, 0.5)
+fit_boost <- batts_boost(x, y = y,
+                         control = boost_control(num_trees_max = 50, depth = 2),
+                         quiet = TRUE)
+predict(fit_boost, c(-1, 0, 1))
+predict(fit_boost, c(-1, 0, 1), type = "ratio")
+head(fitted(fit_boost))
+predict(fit_boost, c(-10, 0), outside = "na")
+
+# Small demonstration; these settings are not a convergence recommendation.
+fit_bart <- batts_bart(x, y = y,
+                       control = bart_control(num_trees = 10, burnin = 20,
+                                              draws = 21, keep_draws = TRUE),
+                       quiet = TRUE)
+predict(fit_bart, c(-1, 0, 1), interval = TRUE)
+dim(predict(fit_bart, c(-1, 0, 1), summary = "none"))
+}
