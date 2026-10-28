@@ -89,16 +89,24 @@ a guarantee of frequentist coverage or simultaneous inference.
 
 ## Main functions
 
-BATTS exposes three main user-facing functions:
+From version 0.4.0 the main user-facing functions are:
 
-- `boots()` fits the boosting estimator for the density ratio.
-- `batts()` fits the Bayesian additive tree model and can return
-  posterior samples for uncertainty quantification.
-- `eval_balance_weight()` evaluates fitted models on new points.
+- `batts_boost()` fits the boosting estimator, with settings collected in
+  `boost_control()`.
+- `batts_bart()` fits the Bayesian additive tree model, with settings in
+  `bart_control()`, and returns posterior draws for uncertainty
+  quantification.
+- `predict()`, `fitted()` and `density_ratio()` evaluate a fit; `print()`,
+  `summary()` and `plot()` describe it.
 
-The functions return the square root of the density ratio, so the example
-below converts outputs to log-density ratios for plotting and
-interpretation.
+The fitting functions accept a matrix, a data frame or a vector, group labels
+of any two-valued type, or two samples (`batts_boost(x, y = y)`).
+
+`boots()`, `batts()` and `eval_balance_weight()`, the interface of versions
+0.1.0 to 0.3.0, still work and give the same results, but are deprecated.
+They return the square root of the density ratio, so the worked example
+below, written for that interface, converts outputs to log-density ratios
+for plotting and interpretation.
 
 ## Worked example
 

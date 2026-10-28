@@ -1,0 +1,18 @@
+bibentry(
+  bibtype = "Misc",
+  header = "To cite BATTS in publications, please use:",
+  title = "Two-sample comparison through additive tree models for density ratios",
+  author = c(person("Naoki", "Awaya"), person("Yuliang", "Xu"),
+             person("Li", "Ma")),
+  year = "2025",
+  howpublished = "arXiv preprint arXiv:2508.03059",
+  eprint = "2508.03059",
+  archivePrefix = "arXiv",
+  primaryClass = "stat.ME",
+  doi = "10.48550/arXiv.2508.03059",
+  url = "https://arxiv.org/abs/2508.03059",
+  textVersion = paste(
+    "Awaya, N., Xu, Y., and Ma, L. (2025).",
+    "Two-sample comparison through additive tree models for density ratios.",
+    "arXiv:2508.03059. doi:10.48550/arXiv.2508.03059")
+)

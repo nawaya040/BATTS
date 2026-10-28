@@ -1,8 +1,9 @@
-^balancePM\.Rproj$
 ^\.Rproj\.user$
+^BATTS\.Rproj$
 ^LICENSE\.md$
 ^README\.Rmd$
 ^README\.html$
 ^example\.R$
-
+^cran-comments\.md$
+^CRAN-SUBMISSION$
 ^\.git$

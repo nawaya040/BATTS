@@ -15,7 +15,8 @@ Bayesian additive trees.
 \item \code{\link[=batts_bart]{batts_bart()}} draws from the generalized posterior, with settings in
 \code{\link[=bart_control]{bart_control()}}.
 \item \code{\link[=predict]{predict()}}, \code{\link[=fitted]{fitted()}} and \code{\link[=density_ratio]{density_ratio()}} evaluate a fit; see
-\link{batts-predict}. \code{\link[=print]{print()}} and \code{\link[=summary]{summary()}} describe it.
+\link{batts-predict}. \code{\link[=print]{print()}}, \code{\link[=summary]{summary()}} and \link[=batts-plot]{plot()} describe
+it.
 }
 
 The earlier interface, \code{\link[=boots]{boots()}}, \code{\link[=batts]{batts()}} and \code{\link[=eval_balance_weight]{eval_balance_weight()}},
@@ -23,13 +24,14 @@ is deprecated but still works; see \link{BATTS-deprecated}.
 }
 \references{
 Awaya, N., Xu, Y., and Ma, L. (2025). Two-sample comparison
-through additive tree models for density ratios.
-\url{https://arxiv.org/abs/2508.03059}.
+through additive tree models for density ratios. arXiv:2508.03059.
+\doi{10.48550/arXiv.2508.03059}.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://github.com/nawaya040/BATTS}
+  \item \url{https://arxiv.org/abs/2508.03059}
   \item Report bugs at \url{https://github.com/nawaya040/BATTS/issues}
 }
 
