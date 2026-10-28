@@ -33,7 +33,7 @@ on:
         type: string
 
 env:
-  RHUB_CONFIG: linux,ubuntu-release,windows,macos,macos-arm64,gcc-asan,clang-asan,clang-ubsan,valgrind,nosuggests
+  RHUB_CONFIG: linux,ubuntu-release,windows,macos,macos-arm64,gcc-asan,clang-asan,clang-ubsan,valgrind
 
 jobs:
 
